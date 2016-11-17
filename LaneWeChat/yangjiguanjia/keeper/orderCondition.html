@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>订单详情</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<style type="text/css">
+			html,body{height: 100%;background: #f5f5f5;font-family: ;}
+			header{width: 100%;height: .7rem;padding: 0 .3rem;line-height: .7rem;border-bottom: 1px solid #e5e5e5;
+			color: #808080;font-size: .3rem;overflow: hidden;box-sizing: border-box;background: white;}
+			.order{float: left;}
+			.condition{font-size: .24rem;color: #fe3057;float: right;}
+			
+			
+			.orderInfo{width: 100%;height: 1.8rem;border-bottom: 1px solid #e5e5e5;background: white;overflow: hidden;}
+			.orderInfo img{width: 1.2rem;display: block;height: 1.2rem;display: none;}
+			.orderInfo dl{margin: .34rem 0 0 .3rem;overflow: hidden;background: white;}
+			dl dt{float: left;margin-right: .2rem;}
+			.orderInfo .goodName{font-size: .32rem;color: #4c4c4c;}
+			.orderInfo .money{font-size: .28rem;color: #fe3057;}
+			.orderInfo .count{font-size: .28rem;color: #808080;}
+			
+			.time{width: 100%;height: .7rem;padding: 0 .3rem;line-height: .7rem;border-bottom: 1px solid #e5e5e5;
+			color: #b2b2b2;font-size: .24rem;overflow: hidden;box-sizing: border-box;background: white;}
+			.left{float: left;}
+			.right{color: #808080;float: right;overflow: hidden;}
+			.right .red{color: #fe3057;display: inline-block;}
+			.receive{width: 100%;height: 1.65rem;padding: .25rem .3rem 0;overflow: hidden;
+			font-size: .32rem;color: #4c4c4c;box-sizing: border-box;background: white;}
+			.location img{display: inline-block;width: .28rem;}
+			.person{margin-left: .1rem;}
+			.receiveInfo{float: right;}
+			.adress{width: 100%;box-sizing: border-box;padding: 0 .46rem;overflow:hidden; text-overflow:ellipsis;display:-webkit-box; 
+			-webkit-box-orient:vertical;-webkit-line-clamp:2; color: #737373;font-size: .3rem;}
+		
+			section ul{margin-top: .2rem;}
+			section ul li{padding: 0 .3rem;width: 100%;box-sizing: border-box;height: 1rem;overflow: hidden;
+			font-size: .32rem;color:#737373;border-bottom: 1px solid #e5e5e5;background: white;line-height: 1rem;}
+			section ul .payTime{height: .7rem;border: 0;font-size: .24rem;color: #b2b2b2;line-height: .7rem;background: #fcfcfc;}
+			.left2{float: left;}
+			.right2{float: right;}
+			
+			section p{margin-top: .5rem;font-size: .22rem;color: #77a9f2;margin-left: .3rem;}
+			
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="order">订单号&emsp;<span class="order_sn"></span></div>
+			<div class="condition"></div>
+		</header>
+		<section>
+			<div class="orderInfo">
+				<dl>
+					<dt>
+						<img src="assets/images/baoxian.jpg" class="baoxian"/>
+						<img src="assets/images/yuhunliao.jpg" class="yuhunliao"/>
+					</dt>
+					<dd class="goodName"></dd>
+					<dd class="money">¥<span class="dan"></span></dd>
+					<dd class="count">x<span class="shu"></span></dd>
+				</dl>
+			</div>
+			<div class="time">
+				<div class="left">下单时间: <span class="order_time"></span></div>
+				<div class="right">总价：<div class="red">¥<span class="payable"></span></div>(含运费)</div>
+			</div>
+			<div class="receive">
+				<span class="location"><img src="assets/images/location.png"/></span>
+				<span class="person">收货人</span>
+				<div class="receiveInfo">
+					<span class="receiver_name"></span>&emsp;<span class="tel receiver_tel"></span>
+				</div>
+				<div class="adress">
+					
+				</div>
+			</div>
+			<ul>
+				<li>
+					<div class="left2">支付方式</div>
+					<div class="right2 pay_type"></div>
+				</li>
+				<li>
+					<div class="left2">养鸡管家</div>
+					<div class="right2">
+						<span class="bossName keeper_name"></span>&emsp;
+						<span class="bossTel keeper_tel"></span>
+					</div>
+				</li>
+				<li class="payTime">支付时间：<span class="pay_time"></span></li>
+			</ul>
+			<p>* 感谢您在养鸡管家购物，欢迎再次光临</p>
+		</section>
+		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				if(localStorage.getItem("orderInfo")){
+					var num = JSON.parse(localStorage.getItem("orderInfo")).orderNum;
+					var condition = JSON.parse(localStorage.getItem("orderInfo")).condition;
+					$(".condition").html(condition);
+				}
+				var version="1.2.2";
+				var signature=hex_md5("order_sn="+num+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
+				$.get("http://weixin.yangjiguanjia.com/Api/Order/getOrderBySN?order_sn="+num+"&signature="+signature+"&version="+version,{},function(data){
+						if(data.code===1){
+							if(data.result.goods_type==1){
+								$(".baoxian").css("display","block")
+							}else{
+								$(".yuhunliao").css("display","block")
+							}
+							$(".order_sn").html(data.result.order_sn);
+							$(".adress").html(data.result.address);
+							$(".receiver_name").html(data.result.receiver_name);
+							$(".receiver_tel").html(data.result.receiver_mobile);
+							$(".goodName").html(data.result.title);
+							var order_time=getLocalTime(data.result.order_time);
+							$(".order_time").html(order_time);
+							
+							
+						    	
+							var pay_time=getLocalTime(data.result.pay_time);
+							$(".pay_time").html(pay_time);
+							$(".pay_type").html(data.result.pay_type)
+							//localStorage.setItem("orderDetails",JSON.stringify({"orderNum":num,"address":address,"condition":condition,"count":count,"time":time,"goodName":goodName,"tel":tel}))
+							$(".keeper_name").html(data.result.keeper_name);
+							$(".keeper_tel").html(data.result.keeper_tel);
+							$(".payable").html(data.result.payable);
+							$(".dan").html(data.result.current_price)
+							$(".shu").html(data.result.amount)
+						}else{
+							alert(data.msg);
+						}
+				})
+				function getLocalTime(dateNum) {  
+//					var time = new Date(parseInt(nS) * 1000).toLocaleString().substr(0,17);
+//					if(time.indexOf("GMT+8")){
+//						time.split("GMT+8")
+//						var str1=time[0];
+//						var str2=time[1];
+//						return str1+str2;
+//					}else{
+//						var str=time.replace("am","上午").replace("pm","下午");
+//						return str;
+//					}
+					var date=new Date(dateNum*1000);
+					return date.getFullYear()+"-"+fixZero(date.getMonth()+1,2)+"-"+fixZero(date.getDate(),2)+" "+fixZero(date.getHours(),2)+":"+fixZero(date.getMinutes(),2)+":"+fixZero(date.getSeconds(),2);
+					function fixZero(num,length){
+					var str=""+num;
+					var len=str.length;
+					var s="";
+					for(var i=length;i-->len;){
+						s+="0";
+					}
+					return s+str;
+					}
+					 
+				}   
+			})
+				
+		</script>
+	</body>
+</html>

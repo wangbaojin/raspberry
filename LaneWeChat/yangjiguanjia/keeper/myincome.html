@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>我的收入</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<style type="text/css">
+			body{background: #fbfbfb;}
+			header{width: 100%;height: 1.83rem;border-bottom: 1px solid #f1f1f1;text-align: center;overflow: hidden;background: white;}
+			header .top{font-size: .24rem;margin-top: .28rem;}
+			header .center{font-size: .24rem;margin-top: .2rem;color: #cccccc;position: relative;}
+			header .getMoney{position: absolute;right: 0;font-size: .26rem;color: black;top: 0;}
+			header .getMoney img{width: .2rem;margin: 0 .2rem;}
+			header img{display: inline-block;width: .35rem;}
+			header .bottom{font-size: .4rem;font-weight: bold;margin-top: .18rem;line-height: .34rem;text-align: center;}
+			
+			section ul li{width: 100%;height: 1.18rem;border: 1px solid #f1f1f1;font-size: .3rem;padding: 0 0.57rem 0 0.29rem;
+			line-height: 1.18rem;background: white;box-sizing: border-box;position: relative;}
+			section ul .left{float: left;}
+			section img{display: inline-block;width: .2rem;float: right;position: absolute;top: .42rem;right: .2rem;}
+			section ul .right{float: right;}
+			section ul .happening{margin-top:.18rem ;}
+			section ul .myAlipay{margin-top:.18rem ;}
+			.phone img{display: inline-block;width: .7rem;height: .7rem;margin-right: .2rem;}
+			.phone{font-size: .32rem;color: #626262;text-align: center;line-height: 5rem;width: 100%;display: inline-block;}
+			.content{display: inline-block;line-height: .7rem;}
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="top">可提现</div>
+			<div class="center">
+				已完成的交易
+				<div class="getMoney">
+					提现<img src="assets/images/go.png"/>
+				</div>
+			</div>
+			<div class="bottom">
+				<img src="assets/images/money.png"/>
+				<span class="noflect">9999.00</span>
+			</div>
+		</header>
+		<section>
+			<ul>
+				<li class="happening">
+					<div class="left">
+						交易中
+					</div>
+					<div class="right inflect">
+						3000.00
+					</div>
+					<img src="assets/images/go.png"/>
+				</li>
+				<li class="alreadyGet">
+					<div class="left">
+						已提现
+					</div>
+					<div class="right flected">
+						9999.00
+					</div>
+					<img src="assets/images/go.png"/>
+				</li>
+				<li class="myAlipay">
+					<div class="left">
+						我的支付宝
+					</div>
+					<div class="right alipay_no">1234556789@qq.com</div>
+				</li>
+				<li class="details">
+					<div class="left">
+						交易明细
+					</div>
+					<img src="assets/images/go.png"/>	
+				</li>
+			</ul>
+		</section>
+		<div class="phone">
+				<div class="content">
+					<img src="assets/images/logo.png"/><a href="tel:010-84599723" style="color:inherit;">010-84599723</a>
+				</div>
+		</div>
+		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				var keeper_id;
+				if(localStorage.getItem("person")){
+					
+					keeper_id=JSON.parse(localStorage.getItem("personDetails")).id;
+				}
+				var version="1.2.2";
+				var signature=hex_md5("keeper_id="+keeper_id+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
+				$.get("http://weixin.yangjiguanjia.com/Api/Keeper/getKeeperIncome?keeper_id="+keeper_id+"&signature="+signature+"&version="+version,{},function(data){
+							if(data.code===1){
+								$(".noflect").html(data.result.noflect)
+								$(".inflect").html(data.result.inflect)
+								$(".flected").html(data.result.flected)
+								$(".alipay_no").html(data.result.alipay_no)
+								localStorage.setItem("cash",JSON.stringify({"noflect":data.result.noflect}))
+							}else{
+								alert(data.msg)
+							}
+						 
+					})
+			
+				$(".getMoney").on("tap",function(){
+					location.href="cash.html"
+				})
+			})
+		</script>
+	</body>
+</html>
