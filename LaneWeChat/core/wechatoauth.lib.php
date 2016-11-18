@@ -28,7 +28,11 @@ class WeChatOAuth{
         $response_type = 'code';
         //构造请求微信接口的URL
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='.$appid.'&redirect_uri='.$redirect_uri.'&response_type='.$response_type.'&scope='.$scope.'&state='.$state.'#wechat_redirect';
-        header('Location: '.$url, true, 301);
+        //header('Location: '.$url, true, 301);
+        if(!isset($_GET['code']))
+        {
+            header("Location:".$url);
+        }
     }
 
 
