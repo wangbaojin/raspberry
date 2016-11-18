@@ -143,7 +143,7 @@
 
 				$.ajax({
 					type: 'post',
-					url: 'http://weixin.yangjiguanjia.com/Api/User/sendSmsCode',
+					url: validate.url+'/Api/User/sendSmsCode',
 					data:params,
 					success: function(data){
 						//alert(data.msg)
@@ -200,7 +200,7 @@
 			alert("请同意使用条款和隐私政策！")
 			return
 		}
-		$.post("http://weixin.yangjiguanjia.com/Api/User/login",params,function(data){
+		$.post(validate.url+"/Api/User/login",params,function(data){
 			$('#loadingToast').show();
 			if(data.code===1){
 				localStorage.setItem("person",JSON.stringify({"mobile":params.mobile,"id":data.result.id}))

@@ -216,6 +216,7 @@
 		</div>
 		<script type="text/javascript" src="assets/js/zepto.min.js"></script>
 		<script type="text/javascript" src="assets/js/zepto.tap.js"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -227,7 +228,7 @@
 				var hidden=$(".hidden");
 				$.ajax({
 					  type: 'GET',
-					  url: "http://weixin.yangjiguanjia.com/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
+					  url: validate.url+"/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
 					  // post payload:
 					  success:  function(data){
 					  		data=JSON.parse(data);
@@ -399,7 +400,7 @@
    						//var version="1.2.2";
 					//	var signature=hex_md5(version+"&images="+images+"&orderID="+$(".orderNum").html()+"&version=1.2.2"+"Tv,cM02kjf^lWoU")
 						$("#loadingToast").show()
-						$.post("http://weixin.yangjiguanjia.com/Wechat/downOrderPic",{"images":JSON.stringify(images),"order_sn":num},function(data){
+						$.post(validate.url+"/Wechat/downOrderPic",{"images":JSON.stringify(images),"order_sn":num},function(data){
 							
 							if(data==1){
 								$("#loadingToast").hide();

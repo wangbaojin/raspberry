@@ -226,6 +226,7 @@
 		
 		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/artTamplate.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/iscroll.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/iscroll-probe.js" type="text/javascript" charset="utf-8"></script>
@@ -351,7 +352,7 @@
 				myScroll.on("scrollEnd",action);
 				var version="1.2.2";
 				var signature=hex_md5("user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				$.get("http://weixin.yangjiguanjia.com/Api/Logs/show?user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&signature="+signature+"&version="+version,{},function(data){
+				$.get(validate.url+"/Api/Logs/show?user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&signature="+signature+"&version="+version,{},function(data){
 							if(data.code===1){
 								//alert(data.msg)
 								total_page=data.result.totalPage_count;
@@ -397,7 +398,7 @@
 				   
 				   		page++;
 				   		signature=hex_md5("user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				   	    $.get("http://weixin.yangjiguanjia.com/Api/Logs/show?user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&signature="+signature+"&version="+version,{},function(data){
+				   	    $.get(validate.url+"/Api/Logs/show?user_id="+user_id+"&coop_id="+coop_id+"&page="+page+"&signature="+signature+"&version="+version,{},function(data){
 								if(data.code===1){
 									var html = template("chickenDiaryData_tmp1",{data:data.result.data});
 								 	$("#content").append(html)

@@ -78,6 +78,7 @@
 </section>
 <script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 <script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 	$(function(){
@@ -91,7 +92,7 @@
 		var timestamp=new Date().getTime();
 		var signature=hex_md5("timestamp="+mobile+"&tel="+mobile+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
 
-		$.get("http://weixin.yangjiguanjia.com/Api/Keeper/getInfo?signature="+signature+"&tel="+mobile+"&timestamp="+timestamp+"&version="+version,{},function(data){
+		$.get(validate.url+"/Api/Keeper/getInfo?signature="+signature+"&tel="+mobile+"&timestamp="+timestamp+"&version="+version,{},function(data){
 			if(data.code===1){
 				//console.log(data)
 				$(".totalMoney").text(data.result.income);

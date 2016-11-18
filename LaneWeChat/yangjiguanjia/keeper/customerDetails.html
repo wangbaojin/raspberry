@@ -197,6 +197,7 @@
 	  </section>
 	<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+	<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/artTamplate.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/html" id="customerDetailsData_tmp1">
@@ -299,7 +300,7 @@
 				};			
 				var version="1.2.2";
 				var signature=hex_md5("user_id="+id+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				$.get("http://weixin.yangjiguanjia.com/Api/Coop/show?user_id="+id+"&signature="+signature+"&version="+version,{},function(data){
+				$.get(validate.url+"/Api/Coop/show?user_id="+id+"&signature="+signature+"&version="+version,{},function(data){
 							if(data.code===1){
 								//alert(data.msg)
 								var html = template("customerDetailsData_tmp1",{data:data.result});

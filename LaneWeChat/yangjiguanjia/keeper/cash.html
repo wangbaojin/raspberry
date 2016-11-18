@@ -54,6 +54,7 @@
 		</div>
 		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 				$(function(){
@@ -75,7 +76,7 @@
 						
 						$.ajax({
 						  type:"get",
-						  url: "http://weixin.yangjiguanjia.com/Api/Keeper/withDraw?keeper_id="+keeper_id+"&total_fee="+noflect+"&signature="+signature+"&version="+version,
+						  url: validate.url+"/Api/Keeper/withDraw?keeper_id="+keeper_id+"&total_fee="+noflect+"&signature="+signature+"&version="+version,
 						  // post payload:
 						  success: function(data){
 						    // Supposing this JSON payload was received:

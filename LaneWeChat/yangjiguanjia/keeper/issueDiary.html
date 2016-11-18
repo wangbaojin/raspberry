@@ -95,6 +95,7 @@
 		</section>
 		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/artTamplate.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/html" id="issue">
@@ -133,7 +134,7 @@
 //			})
 			var version="1.2.2";
 			var signature=hex_md5("coop_id="+id+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-			$.get("http://weixin.yangjiguanjia.com/Api/User/addImmLog?coop_id="+id+"&signature="+signature+"&version="+version,{},function(data){
+			$.get(validate.url+"/Api/User/addImmLog?coop_id="+id+"&signature="+signature+"&version="+version,{},function(data){
 							if(data.code===1){
 								var html = template("issue",{data:data.result});
 							 	$("section").html(html);

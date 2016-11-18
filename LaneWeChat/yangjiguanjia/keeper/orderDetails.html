@@ -183,7 +183,7 @@
 				var num = JSON.parse(localStorage.getItem("orderInfo")).orderNum;
 				var version="1.2.2";
 				var signature=hex_md5("order_sn="+num+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				$.get("http://weixin.yangjiguanjia.com/Api/Order/getOrderBySN?order_sn="+num+"&signature="+signature+"&version="+version,{},function(data){
+				$.get(validate.url+"/Api/Order/getOrderBySN?order_sn="+num+"&signature="+signature+"&version="+version,{},function(data){
 					if(data.code===1){
 						$(".orderNum").text(data.result.order_sn);
 						$(".chickenType").val(data.result.hens_breed);
@@ -319,7 +319,7 @@
 					params.signature=signature;
 					params.version=version;
 					
-			    	$.post("http://weixin.yangjiguanjia.com/Api/Keeper/upOrderCommit",params,function(data){
+			    	$.post(validate.url+"/Api/Keeper/upOrderCommit",params,function(data){
 						//$('#loadingToast').show();
 						if(data.code===1){
 							
@@ -346,7 +346,7 @@
 				};
 				　$.ajax({
 					type:"GET",
-					url:"http://weixin.yangjiguanjia.com/getCardInfo/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo="+bankNum+"&cardBinCheck=true",
+					url:validate.url+"/getCardInfo/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo="+bankNum+"&cardBinCheck=true",
 					success:function(data){
 			　　　　　　//这里的success方法是不会执行的，会调用上传pandoraCall方法，该方法名和服务器回传内容的方法名一致
 					　　var bank=data.bank

@@ -96,6 +96,7 @@
 		</section>
 		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
@@ -106,7 +107,7 @@
 				}
 				var version="1.2.2";
 				var signature=hex_md5("order_sn="+num+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				$.get("http://weixin.yangjiguanjia.com/Api/Order/getOrderBySN?order_sn="+num+"&signature="+signature+"&version="+version,{},function(data){
+				$.get(validate.url+"/Api/Order/getOrderBySN?order_sn="+num+"&signature="+signature+"&version="+version,{},function(data){
 						if(data.code===1){
 							if(data.result.goods_type==1){
 								$(".baoxian").css("display","block")

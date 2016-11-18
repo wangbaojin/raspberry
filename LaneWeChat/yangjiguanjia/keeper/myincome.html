@@ -84,6 +84,7 @@
 		</div>
 		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/common.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function(){
@@ -94,7 +95,7 @@
 				}
 				var version="1.2.2";
 				var signature=hex_md5("keeper_id="+keeper_id+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
-				$.get("http://weixin.yangjiguanjia.com/Api/Keeper/getKeeperIncome?keeper_id="+keeper_id+"&signature="+signature+"&version="+version,{},function(data){
+				$.get(validate.url+"/Api/Keeper/getKeeperIncome?keeper_id="+keeper_id+"&signature="+signature+"&version="+version,{},function(data){
 							if(data.code===1){
 								$(".noflect").html(data.result.noflect)
 								$(".inflect").html(data.result.inflect)
