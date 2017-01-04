@@ -45,7 +45,7 @@ $editAddress = $tools->GetEditAddressParameters();
 //php调起微信支付的JS
 echo "<script type='text/javascript'>callpay();</script>";
 
-//③、在支持成功回调通知中处理成功之后的事宜，见 notify.php
+//③、在支持成功回调通知中处理成功之后的事宜，见 notify.php..
 /**
  * 注意：
  * 1、当你的回调地址不可访问的时候，回调通知会失败，可以通过查询订单来确认支付是否成功
@@ -55,8 +55,8 @@ echo "<script type='text/javascript'>callpay();</script>";
 
 ?>
 <html xmlns="http://www.w3.org/1999/html">
-<body>
 
+<head>
     <script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
@@ -72,10 +72,10 @@ echo "<script type='text/javascript'>callpay();</script>";
 				WeixinJSBridge.log(res.err_msg);
                                 if(res.err_msg == "get_brand_wcpay_request:ok")                                  {   
 
-                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/keeper/orderManage.html";
+                                   location.href="http://www.yangjiguanjia.com";
                                  }else{   
 
-                                     location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/keeper/orderManage.html";
+                                     location.href="http://www.yangjiguanjia.com";
                                  }  
 				//alert(res.err_code+res.err_desc+res.err_msg);
 			}
@@ -96,5 +96,6 @@ echo "<script type='text/javascript'>callpay();</script>";
 		}
 	}
     </script>
-</body>
+</head>
+<body></body>
 </html>
