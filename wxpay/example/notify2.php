@@ -50,19 +50,9 @@ class PayNotifyCallBack extends WxPayNotify
                 //订单号
                 $out_trade_no = $data['out_trade_no'];
 	        
-                $db->exec("UPDATE ".DB_TABLEPRE."order SET status=1,payable=".$data['total_fee']."/100,pay_time=".time().",updated_at=".time().",pay_type='weixin',callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'"); 
+                $db->exec("UPDATE ".DB_TABLEPRE."wx_order SET paid=1,total_price=".$data['total_fee']."/100,open_id=".$data['open_id'].",update_time=".time().",callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'"); 
               
-                if(preg_match('/^3488.*$/',$out_trade_no)) {
-                    //以3488开头的订单，即挂了分期，付了首付的订单
-                   $sql = "select * from ".DB_TABLEPRE."order WHERE order_sn =".$out_trade_no."";  
-                   
-                   foreach($db->query($sql) as $value) 
-                   { 
-                       $bill_sn =  $value["bill_sn"]; 
-                   }  
-                   $db->exec("UPDATE ".DB_TABLEPRE."bill SET firstpay_status=1,update_at='".time()."' WHERE bill_sn='".$bill_sn."'");     
-            
-                }
+               
                               
          	return true;
 	}
