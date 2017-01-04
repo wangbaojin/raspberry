@@ -19,7 +19,7 @@ function printf_info($data)
         echo "<font color='#00ff55;'>$key</font> : $value <br/>";
     }
 }
-
+echo 22;
 //①、获取用户openid
 $tools  = new JsApiPay();
 $openId = $tools->GetOpenid();
@@ -41,10 +41,9 @@ $jsApiParameters = $tools->GetJsApiParameters($order);
 
 //获取共享收货地址js函数参数
 $editAddress = $tools->GetEditAddressParameters();
-
+var_dump($jsApiParameters);
 //php调起微信支付的JS
-echo "<script type='text/javascript'>callpay();</script>";
-
+//echo "<script type='text/javascript'>callpay();</script>";
 //③、在支持成功回调通知中处理成功之后的事宜，见 notify.php..
 /**
  * 注意：
@@ -99,3 +98,4 @@ echo "<script type='text/javascript'>callpay();</script>";
 </head>
 <body></body>
 </html>
+<?php echo "<script type='text/javascript'>callpay();</script>";?>
