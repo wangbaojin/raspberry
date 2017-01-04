@@ -20,7 +20,6 @@ function printf_info($data)
 //①、获取用户openid
 $tools  = new JsApiPay();
 $openId = $tools->GetOpenid();
-
 //②、统一下单
 $input = new WxPayUnifiedOrder();
 $input->SetBody("保险/商品订单");
@@ -30,12 +29,12 @@ $input->SetTotal_fee($_GET['total_fee']*100);
 $input->SetTime_start(date("YmdHis"));
 $input->SetTime_expire(date("YmdHis", time() + 600));
 $input->SetGoods_tag("WXG");
-$input->SetNotify_url("http://pay.yangjiguanjia.com/wxpay/example/notify.php");
+$input->SetNotify_url("http://weixin.yangjiguanjia.com/wxpay/example/notify.php");
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
 $order = WxPayApi::unifiedOrder($input);
+
 //echo '<font color="#f00"><b>统一下单支付单信息</b></font><br/>';
-//printf_info($order);
 $jsApiParameters = $tools->GetJsApiParameters($order);
 
 //获取共享收货地址js函数参数
@@ -48,6 +47,7 @@ $editAddress = $tools->GetEditAddressParameters();
  * 2、jsapi支付时需要填入用户openid，WxPay.JsApiPay.php中有获取openid流程 （文档可以参考微信公众平台“网页授权接口”，
  * 参考http://mp.weixin.qq.com/wiki/17/c0f37d5704f0b64713d5d2c37b468d75.html）
  */
+
 ?>
 
 <html>
@@ -184,13 +184,13 @@ $editAddress = $tools->GetEditAddressParameters();
                         function(res){
                                   
 				WeixinJSBridge.log(res.err_msg);
-                                /*if(res.err_msg == "get_brand_wcpay_request:ok")                                  {   
+                                if(res.err_msg == "get_brand_wcpay_request:ok")                                  {   
 
-                                   location.href="http://www.yangjiguanjia.com/Keeper";
+                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/keeper/orderManage.html";
                                  }else{   
 
-                                     location.href="default.aspx?n=payment&action=error";
-                                 }*/  
+                                     location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/keeper/orderManage.html";
+                                 }  
 				//alert(res.err_code+res.err_desc+res.err_msg);
 			}
 		);
