@@ -5,7 +5,7 @@ error_reporting(E_ERROR);
 require_once "../lib/WxPay.Api.php";
 require_once "../lib/WxPay.Notify.php";
 require_once "../../lib/db.class.php";
-require_once "../../alipay.config.php";
+require_once "../../lib/alipay.config.php";
 require_once 'log.php';
 
 //初始化日志
