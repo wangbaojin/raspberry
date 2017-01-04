@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+		<meta name="apple-touch-fullscreen" content="YES" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>快乐的蛋</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<p style="text-align: center;font-size: .32rem;margin-top: .2rem;">鸡年到,礼物来,送TA来吃鸡蛋喽</p>
+			<p style="text-align: center;font-size: .32rem;margin-top: .2rem;">快乐的蛋帮您将祝福送到您的朋友手中</p>
+			<div class="weui-cells weui-cells_radio">
+	            <label class="weui-cell weui-check__label" for="x11">
+	                <div class="weui-cell__bd">
+	                    <p>¥1920元,慢慢一年的祝福</p>
+	                </div>
+	                <div class="weui-cell__ft">
+	                    <input type="radio" class="weui-check" name="radio1" id="x11"  v-model="picked" value="1920">
+	                    <span class="weui-icon-checked"></span>
+	                </div>
+	            </label>
+	            <label class="weui-cell weui-check__label" for="x12">
+	                <div class="weui-cell__bd">
+	                    <p>¥980元,半年</p>
+	                </div>
+	                <div class="weui-cell__ft">
+	                    <input type="radio" name="radio1" class="weui-check" id="x12" v-model="picked" value="980">
+	                    <span class="weui-icon-checked"></span>
+	                </div>
+	            </label>
+	            <label class="weui-cell weui-check__label" for="x13">
+	                <div class="weui-cell__bd">
+	                    <p>¥39元,一份心意</p>
+	                </div>
+	                <div class="weui-cell__ft">
+	                    <input type="radio" name="radio1" class="weui-check" id="x13" v-model="picked" value="39">
+	                    <span class="weui-icon-checked"></span>
+	                </div>
+	            </label>
+	        </div>
+	        
+	        <div class="weui-cells">
+	            <div class="weui-cell">
+	                <div class="weui-cell__bd">
+	                    <input class="weui-input" type="text" placeholder="请输入您的姓名" v-model="name">
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <div class="weui-cells weui-cells_form">
+	            <div class="weui-cell">
+	                <div class="weui-cell__bd">
+	                    <textarea class="weui-textarea" placeholder="您的祝福语" rows="3" v-model="message"></textarea>
+	                   <!-- <div class="weui-textarea-counter"><span>0</span>/200</div>-->
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <div class="weui-btn-area" style="margin-top: 1.2rem;">
+	            <a class="weui-btn weui-btn_primary" href="javascript:void(0)" id="showTooltips" @click="next_step">下一步</a>
+	        </div>
+	    </div>
+		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+			  el: '#app',
+			  data: {
+			    message: '',
+			    name:'',
+			    picked:1
+			  },
+			  methods:{
+			  	next_step:function(){
+			  		if(this.name==""){
+			  			alert("请输入姓名")
+			  		}else{
+			  			localStorage.setItem("product",JSON.stringify({"name":this.name,"id":this.picked,"hope":this.message}))
+			  			location.href="pay_egg.html"
+			  		}
+			  	}
+			  }
+			})
+		</script>
+	</body>
+</html>
