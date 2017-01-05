@@ -74,6 +74,7 @@
 			  },
 			  methods:{
 			  	pay:function(){
+
 			  		if(this.flag){
 			  			var id=JSON.parse(localStorage.getItem("product")).id;
 				  		var name=JSON.parse(localStorage.getItem("product")).name;
@@ -93,6 +94,7 @@
 				        )
 			  		}
 			  		
+
 			  	},
 			  	onBridgeReady:function(){
 			  		    WeixinJSBridge.invoke(
