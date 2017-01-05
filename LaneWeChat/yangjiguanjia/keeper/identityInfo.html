@@ -224,20 +224,20 @@
 				//alert(document.referrer)
 				var version="1.2.2";
 				var signature=hex_md5("version=1.2.2"+version+"Tv,cM02kjf^lWoU");
-				var url=location.href;
+				var url=location.href.split("?")[0];
 				var hidden=$(".hidden");
 				$.ajax({
 					  type: 'GET',
-					  url: validate.url+"/Api/Wechat/jssdkConnect?signature="+signature+"&version="+version,
+					  url: validate.url+"/Api/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
 					  // post payload:
 					  success:  function(data){
 					  		data=JSON.parse(data);
 						   	wx.config({
 									debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-									appId :"wxae085b95829a51af", // 必填，appID公众号的唯一标识
-									timestamp :1483606506, // 必填，生成签名的时间戳
-									nonceStr :"Tv4WBbL2eeFq2UwH", // 必填，生成签名的随机串
-									signature :"f1cfce1b6db68a31cf13e58332fff146e86cab03",// 必填，签名，见附录1
+									appId :data.appId, // 必填，appID公众号的唯一标识
+									timestamp :data.timestamp, // 必填，生成签名的时间戳
+									nonceStr :data.nonceStr, // 必填，生成签名的随机串
+									signature :data.signature,// 必填，签名，见附录1
 									jsApiList : [ 'chooseImage','uploadImage' ]
 									// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 								});
