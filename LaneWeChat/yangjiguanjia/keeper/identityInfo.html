@@ -226,6 +226,7 @@
 				var signature=hex_md5("version=1.2.2"+version+"Tv,cM02kjf^lWoU");
 				var url=location.href;
 				var hidden=$(".hidden");
+				alert(url)
 				$.ajax({
 					  type: 'GET',
 					  url: validate.url+"/Api/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
