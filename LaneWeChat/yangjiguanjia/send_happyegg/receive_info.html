@@ -10,7 +10,7 @@
 		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
-		<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+		<link href="assets/css/animate.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			#example-1 li{display: flex;width: 100%;}
 			#example-1 span{flex: 1;text-align: center;}
@@ -27,7 +27,7 @@
             position: absolute;
             top: 0;
         }
-        .hongbao{
+        #hongbao{
             height: 9rem;
             background: #A5423A;
             width: 6rem;
@@ -35,6 +35,11 @@
             top: 0;
             border-radius: 10px;
             margin: .2rem auto 0;
+     
+	        -webkit-animation-delay: 0.6s;
+	        -moz-animation-delay: 0.6s;
+	        -o-animation-delay: 0.6s;
+	        animation-delay: 0.6s;
         }
         .topcontent{
             height: 280px;
@@ -100,6 +105,13 @@
                 -ms-animation: anim .6s alternate;
                     animation: anim .6s alternate;
         }
+        
+        #got{
+        	 -webkit-animation-delay: 1s;
+	        -moz-animation-delay: 1s;
+	        -o-animation-delay: 1s;
+	        animation-delay: 1s;
+        }
         @-webkit-keyframes anim {
             from { -webkit-transform: rotateY(0deg); }
             to { -webkit-transform: rotateY(360deg); }
@@ -147,10 +159,13 @@
 	</head>
 	<body>
 		<div id="app">
-			<transition v-bind:name="animation_name">
+				<div v-if="active">
+					<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="got" v-bind:class="{ animated: active, 'bounceInRight': active }">手速可以啊，小伙子</p>
+				</div>
+				
 				<div v-if="show">
 					<div class="container" id="container">
-				        <div class="hongbao">
+				        <div v-bind:class="{ animated: active, 'fadeOutUp': active }"  id="hongbao">
 				            <div class="topcontent">
 				                <div class="avatar">
 				                    <!--<img src="http://placehold.it/80x80" alt="" width="80" height="80">-->
@@ -167,8 +182,8 @@
 				        </div>
 				    </div>
 				</div>
-			</transition>
-			<p style="text-align: center;font-size: .32rem;margin-top: .2rem;">这是张宇给您送的蛋蛋哦!</p>
+		
+			<p style="text-align: center;font-size: .4rem;margin-top: .2rem;">这是张宇给您送的蛋蛋哦!</p>
 			<p style="font-size: .36rem;margin: .2rem 0;">新年快乐啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！</p>
 			<div class="weui-cells weui-cells_form">
 	            <div class="weui-cell">
@@ -217,7 +232,8 @@
 			 	code:"",
 			 	isOpen:false,
 			 	show:true,
-			 	animation_name:""
+			 	active:false,
+			 	show_got:false
 			 	
 			  },
 			  created:function(){
@@ -243,9 +259,11 @@
 	         	open:function(){
 	         		var vm=this
 	         		this.isOpen=true;
-	         		setTimeout(function(){
-	         			vm.animation_name="bounce";
-	         		},600)
+	         		this.active=true;
+	         		
+//	         		setTimeout(function(){
+//	         			vm.animation_name="bounce";
+//	         		},600)
 	         	}
 	         }
 			})

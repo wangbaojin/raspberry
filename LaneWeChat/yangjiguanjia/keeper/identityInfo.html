@@ -228,7 +228,7 @@
 				var hidden=$(".hidden");
 				$.ajax({
 					  type: 'GET',
-					  url: "http://www.yangjiguanjia.com/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
+					  url: validate.url+"/Api/Wechat/jssdkConnect?signature="+signature+"&version="+version+"&url="+url,
 					  // post payload:
 					  success:  function(data){
 					  		data=JSON.parse(data);
