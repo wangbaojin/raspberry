@@ -69,25 +69,30 @@
 			  el: '#app',
 			  data: {
 			    message: '',
-			    person:1
+			    person:1,
+			    flag:true
 			  },
 			  methods:{
 			  	pay:function(){
-			  		var id=JSON.parse(localStorage.getItem("product")).id;
-			  		var name=JSON.parse(localStorage.getItem("product")).name;
-			  		var hope=JSON.parse(localStorage.getItem("product")).hope;
-			  		//alert(typeof(id))
-			  		//alert(typeof(this.person))
-			  		this.$http.post(validate.url+"/Api/WxHappyEgg/createOrder",{user_name:name,unit_price:id,wish_word:hope,amount:this.person,total_price:this.person*id},{emulateJSON:true}).then(
-			            function (res) {
-			            	if(res.body.code==1){
-			            		location.href="http://weixin.yangjiguanjia.com/wxpay/example/jsapi2.php?order_sn="+res.body.result.order_sn+"&total_fee="+res.body.result.total_price
-			            	}
-			                //console.log(res.body);
-			            },function (res) {
-			            	// 处理失败的结果
-			            }
-			        )
+			  		if(this.flag){
+			  			var id=JSON.parse(localStorage.getItem("product")).id;
+				  		var name=JSON.parse(localStorage.getItem("product")).name;
+				  		var hope=JSON.parse(localStorage.getItem("product")).hope;
+				  		
+				  		this.$http.post(validate.url+"/Api/WxHappyEgg/createOrder",{user_name:name,unit_price:id,wish_word:hope,amount:this.person,total_price:this.person*id},{emulateJSON:true}).then(
+				            function (res) {
+				            	if(res.body.code==1){
+				            		this.flag=false;
+				            		location.href="http://weixin.yangjiguanjia.com/wxpay/example/jsapi2.php?order_sn="+res.body.result.order_sn+"&total_fee="+res.body.result.total_price
+				            	}
+				                //console.log(res.body);
+				            },function (res) {
+				            	// 处理失败的结果
+				            	alert("请求出错!")
+				            }
+				        )
+			  		}
+			  		
 			  	},
 			  	onBridgeReady:function(){
 			  		    WeixinJSBridge.invoke(
