@@ -49,12 +49,13 @@ class PayNotifyCallBack extends WxPayNotify
                 //处理支付回调操作数据库的逻辑
                 //订单号
                 $out_trade_no = $data['out_trade_no'];
-	        
-                $db->exec("UPDATE ".DB_TABLEPRE."wx_order SET paid=1,total_price=".$data['total_fee']."/100,open_id=".$data['open_id'].",update_time=".time().",callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'"); 
-              
-               
+	        $openid = $data['openid'];    
+                //$db->exec("UPDATE ".DB_TABLEPRE."order SET status=1,payable=".$data['total_fee']."/100,pay_time=".time().",updated_at=".time().",pay_type='weixin',callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'"); 
+               // $db->exec("UPDATE ".DB_TABLEPRE."wxorder SET paid=1,total_price=".$data['total_fee']."/100,open_id=".$data['openid'].",update_time=".time().",callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'");
+               $db->exec("UPDATE ".DB_TABLEPRE."wxorder SET paid=1,update_time=".time().",open_id='".$openid."',callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'");
+
                               
-         	return true;
+                return true;
 	}
 }
 

@@ -94,6 +94,6 @@ $editAddress = $tools->GetEditAddressParameters();
 	}
     </script>
 </head>
-<body></body>
+<body background:#0f0; background-color:transparent;></body>
 </html>
 <?php echo "<script type='text/javascript'>callpay();</script>";?>
