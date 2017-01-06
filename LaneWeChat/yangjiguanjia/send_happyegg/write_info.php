@@ -30,33 +30,9 @@
 	</head>
 	<body>
 		<div id="app">
-				<div v-if="active">
-					<div id="box" v-bind:class="{  animated: active,fadeOut: active }">
-						<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="got" v-bind:class="{ animated: active, 'bounceInRight': active }">手速可以啊，小伙子</p>
-					</div>
-				</div>
 				
-				<div v-if="show">
-					<div class="container" id="container">
-				        <div v-bind:class="{ animated: active, 'fadeOutUp': active }"  id="hongbao">
-				            <div class="topcontent">
-				                <div class="avatar">
-				                    <!--<img src="http://placehold.it/80x80" alt="" width="80" height="80">-->
-				                    
-				                </div>
-				                <h2 style="font-size: 26px;color: white;">老王</h2>
-				                <span class="text" style="font-size: 22px;">给你发了一个红包</span>
-				                <div class="description" style="color:white;font-weight: bold;font-size: 20px;">恭喜发财 大吉大利</div>
-				            </div>
-				            <div id="chai" v-bind:class="{ rotate: isOpen }" @click="open">
-				            	開
-				                <!--<span style="font-size: 26px;font-weight: 600;"></span>-->
-				            </div>
-				        </div>
-				    </div>
-				</div>
 		
-			<p style="text-align: center;font-size: .4rem;margin-top: .2rem;">这是张宇给您送的蛋蛋哦!</p>
+			<p style="text-align: center;font-size: .4rem;margin-top: .2rem;">这是老王给您送的蛋蛋哦!</p>
 			<p style="font-size: .36rem;margin: .2rem 0;">新年快乐啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！</p>
 			<div class="weui-cells weui-cells_form">
 	            <div class="weui-cell">
@@ -95,6 +71,7 @@
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var app = new Vue({
 			  el: '#app',
@@ -120,10 +97,21 @@
 	         },
 	         methods:{
 	         	submit:function(){
-	         		this.$http.post("test.php",{name:this.name,address:this.address,tel:this.tel,code:this.code},{emulateJSON:true}).then(
+	         		var _this=this;
+	         		if(this.name==""){
+			  			alert("请输入姓名")
+			  			return
+			  		}else if(this.address==""){
+			  			alert("请输入地址")
+			  			return
+			  		}else if(!validate.phone(_this.tel)){
+			  			alert("请输入正确的手机号")
+			  			return
+			  		}
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
-			                alert(res.body);
+			                alert(res.body.msg);
 			            },function (res) {
 			            	// 处理失败的结果
 			            }

@@ -11,21 +11,73 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
-			
+			#example-1 li{display: flex;width: 100%;padding: .2rem .1rem;box-sizing: border-box;}
+			#example-1 span{flex: 1;text-align: center;}
 		</style>
 	</head>
 	<body>
 		<div id="app">
-			<p>{{message}}</p>
+			<p style="text-align: center;font-size: .32rem;margin-top: .2rem;">送出10个鸡蛋,剩余10个</p>
+			<p style="font-size: .36rem;margin: .2rem 0;">新年快乐啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！</p>
+			
+	        <div class="button-sp-area" style="width: 80%;margin: 0 auto .2rem;">
+	            <a href="javascript:void(0);" class="weui-btn weui-btn_plain-primary">继续赠送其他好友</a>
+	        </div>		  
+			<p style="font-size: .26rem;color: gray;">已有9人抢到!</p>
+			<ul id="example-1" style="font-size: .32rem;">
+			  <li v-for="(item, index) in items">
+			  	<!--<floor  v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:name="{{item.name}}" v-bind:time="{{item.time}}" v-bind:condition="{{item.condition}}"></floor>-->
+			    <span>第{{index+1}}楼</span><span>{{ item.name }}</span> <span>{{ item.time }}</span> <span>{{ item.condition | condition }}</span><span>{{ time_left }}</span>
+			    <div class="button-sp-area">
+			    	<a href="javascript:void(0);" class="weui-btn weui-btn_mini weui-btn_primary" @click.stop.prevent="sure(item.name)">确认</a>
+			    </div>
+			  </li>
+			</ul>
 	    </div>
+	    <template id="myComponent">
+            <li><span>{{ name }}</span> <span>{{ time }}</span> <span>{{ condition }}</span></li>
+       </template>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			Vue.component('floor',{
+	            template: '#myComponent',
+	            props:["name","time","condition"]
+	        })
 			var app = new Vue({
 			  el: '#app',
 			  data: {
-			    message: '快乐的蛋分享'
-			   
+			    items:[
+			    	{name:"张三",wechat_num:"15010766596",time:"2017-01-01",condition:1},
+			    	{name:"李四",wechat_num:"13545481234",time:"2017-01-02",condition:1},
+			    	{name:"二狗",wechat_num:"18945641321",time:"2017-01-03",condition:0}
+			    ],
+			    time_left:20
+			  },
+			  filters:{
+			  	condition:function(value){
+			  		if(value==1){
+			  			return "已领取"
+			  		}else if(value==0){
+			  			return "未领取"
+			  		}
+			  	}
+			  },
+			  methods:{
+			  	sure:function(value){
+			  		console.log(value)
+			  	}
+			  },
+			  created:function(){
+			  	var _this=this;
+			  	var time=setInterval(function(){
+			  		_this.time_left--
+			  		if(_this.time_left<0){
+			  			clearInterval(time)
+			  			_this.time_left="end"
+			  		}
+			  	},1000)
 			  }
 			})
 		</script>
