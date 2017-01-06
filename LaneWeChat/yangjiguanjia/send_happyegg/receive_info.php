@@ -1,6 +1,14 @@
-<!DOCTYPE html>
-<html>
-	<head>
+ <?php
+
+   include "../../lanewechat.php";
+   $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php';
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   $code = $_GET['code'];
+   $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+  //echo $a['openid'];
+?>
+<html>	
+<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
 		<meta name="apple-touch-fullscreen" content="YES" />
@@ -162,9 +170,8 @@
         
 		</style>
 	</head>
-	<body>
-        
-		<div id="app">
+        <body>
+        <div id="app">
 			<div v-if="active">
 				<div id="box" v-bind:class="{  animated: active,fadeOut: active }">
 					<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="got" v-bind:class="{ animated: active, 'bounceInRight': active }">手速可以啊,小伙子</p>
@@ -200,6 +207,7 @@
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+                 //alert("<?php echo $a['openid'];?>");
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -216,7 +224,7 @@
 			  },
 			  created:function(){
 			  		var _this=this
-					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"2017010514061787472",open_id:111111},{emulateJSON:true}).then(
+					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"2017010514061787472",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
@@ -240,7 +248,7 @@
 	         		this.active=true;
 	         		setTimeout(function(){
 	         			alert("快去填写收货地址吧！")
-	         			location.href="write_info.html"
+	         			location.href="write_info.php"
 	         		},2500)
 	         	}
 	         }
