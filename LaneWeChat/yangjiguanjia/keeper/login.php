@@ -55,7 +55,7 @@
    \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-   //echo $a['openid'];
+//   echo $a['openid'];
  
 ?>
 <section>
