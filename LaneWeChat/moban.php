@@ -13,7 +13,7 @@
         //$templateId 模板Id。在公众平台线上模板库中选用模板获得ID
         //$url URL 点击查看的时候跳转到URL。
         //$topcolor 顶部颜色，可以为空。默认是红色
-        $touser = "oQUJpvw4o3zs_fxL-w3ENGchwcL0";
+        $touser = "oQUJpvzcHlw2lzghUpuMIv92S06k";
         $templateId = "S7cNdtiV2EfwhQK_UPisTlNESry0Qp9JVlFQ9hV66SI";
         $url = "http://www.yangjiguanjia.com";
         \LaneWeChat\Core\TemplateMessage::sendTemplateMessage($data, $touser, $templateId, $url, $topcolor='#FF0000');
