@@ -248,7 +248,7 @@
 	         		this.active=true;
 	         		setTimeout(function(){
 	         			alert("快去填写收货地址吧！")
-	         			location.href="write_info.html"
+	         			location.href="write_info.php"
 	         		},2500)
 	         	}
 	         }
