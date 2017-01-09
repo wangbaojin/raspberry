@@ -189,20 +189,16 @@
 			  created:function(){
 			  		
 			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
-			  	
-			  		this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(data){
-			         	//console.info(response);
-			         	//data=JSON.parse(data);
-			         	alert(typeof(data))
-			         	alert("appId:"+data.appId+"type:")
-			         	alert("appId"+JSON.parse(data).appId)
-			         	alert(typeof(data.appId))
+				  
+			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+	         	
+                       res=JSON.parse(res.body)
 			         	wx.config({
-		                    debug: true,
-		                    appId: data.appId,
-		                    timestamp: data.timestamp,
-		                    nonceStr: data.nonceStr,
-		                    signature: data.signature,
+		                    debug: false,
+		                    appId: res.appId,
+		                    timestamp: res.timestamp,
+		                    nonceStr: res.nonceStr,
+		                    signature: res.signature,
 		                    jsApiList: ['onMenuShareAppMessage']
 		                });
 		                wx.ready(function () {
@@ -226,10 +222,12 @@
 			        },function(response){
 			        	console.info(response);
 			        });
-			        
+					
+
+
 			        //请求抢红包详情
 			        
-					this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
