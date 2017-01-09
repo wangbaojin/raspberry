@@ -186,6 +186,9 @@
 			         	//console.info(response);
 			         	//data=JSON.parse(data);
 			         	alert(typeof(data))
+			         	alert("appId:"+data.appId+"type:")
+			         	alert("appId"+JSON.parse(data).appId)
+			         	alert(typeof(data.appId))
 			         	wx.config({
 		                    debug: true,
 		                    appId: data.appId,
