@@ -183,15 +183,14 @@
 			  	
 			  		this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(data){
 			         	//console.info(response);
+			         	data=JSON.parse(data);
 			         	wx.config({
 		                    debug: true,
 		                    appId: data.appId,
 		                    timestamp: data.timestamp,
 		                    nonceStr: data.nonceStr,
 		                    signature: data.signature,
-		                    jsApiList: [
-		                        'onMenuShareAppMessage'
-		                    ]
+		                    jsApiList: ['onMenuShareAppMessage']
 		                });
 		                wx.ready(function () {
 		                    wx.onMenuShareAppMessage({
