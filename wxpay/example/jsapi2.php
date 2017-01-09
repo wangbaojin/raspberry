@@ -69,7 +69,7 @@ $editAddress = $tools->GetEditAddressParameters();
 				WeixinJSBridge.log(res.err_msg);
                                 if(res.err_msg == "get_brand_wcpay_request:ok")                                  {   
 
-                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/share_egg.html";
+                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/share_egg.html?order_sn=<?php echo $_GET['order_sn'];?>";
                                  }else{   
 
                                      location.href="http://www.yangjiguanjia.com";
