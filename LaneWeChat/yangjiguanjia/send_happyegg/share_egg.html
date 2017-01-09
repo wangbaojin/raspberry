@@ -84,7 +84,7 @@
 						</div>
 						<div v-else-if="item.condition == 1&&item.last_time>0">
 						  <span class="time_left">({{ item.last_time }}s后自动领取)</span>
-						  <a href="javascript:void(0);" class="delete_btn" @click="refuse(item.receive_id)">拒绝</a>
+						  <a href="javascript:void(0);" class="delete_btn" @click="refuse(item.receive_id,index)">拒绝</a>
 						</div>
 				    </div>
 				   
@@ -141,14 +141,15 @@
 			  	}
 			  },
 			  methods:{
-			  	refuse:function(value){
-			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:"2017010514061787472",open_id:"<?php echo $a['openid']; ?>",receive_id:""},{emulateJSON:true}).then(
+			  	refuse:function(value,index){
+			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:location.href.split("?")[1],open_id:"<?php echo $a['openid']; ?>",receive_id:value},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
-			                	
+			                	_this.items[index].last_time=0;		            	
+				  				_this.items[index].condition=0;		   
 			                }else if(res.body.code==0){
-			                	
+			                	//alert(res.body.code)
 			                }
 			               
 			            },function (res) {
@@ -183,7 +184,8 @@
 			  	
 			  		this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(data){
 			         	//console.info(response);
-			         	data=JSON.parse(data);
+			         	//data=JSON.parse(data);
+			         	alert(typeof(data))
 			         	wx.config({
 		                    debug: true,
 		                    appId: data.appId,
