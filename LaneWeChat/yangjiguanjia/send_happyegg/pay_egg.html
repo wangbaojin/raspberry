@@ -79,7 +79,6 @@
 			  			var id=JSON.parse(localStorage.getItem("product")).id;
 				  		var name=JSON.parse(localStorage.getItem("product")).name;
 				  		var hope=JSON.parse(localStorage.getItem("product")).hope;
-				  		
 				  		this.$http.post(validate.url+"/Api/WxHappyEgg/createOrder",{user_name:name,unit_price:id,wish_word:hope,amount:this.person,total_price:this.person*id},{emulateJSON:true}).then(
 				            function (res) {
 				            	if(res.body.code==1){

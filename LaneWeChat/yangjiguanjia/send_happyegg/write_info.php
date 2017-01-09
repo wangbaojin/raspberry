@@ -22,52 +22,66 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
-			#example-1 li{display: flex;width: 100%;}
-			#example-1 span{flex: 1;text-align: center;}
+			html,body{background: #ffe500;width: 100%;}
+			
+			.box{margin:.4rem .4rem 0 .4rem;box-sizing: border-box;
+			position: relative;}
+			 img{width: 100%;display: inline-block;}
+			.write_box{z-index: 999;box-sizing: border-box;margin: 0 auto;position: absolute;top: 0;text-align: center;
+			font-size: 0;padding: 0 .3rem;width: 100%;margin-top: .75rem;overflow: hidden;}
+	        .tx{margin: 1.3rem auto .76rem;width: 100%;}
+	        .tx img{width: 1rem;height: 1rem;display: inline-block;margin: 0 auto;border-radius: 50%;}
+			.write_box input{display: block;width: 4.28rem;border-bottom: 1px solid #e4c600;font-size: .28rem;
+			color: #bbbbbb;height: .6rem;line-height: .6rem;margin-bottom: .3rem;float: left;position: relative;}
+			.write_box input:before{content: "";
+			  position: absolute;
+			  left: 0;
+			  right: 0;
+			  height: 1px;
+			  color: #d9d9d9;top: 0;
+			  border-top: 1px solid #d9d9d9;
+			  -webkit-transform-origin: 0 0;
+			  transform-origin: 0 0;
+			  -webkit-transform: scaleY(.5);
+			  transform: scaleY(.5);}
+			.input_box{float: left;}
+			.input_box span{display: block;float: left;margin: .07rem .3rem 0 .46rem;}
+			.input_box img{width: .42rem;display: inline-block;}
 		
-	       
+			.submit1_btn{box-sizing: border-box;width:100%;height: 1rem;float: left;margin-top: 1rem;}
+			.submit1_btn a{width: 5rem;height: 1rem;line-height: 1rem;text-align: center;color: #ffffff;
+			font-size: .32rem;background: #fc4602;display: inline-block;margin:0 auto ;
+			border-radius: .1rem;font-family: "微软雅黑";}
 		</style>
 	</head>
 	<body>
 		<div id="app">
-				
-		
-			<p style="text-align: center;font-size: .4rem;margin-top: .2rem;">这是老王给您送的蛋蛋哦!</p>
-			<p style="font-size: .36rem;margin: .2rem 0;">新年快乐啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊！</p>
-			<div class="weui-cells weui-cells_form">
-	            <div class="weui-cell">
-	                <div class="weui-cell__hd"><label class="weui-label">配送地址</label></div>
-	                <div class="weui-cell__bd">
-	                    <input class="weui-input" type="text" placeholder="请输入配送地址" v-model="address">
-	                </div>
-	            </div>
-	            <div class="weui-cell weui-cell_vcode">
-	                <div class="weui-cell__hd">
-	                    <label class="weui-label">手机号</label>
-	                </div>
-	                <div class="weui-cell__bd">
-	                    <input class="weui-input" type="tel" placeholder="请输入手机号" v-model="tel">
-	                </div>
-	                <div class="weui-cell__ft">
-	                    <button class="weui-vcode-btn">获取验证码</button>
-	                </div>
-	            </div>
-	            <div class="weui-cell">
-	                <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
-	                <div class="weui-cell__bd">
-	                    <input class="weui-input" type="number" placeholder="请输入手机验证码" v-model="code">
-	                </div>
-	            </div>
-	            <div class="weui-cell">
-	                <div class="weui-cell__hd"><label class="weui-label">姓名</label></div>
-	                <div class="weui-cell__bd">
-	                    <input class="weui-input" type="text" placeholder="请输入您的姓名" v-model="name">
-	                </div>
-	            </div>
-	        </div>
-	        <div class="button-sp-area" style="width: 80%;margin: 1rem auto .2rem;">
-	            <a href="javascript:void(0);" class="weui-btn weui-btn_plain-primary" @click="submit">提交</a>
-	        </div>	
+			<div class="box">
+				<img src="assets/img/bg_write.png"/>
+				<div class="write_box">
+					<div class="tx">
+						<img src="../../../wxpay/example/assets/img/baoxian.jpg"/>
+					</div>
+					<div class="input_box">
+						<span><img src="assets/img/name.png"/></span>
+						<input class="name" type="text" placeholder="联系人" v-model="name">
+					</div>
+					
+					<div class="input_box">
+						<span><img src="assets/img/tel.png"/></span>
+                		<input class="tel" type="tel" placeholder="联系电话" v-model="tel">
+                	</div>
+                	
+                	<div class="input_box">
+						<span><img src="assets/img/address.png"/></span>
+						<input class="address" type="text" placeholder="配送地址" v-model="address" style="margin-bottom: 0;">
+					</div>
+					<div class="submit1_btn" >
+			            <a href="javascript:void(0);"  @click="submit">提交</a>
+			        </div>
+				</div>
+			</div>	
+	        	
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
@@ -87,15 +101,9 @@
 			 	
 			  },
 			  created:function(){
-//              var url="json.jsp";
-//				this.$http.get(url).then(function(data){
-//                  //var json=data.body;
-//                  //this.data=eval("(" + json +")");
-//              },function(response){
-//                  //console.info(response);
-//              })
-	         },
-	         methods:{
+
+	          },
+	          methods:{
 	         	submit:function(){
 	         		var _this=this;
 	         		if(this.name==""){
@@ -126,7 +134,7 @@
 //	         			vm.animation_name="bounce";
 //	         		},600)
 	         	}
-	         }
+		      }
 			})
 		</script>
 	</body>

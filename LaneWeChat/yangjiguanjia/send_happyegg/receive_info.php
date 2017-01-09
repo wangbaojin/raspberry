@@ -30,7 +30,6 @@
 	            /*max-width: 960px;*/
 	            margin: 0 auto;
 	            padding: 0 5px;
-	           
 	            height: 100%;
 	            position: absolute;
 	            top: 0;
@@ -178,9 +177,7 @@
 				</div>
 			</div>
 			<div v-if="condition">
-				
-					<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="err" v-bind:class="{ animated: condition, 'bounceInRight': condition }">{{message}}</p>
-				
+				<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="err" v-bind:class="{ animated: condition, 'bounceInRight': condition }">{{message}}</p>
 			</div>
 			<div v-if="show">
 				<div class="container" id="container">
