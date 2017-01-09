@@ -1,3 +1,11 @@
+ <?php
+
+   include "../../lanewechat.php";
+   $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   $code = $_GET['code'];
+   $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+ ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -182,22 +190,19 @@
 			  		
 			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
 			  	
-			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+			  		this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(data){
 			         	//console.info(response);
 			         	//data=JSON.parse(data);
-			         	
-			         	
-                       res=JSON.parse(res.body)
-			         	
-			         	
-//			         	JSON.parse(data)
-//			         	alert(typeof(data.appId))
+			         	alert(typeof(data))
+			         	alert("appId:"+data.appId+"type:")
+			         	alert("appId"+JSON.parse(data).appId)
+			         	alert(typeof(data.appId))
 			         	wx.config({
 		                    debug: true,
-		                    appId: res.appId,
-		                    timestamp: res.timestamp,
-		                    nonceStr: res.nonceStr,
-		                    signature: res.signature,
+		                    appId: data.appId,
+		                    timestamp: data.timestamp,
+		                    nonceStr: data.nonceStr,
+		                    signature: data.signature,
 		                    jsApiList: ['onMenuShareAppMessage']
 		                });
 		                wx.ready(function () {
@@ -221,46 +226,10 @@
 			        },function(response){
 			        	console.info(response);
 			        });
-					
-//					this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url, function(data) {
-//						alert(typeof(data))
-//			         	alert("appId:"+data.appId+"type:")
-//			         	
-////			         	JSON.parse(data)
-////			         	alert(typeof(data.appId))
-//			         	wx.config({
-//		                    debug: true,
-//		                    appId: data.appId,
-//		                    timestamp: data.timestamp,
-//		                    nonceStr: data.nonceStr,
-//		                    signature: data.signature,
-//		                    jsApiList: ['onMenuShareAppMessage']
-//		                });
-//		                wx.ready(function () {
-//		                    wx.onMenuShareAppMessage({
-//		                    	title: '快来抢多多的蛋了！', // 分享标题
-//							    desc: '快乐的蛋', // 分享描述
-//							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn'+order_sn, // 分享链接
-//							    imgUrl: '', // 分享图标
-//							    type: 'link', // 分享类型,music、video或link，不填默认为link
-//							    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-//		                        success: function () { 
-//		                            // 用户确认分享后执行的回调函数
-//		                            alert("分享成功了！")
-//		                        },
-//		                        cancel: function () { 
-//		                            // 用户取消分享后执行的回调函数
-//		                            alert("不分享朋友会收不到你的祝福哦！")
-//		                        }
-//		                    });
-//		                });
-//					}).error(function(data, status, request) {
-//						console.log('fail' + status + "," + request);
-//					})
 			        
 			        //请求抢红包详情
 			        
-					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
