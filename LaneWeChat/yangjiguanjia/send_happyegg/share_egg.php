@@ -1,11 +1,18 @@
 <?php
    include "../../lanewechat.php";
-   $b = $_GET['order_sn'];
+   include "../../../lib/mysqli_db.class.php";
+   include "../../../lib/alipay.config.php";
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
    \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-   
+   //先写业务,待封装到数据库工具类
+   $db_my = new DB(DB_HOST,DB_USER,DB_PW,DB_NAME);
+   $where  = array("open_id"=>$a['open_id']);
+   $fields = array('order_sn');
+   $orderInfo = $db_my->simpleQuery("kp_wxorder",$fields,$where);
+   $order = $db_my->getRowFromQuery("select * from user where open_id=".$a['openid']." order by create_time;");
+
  ?>
 <!DOCTYPE html>
 <html>
