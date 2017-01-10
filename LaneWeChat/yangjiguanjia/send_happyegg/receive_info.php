@@ -221,7 +221,7 @@
 			  },
 			  created:function(){
 			  		var _this=this
-					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"2017010514061787472",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:location.href.split("?")[1],open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){

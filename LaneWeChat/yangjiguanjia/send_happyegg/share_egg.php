@@ -1,10 +1,11 @@
- <?php
-
+<?php
    include "../../lanewechat.php";
+   $b = $_GET['order_sn'];
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
    \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+   
  ?>
 <!DOCTYPE html>
 <html>
@@ -57,6 +58,14 @@
 		</style>
 	</head>
 	<body>
+		 <?php
+
+   include "../../lanewechat.php";
+   $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   $code = $_GET['code'];
+   $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+ ?>
 		<div id="app">
 			<div class="bg_box" v-if="flag" >
 				<div class="direct"><img src="assets/img/direct.png"/></div>
@@ -189,12 +198,14 @@
 			  created:function(){
 			  		
 			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
-				  
+				    alert(url)
+                                    alert(<?php  echo $b;?>)
+				    alert(location.href.split("?")[1])
 			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
 	         	
                        res=JSON.parse(res.body)
 			         	wx.config({
-		                    debug: false,
+		                    debug: true,
 		                    appId: res.appId,
 		                    timestamp: res.timestamp,
 		                    nonceStr: res.nonceStr,
@@ -205,7 +216,7 @@
 		                    wx.onMenuShareAppMessage({
 		                    	title: '快来抢多多的蛋了！', // 分享标题
 							    desc: '快乐的蛋', // 分享描述
-							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn'+order_sn, // 分享链接
+							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn='+order_sn, // 分享链接
 							    imgUrl: '', // 分享图标
 							    type: 'link', // 分享类型,music、video或link，不填默认为link
 							    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空

@@ -105,6 +105,7 @@
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script type="text/javascript">
+			console.log("<?php echo 1111;?>")
 			Vue.component('floor',{
 	            template: '#myComponent',
 	            props:["name","time","condition"]
@@ -181,8 +182,7 @@
 			  created:function(){
 			  		
 			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
-				  
-			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url ).then(function(res){
 	         	
                        res=JSON.parse(res.body)
 			         	wx.config({
@@ -197,7 +197,7 @@
 		                    wx.onMenuShareAppMessage({
 		                    	title: '快来抢多多的蛋了！', // 分享标题
 							    desc: '快乐的蛋', // 分享描述
-							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn'+order_sn, // 分享链接
+							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.html?order_sn'+order_sn, // 分享链接
 							    imgUrl: '', // 分享图标
 							    type: 'link', // 分享类型,music、video或link，不填默认为link
 							    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
