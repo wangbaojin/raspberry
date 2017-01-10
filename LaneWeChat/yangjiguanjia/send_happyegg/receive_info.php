@@ -1,12 +1,15 @@
- <?php
+<?php
 
-   include "../../lanewechat.php";
+   include "../../lanewechat.php"; 
+   $b = $_GET['order_sn']; 
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-  //echo $a['openid'];
+   $order_sn = $_GET['state'];
+     
 ?>
+<!DOCTYPE html>
 <html>	
 <head>
 		<meta charset="UTF-8">
@@ -22,7 +25,8 @@
 		<style type="text/css">
 			#example-1 li{display: flex;width: 100%;}
 			#example-1 span{flex: 1;text-align: center;}
-		
+			html,body{width: 100%;height: 100%;}
+			#app{width: 100%;height: 100%;}
 	        .container{
 	        	z-index: 999;
 	            text-align: center;
@@ -166,26 +170,82 @@
         	-moz-animation-delay: 2s;
         	-o-animation-delay: 2s;
         	animation-delay: 2s;}
-        
+        	.get_box{position: relative;width: 100%;height: 100%;
+        	}
+        	.success_bg{width: 100%;display: block;height: 100%;position: absolute;z-index: 98;
+        	-webkit-animation-delay: 1s;
+		        -moz-animation-delay: 1s;
+		        -o-animation-delay: 1s;
+		        animation-delay: 1s;}
+        	.caidai{display: inline-block;width: 6rem;position: absolute;top: 1.4rem;left: .75rem;z-index: 99;
+        	-webkit-animation-delay: 1s;
+		        -moz-animation-delay: 1s;
+		        -o-animation-delay: 1s;
+		        animation-delay: 1s;}
+		
+			
+			.success_info{width: 4.4rem;height: 5.36rem;border-radius: .1rem;font-family: "微软雅黑";color: #ffffff;
+			background: #ff1400;margin:0 auto;font-size: .2rem;z-index: 999;}
+			.text_box{width: 100%;text-align: center;}
+			.text_box img{display: inline-block;width: 3.1rem;margin: 0 auto;margin-top: .58rem;}
+			.success_info p{width: 100%;text-align: center;}
+			.goods_info{font-size: .42rem;font-weight: bold;}
+			.hope{font-size: .34rem;margin-top: .3rem;}
+			
+			.big_box{width: 100%;position: absolute;top: 1.85rem;z-index: 9999;
+			-webkit-animation-delay: 1s;
+		        -moz-animation-delay: 1s;
+		        -o-animation-delay: 1s;
+		        animation-delay: 1s;}
+			.go_btn{text-align: center;margin-top: .74rem;}
+			.go_btn a{display: inline-block;width: 3.92rem;height: .86rem;line-height: .86rem;font-size: .36rem;color: #fd2c1a;
+			font-family: "微软雅黑";background: #ffff00;border-radius: .1rem;text-align: center;}
+			
+			.show_none{position: relative;width: 100%;height: 100%;}
+			.show_none .none_bg{width: 100%;display: inline-block;height: 100%;;}
+			.none{width: 5.2rem;display: inline-block;}
+			.none_box{width: 100%;text-align: center;position: absolute;top: 3.3rem;}
 		</style>
 	</head>
         <body>
         <div id="app">
-			<div v-if="active">
-				<div id="box" v-bind:class="{  animated: active,fadeOut: active }">
-					<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="got" v-bind:class="{ animated: active, 'bounceInRight': active }">手速可以啊,小伙子</p>
+			<div v-if="show_none" class="show_none">
+				<img src="assets/img/none_bg.jpg" class="none_bg"/>
+				<div class="none_box">
+					<img src="assets/img/none.png" class="none" v-bind:class="{ animated: show_none, 'bounceInRight': show_none }"/>
 				</div>
 			</div>
-			<div v-if="condition">
-				<p style="font-size: 30px;color: dodgerblue;text-align: center;margin-top: 40%;font-weight: 600;" id="err" v-bind:class="{ animated: condition, 'bounceInRight': condition }">{{message}}</p>
+			<div v-if="show_get" class="show_none">
+				<img src="assets/img/already_get_bg.jpg" class="none_bg"/>
+				<div class="none_box">
+					<img src="assets/img/already_get_text.png" class="none" v-bind:class="{ animated: show_get, 'bounceInRight': show_get }"/>
+				</div>
 			</div>
-			<div v-if="show">
+			<div v-if="show" style="width: 100%;height: 100%;">
+				
+					<div class="get_box" id="got" v-if="active">
+						<img src="assets/img/success.png" class="success_bg" v-bind:class="{ animated: active, 'fadeIn': active }"/>
+						<img src="assets/img/caidai.png" class="caidai" v-bind:class="{ animated: active, 'fadeIn': active }"/>
+						<div class="big_box" v-bind:class="{ animated: active, 'fadeInUp': active }">
+							<div class="success_info">
+								<div class="text_box">
+									<img src="assets/img/get.png" class="get"/>
+								</div>
+								<p class="hope" >恭喜您抢到</p>
+								<p class="goods_info">38元鸡蛋一提</p>
+								<div class="go_btn" >
+						            <a href="javascript:void(0);" @click="go">前去领奖</a>
+						        </div>
+							</div>
+						</div>
+					</div>
+				
+				
 				<div class="container" id="container">
 			        <div v-bind:class="{ animated: active, 'fadeOutUp': active }"  id="hongbao">
 			            <div class="topcontent">
 			                <div class="avatar">
-			                    <!--<img src="http://placehold.it/80x80" alt="" width="80" height="80">-->
-			                    
+			                        
 			                </div>
 			                <h2 style="font-size: 26px;color: white;">老王</h2>
 			                <span class="text" style="font-size: 22px;">给你发了一个红包</span>
@@ -193,7 +253,6 @@
 			            </div>
 			            <div id="chai" v-bind:class="{ rotate: isOpen }" @click="open">
 			            	開
-			                <!--<span style="font-size: 26px;font-weight: 600;"></span>-->
 			            </div>
 			        </div>
 			    </div>
@@ -204,31 +263,35 @@
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-                 //alert("<?php echo $a['openid'];?>");
+                 
 			var app = new Vue({
 			  el: '#app',
 			  data: {
-			 	name:"",
-			 	address:"",
-			 	tel:"",
-			 	code:"",
 			 	isOpen:false,
 			 	show:false,
 			 	active:false,
 			 	show_got:false,
 			 	condition:false,
-			 	message:""
+			 	message:"",
+			 	show_none:false,
+			 	show_get:false
 			  },
 			  created:function(){
 			  		var _this=this
-					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:location.href.split("?")[1],open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
 			                	_this.show=true;
 			                }else if(res.body.code==0){
-			                	_this.message=res.body.msg;
-			                	_this.condition=true;
+			                	if(res.body.error==5006){
+			                		_this.show_get=true;
+			                	}else if(res.body.error==5007){
+			                		_show_none=true;
+			                	}else{
+			                		alert(res.body.msg)
+			                	}
+			                	
 			                }
 			               
 			            },function (res) {
@@ -243,10 +306,14 @@
 	         		//var vm=this
 	         		this.isOpen=true;
 	         		this.active=true;
-	         		setTimeout(function(){
-	         			alert("快去填写收货地址吧！")
-	         			location.href="write_info.php"
-	         		},2500)
+//	         		setTimeout(function(){
+//	         			alert("快去填写收货地址吧！")
+//	         			location.href="write_info.php"
+//	         		},2500)
+	         	},
+	         	go:function(){
+	         		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>"}))
+	         		location.href="write_info.php"
 	         	}
 	         }
 			})

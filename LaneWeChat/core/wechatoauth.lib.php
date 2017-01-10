@@ -15,7 +15,7 @@ class WeChatOAuth{
      * @param $scope snsapi_base不弹出授权页面，只能获得OpenId;snsapi_userinfo弹出授权页面，可以获得所有信息
      * 将会跳转到redirect_uri/?code=CODE&state=STATE 通过GET方式获取code和state
      */
-    public static function getCode($redirect_uri, $state=1, $scope='snsapi_base'){
+    public static function getCode($redirect_uri, $state, $scope='snsapi_base'){
         if($redirect_uri[0] == '/'){
             $redirect_uri = substr($redirect_uri, 1);
         }
@@ -31,7 +31,7 @@ class WeChatOAuth{
         //header('Location: '.$url, true, 301);
         if(!isset($_GET['code']))
         {
-            header("Location:".$url);
+            header("Location:".$url,302);
         }
     }
 

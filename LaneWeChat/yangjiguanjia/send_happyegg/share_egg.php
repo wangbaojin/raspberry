@@ -1,18 +1,12 @@
-<?php
+ <?php
+
    include "../../lanewechat.php";
-   include "../../../lib/mysqli_db.class.php";
-   include "../../../lib/alipay.config.php";
+   $b = $_GET['order_sn']; 
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-   //先写业务,待封装到数据库工具类
-   $db_my = new DB(DB_HOST,DB_USER,DB_PW,DB_NAME);
-   $where  = array("open_id"=>$a['open_id']);
-   $fields = array('order_sn');
-   $orderInfo = $db_my->simpleQuery("kp_wxorder",$fields,$where);
-   $order = $db_my->getRowFromQuery("select * from user where open_id=".$a['openid']." order by create_time;");
-
+   $order_sn = $_GET['state'];
  ?>
 <!DOCTYPE html>
 <html>
@@ -65,14 +59,6 @@
 		</style>
 	</head>
 	<body>
-		 <?php
-
-   include "../../lanewechat.php";
-   $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
-   $code = $_GET['code'];
-   $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
- ?>
 		<div id="app">
 			<div class="bg_box" v-if="flag" >
 				<div class="direct"><img src="assets/img/direct.png"/></div>
@@ -100,13 +86,13 @@
 				    	<span class="time">{{ item.create_time }}</span>
 				    </div>
 				    <div class="condition">
-				    	<div v-if="item.condition == 1&&item.last_time == 0">
+				    	<div v-if="item.status == 1&&item.last_time == 0">
 						  <img src="assets/img/got.png"/>
 						</div>
-						<div v-else-if="item.condition == 0">
+						<div v-else-if="item.status == 0">
 						  <img src="assets/img/err.png"/>
 						</div>
-						<div v-else-if="item.condition == 1&&item.last_time>0">
+						<div v-else-if="item.status == 2&&item.last_time>0">
 						  <span class="time_left">({{ item.last_time }}s后自动领取)</span>
 						  <a href="javascript:void(0);" class="delete_btn" @click="refuse(item.receive_id,index)">拒绝</a>
 						</div>
@@ -166,12 +152,12 @@
 			  },
 			  methods:{
 			  	refuse:function(value,index){
-			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:location.href.split("?")[1],open_id:"<?php echo $a['openid']; ?>",receive_id:value},{emulateJSON:true}).then(
+			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>",receive_id:value},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
 			                	_this.items[index].last_time=0;		            	
-				  				_this.items[index].condition=0;		   
+				  				_this.items[index].status=0;		   
 			                }else if(res.body.code==0){
 			                	//alert(res.body.code)
 			                }
@@ -191,7 +177,7 @@
 				  			if(_this.items[index].last_time<0){		            	
 				  				clearInterval(time)			            	
 				  				_this.items[index].last_time=0;		            	
-				  				_this.items[index].condition=1;		     
+				  				_this.items[index].status=1;		     
 				  			}
 			  			}, 1000)	
 			  	},
@@ -203,13 +189,12 @@
 			  	}
 			  },
 			  created:function(){
-			  		
-			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
-				    alert(url)
-                                    alert(<?php  echo $b;?>)
-				    alert(location.href.split("?")[1])
+			  		var _this=this;
+				    alert("<?php echo $order_sn;?>")
+				    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
+					alert(url)
 			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
-	         	
+	         			alert(res.body)
                        res=JSON.parse(res.body)
 			         	wx.config({
 		                    debug: true,
@@ -223,7 +208,7 @@
 		                    wx.onMenuShareAppMessage({
 		                    	title: '快来抢多多的蛋了！', // 分享标题
 							    desc: '快乐的蛋', // 分享描述
-							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn='+order_sn, // 分享链接
+							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn='+"<?php echo $order_sn;?>", // 分享链接
 							    imgUrl: '', // 分享图标
 							    type: 'link', // 分享类型,music、video或link，不填默认为link
 							    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -245,7 +230,7 @@
 
 			        //请求抢红包详情
 			        
-					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
@@ -255,7 +240,7 @@
 			                	_this.items=res.body.result.catch_info;
 						  		for(var i=0;i<_this.items.length;i++){
 						  			var index=i;
-						  			if(_this.items[i].condition==1){
+						  			if(_this.items[i].status==1){
 						  				_this.time_left(index)
 						  			}
 						  		}

@@ -18,10 +18,11 @@ class GetSignPackage
 
 
         // 注意 URL 一定要动态获取，不能 hardcode.
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
-        $completePath = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    //    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+      //  $completePath = "$protocol$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         //暂时写写死
         $url = $url ? $url : $completePath;
+        
         $timestamp = time();
         $nonceStr = GetSignPackage::createNonceStr();
 

@@ -6,9 +6,9 @@
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
    $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN');
-   echo $user_info['nickname'];
-   echo $user_info['headimgurl'];
-   echo $user_info['openid'];
+// echo $user_info['nickname'];
+// echo $user_info['headimgurl'];
+// echo $user_info['openid'];
 ?>
 <html>
 	<head>
@@ -116,12 +116,20 @@
 			  			alert("请输入正确的手机号")
 			  			return
 			  		}
-	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>"},{emulateJSON:true}).then(
+			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>",order_sn:order_sn},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
-			                alert(res.body.msg);
-			            },function (res) {
+			                if(res.body.code==1){
+			                	alert(res.body.msg);
+			                	location.href="wish_egg.html"
+			                }else{
+			                	alert(res.body.msg)
+			                }
+			                
+			            },function (res){
 			            	// 处理失败的结果
+			            	alert("请求失败!")
 			            }
 			        )
 	         	},
