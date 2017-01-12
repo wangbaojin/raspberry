@@ -23,7 +23,6 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
 			html,body{background: #ffe500;width: 100%;}
-			
 			.box{margin:.4rem .4rem 0 .4rem;box-sizing: border-box;
 			position: relative;}
 			 img{width: 100%;display: inline-block;}
@@ -60,7 +59,7 @@
 				<img src="assets/img/bg_write.png"/>
 				<div class="write_box">
 					<div class="tx">
-						<img src="../../../wxpay/example/assets/img/baoxian.jpg"/>
+						<img src="<?php echo $user_info['headimgurl']; ?>"/>
 					</div>
 					<div class="input_box">
 						<span><img src="assets/img/name.png"/></span>
@@ -86,6 +85,7 @@
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script type="text/javascript">
 			var app = new Vue({
 			  el: '#app',
@@ -93,15 +93,52 @@
 			 	name:"",
 			 	address:"",
 			 	tel:"",
-			 	code:"",
-			 	isOpen:false,
-			 	show:true,
-			 	active:false,
-			 	show_got:false
+			 	code:""
 			 	
 			  },
 			  created:function(){
-
+					var _this=this;
+				    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
+					//alert(url)
+			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+	         			//alert(res.body)
+                        res=JSON.parse(res.body)
+			         	wx.config({
+		                    debug: false,
+		                    appId: res.appId,
+		                    timestamp: res.timestamp,
+		                    nonceStr: res.nonceStr,
+		                    signature: res.signature,
+		                    jsApiList: ['getLocation']
+		                });
+		                wx.ready(function () {
+		                    wx.getLocation({
+							    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+							    success: function (res) {
+							        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+							        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+							  		_this.$http.get(validate.url+'/getAddressInfo/geocoder/v2/?location='+latitude+','+longitude+'&output=json&pois=1&ak=0r5h4bhrVoUjEvrNc8Lx0NLUcP9xiaQo').then(function(res){
+					                    res=JSON.parse(res.body)
+//					                    alert(res)
+//					                    alert(typeof(res))
+//					                    alert(res.status==0)
+					                    if(res.status==0){
+					                    	//alert(res.result.formatted_address)
+					                    	_this.address=res.result.formatted_address;
+					                    }else{
+					                    	alert("定位失败！")
+					                    }
+					                    
+					                },function(response){
+					                    //console.info(response);
+					                    
+					                })
+							    }
+							});
+		                });
+			        },function(response){
+			        	console.info(response);
+			        });
 	          },
 	          methods:{
 	         	submit:function(){
@@ -117,9 +154,13 @@
 			  			return
 			  		}
 			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
+			  		
+			  		
+			  		
 	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>",order_sn:order_sn},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
+			                //alert(JSON.stringify(res.body))
 			                if(res.body.code==1){
 			                	alert(res.body.msg);
 			                	location.href="wish_egg.html"
@@ -132,15 +173,6 @@
 			            	alert("请求失败!")
 			            }
 			        )
-	         	},
-	         	open:function(){
-	         		var vm=this
-	         		this.isOpen=true;
-	         		this.active=true;
-	         		
-//	         		setTimeout(function(){
-//	         			vm.animation_name="bounce";
-//	         		},600)
 	         	}
 		      }
 			})
