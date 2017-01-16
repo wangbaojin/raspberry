@@ -11,14 +11,15 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
-			body{width: 100%;height: 100%;background-color: #f75843;font-family: Microsoft YaHei;padding-top: 1rem;}
-			.mask{position: fixed;left: 0;top: 0;background-color: #000;opacity: 0.77;filter:alpha(opacity=51.8);height: 100%;width: 100%;z-index: 99;padding-top: 1.5rem;}
+			body{width: 100%;height: 100%;background-color: #f75843;font-family: "微软雅黑";padding-top: 1rem;}
+			.mask_img{position: fixed;left: 0;top: 0;;height: 100%;width: 100%;z-index: 99;padding-top: 1.5rem;z-index: 999;}
+			.mask{position: fixed;left: 0;top: 0;background-color: #000;opacity: 0.77;filter:alpha(opacity=51.8);height: 100%;width: 100%;z-index: 99;}
 		</style>
 	</head>
 	<body>
 		<div id="app">
-				<p style="font-size: .44rem;color: #fff;margin: 0 auto;text-align: center;">感谢张宇的蛋蛋</p>
-				<p style="font-size: .3rem;color: #fff;margin: 0 auto;text-align: center;margin: .3rem 0 .4rem 0">每周五请注意收蛋哦O(∩_∩)O</p>
+				<p style="font-size: .44rem;color: #fff;margin: 0 auto;text-align: center;">感谢{{user_name}}的蛋蛋</p>
+				<p style="font-size: .3rem;color: #fff;margin: 0 auto;text-align: center;margin: .3rem 0 .4rem 0">每周日请注意收蛋哦O(∩_∩)O</p>
 				<div style="height: 5rem;width: 5rem;border-radius: 50% 50%;background-color: #fff;margin: 0 auto;position: relative;">
 					<img style="width: 4rem;position: absolute;left: .5rem;top:1rem;" src="assets/img/duoduo.png" alt="">
 				</div>
@@ -26,25 +27,29 @@
 		          	<a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 5rem;background-color: #fdd001;color:#f33920;" class="weui-btn weui-btn_primary" href="javascript:void(0)" @click='sendgift'>我也要送礼物</a>
 		    	</div>
 		    	<div v-show='disp' class="mask">
+		    	</div>
+		    	<div v-show='disp' class="mask_img">
 		    		<img style="width: 6rem;display: block;margin: 0 auto;" src="assets/img/wish.png" alt="">
-		    		<img @click="turnoff" style="display: block;margin: 0 auto;margin-top: .8rem;" src="assets/img/x.png" alt="">
+		    		<img @click="turnoff" style="display: block;margin: 0 auto;margin-top: .8rem;width: .6rem;" src="assets/img/x.png" alt="">
 		    		<p style="width: .7rem;font-size: .7rem;color:#000;position: absolute;top: 3.9rem;left: 3.4rem;line-height: .7rem;">{{wish}}</p>
 		    	</div>
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var app = new Vue({
 			  el: '#app',
 			  data: {
 			  	disp:true,
-			  	wish:''
+			  	wish:'',
+			  	user_name:""
 
 			  },
 			  created:function(){
-			  	var hope=JSON.parse(localStorage.getItem("product")).hope;
+			  	var hope=JSON.parse(localStorage.getItem("order_sender")).wish_word;
+			  	var user_name=JSON.parse(localStorage.getItem("order_sender")).user_name;
+			  	//alert(JSON.parse(localStorage.getItem("order_number")).order_sn)
 			  	this.wish=hope;
+			  	this.user_name=user_name
 			  },
 			  methods:{
 			  	turnoff:function(){
