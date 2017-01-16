@@ -1,10 +1,12 @@
  <?php
 
    include "../../lanewechat.php";
+   $b = $_GET['order_sn']; 
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+   $order_sn = $_GET['state'];
  ?>
 <!DOCTYPE html>
 <html>
@@ -24,14 +26,15 @@
 			.top_box{position: relative;font-size: 0;width: 100%;}
 			.top{position: absolute;top: 0;left: 0;text-align: center;width: 100%;}
 			.top .total{font-size: .46rem;color: #222222;margin-top: .4rem;font-family: "微软雅黑";}
-			.top .left{margin-top:;font-size: .46rem;font-weight: bold;font-family: "微软雅黑";}
+			.top .left{margin-top:;font-size: .46rem;font-weight: bold;font-family: "微软雅黑";line-height: .7rem;}
 			.left span{font-size: .72rem;color: #fc4700;}
+			.btn_box{margin-top: .2rem;}
 			.btn_box a{display: inline-block;width: 5rem;height: 1rem;line-height: 1rem;font-size: .32rem;color: #ffffff;
 			font-family: "微软雅黑";background: #fb4700;border-radius: .1rem;}
 			.got_info{font-size: .28rem;color: #222222;margin-top: .2rem;}
 			.got_info span{color: #fc4700;}
 			
-			.got_list{font-size: 0;width: 100%;padding:0 .9rem;box-sizing: border-box;}
+			.got_list{font-size: 0;width: 100%;padding:0 .5rem;box-sizing: border-box;}
 			#example-1 ul{width: 100%;}
 			#example-1 li{width: 100%;box-sizing: border-box;border-bottom: 1px solid #ca5309;font-size: .2rem;
 			height: 1.4rem;overflow: hidden;}
@@ -63,8 +66,15 @@
 				<div class="know" @click="know"><img src="assets/img/know.png"/></div>
 			</div>
 			<div class="top_box">
-				<div class="bg"><img src="assets/img/bg.jpg"/></div>
-				<div class="top">
+				<div class="bg">
+					<div v-if="status == 1">
+						<img src="assets/img/bg.jpg" />
+					</div>
+					<div v-else-if="status == 0">
+					  <img src="assets/img/bg2.jpg" />
+					</div>
+				</div>
+				<div class="top" v-if="status == 1">
 					<p class="total">送出{{ total_amount }}个鸡蛋礼包</p>
 					<p class="left">剩余<span>{{ last_amount }}</span>个</p>
 			        <div class="btn_box">
@@ -80,19 +90,21 @@
 				  	<!--<floor  v-for="(item, index) in items" v-bind:item="item" v-bind:index="index" v-bind:name="{{item.name}}" v-bind:time="{{item.time}}" v-bind:condition="{{item.condition}}"></floor>-->
 				    <span class="tx"><img v-bind:src="item.pic"></span>
 				    <div class="info_box">
-				    	<span class="name">{{ item.nick_name }}</span>
+				    	<span class="name">{{ item.nick_name }}({{ item.real_name }})</span>
 				    	<span class="time">{{ item.create_time }}</span>
 				    </div>
 				    <div class="condition">
-				    	<div v-if="item.condition == 1&&item.last_time == 0">
+				    	<div v-if="item.status == 1&&item.last_time == 0">
 						  <img src="assets/img/got.png"/>
 						</div>
-						<div v-else-if="item.condition == 0">
+						<div v-else-if="item.status == 0">
 						  <img src="assets/img/err.png"/>
 						</div>
-						<div v-else-if="item.condition == 1&&item.last_time>0">
-						  <span class="time_left">({{ item.last_time }}s后自动领取)</span>
-						  <a href="javascript:void(0);" class="delete_btn" @click="refuse(item.receive_id,index)">拒绝</a>
+						<div v-if="status == 1">
+							<div v-if="item.status == 1&&item.last_time>0">
+							  <span class="time_left">({{ item.last_time }}s后自动领取)</span>
+							  <a href="javascript:void(0);" class="delete_btn" @click="refuse(item.receive_id,index)">拒绝</a>
+							</div>	
 						</div>
 				    </div>
 				   
@@ -126,7 +138,8 @@
 			    flag:false,
 			    total_amount:"",
 			    last_amount:"",
-			    catched_amount:""
+			    catched_amount:"",
+			    status:null
 			   
 			  },
 			  filters:{
@@ -150,14 +163,18 @@
 			  },
 			  methods:{
 			  	refuse:function(value,index){
-			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:location.href.split("?")[1],open_id:"<?php echo $a['openid']; ?>",receive_id:value},{emulateJSON:true}).then(
+			  		var _this=this
+			  		this.$http.post(validate.url+"/Api/WxHappyEgg/setCatchLogStatus",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>",receive_id:value},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
-			                	_this.items[index].last_time=0;		            	
-				  				_this.items[index].condition=0;		   
+			                	alert(res.body.msg)
+//			                	alert(index)
+//			                	alert(_this.items[index].status)
+			                	           	
+				  				_this.items[index].status=0;		   
 			                }else if(res.body.code==0){
-			                	//alert(res.body.code)
+			                	alert(res.body.msg)
 			                }
 			               
 			            },function (res) {
@@ -175,7 +192,7 @@
 				  			if(_this.items[index].last_time<0){		            	
 				  				clearInterval(time)			            	
 				  				_this.items[index].last_time=0;		            	
-				  				_this.items[index].condition=1;		     
+				  				_this.items[index].status=1;		     
 				  			}
 			  			}, 1000)	
 			  	},
@@ -187,57 +204,32 @@
 			  	}
 			  },
 			  created:function(){
-			  		
-			  		var url=location.href,order_sn=location.href.split("?")[1],_this=this;
-				  
-			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
-	         	
-                       res=JSON.parse(res.body)
-			         	wx.config({
-		                    debug: false,
-		                    appId: res.appId,
-		                    timestamp: res.timestamp,
-		                    nonceStr: res.nonceStr,
-		                    signature: res.signature,
-		                    jsApiList: ['onMenuShareAppMessage']
-		                });
-		                wx.ready(function () {
-		                    wx.onMenuShareAppMessage({
-		                    	title: '快来抢多多的蛋了！', // 分享标题
-							    desc: '快乐的蛋', // 分享描述
-							    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn'+order_sn, // 分享链接
-							    imgUrl: '', // 分享图标
-							    type: 'link', // 分享类型,music、video或link，不填默认为link
-							    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-		                        success: function () { 
-		                            // 用户确认分享后执行的回调函数
-		                            alert("分享成功了！")
-		                        },
-		                        cancel: function () { 
-		                            // 用户取消分享后执行的回调函数
-		                            alert("不分享朋友会收不到你的祝福哦！")
-		                        }
-		                    });
-		                });
-			        },function(response){
-			        	console.info(response);
-			        });
-					
-
-
-			        //请求抢红包详情
-			        
-					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:order_sn,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+			  		var _this=this;
+				    //alert(location.href)
+				    //请求抢红包详情
+			      
+					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
+			                //alert(JSON.stringify(res.body))
 			                if(res.body.code==1){
+			                	//alert(res.body.result.status)
+			                	if(res.body.result.status==1){  //判断是购买人进入红包详情 还是其他人
+			                		_this.status=1;
+//			                		_this.my=true;
+//			                		_this.others=false
+			                	}else if(res.body.result.status==0){
+			                		_this.status=0;
+//			                		_this.my=false;
+//			                		_this.others=true;
+			                	}
 			                	_this.total_amount=res.body.result.total_amount;
 			                	_this.last_amount=res.body.result.last_amount;
 			                	_this.catched_amount=res.body.result.catched_amount;
 			                	_this.items=res.body.result.catch_info;
 						  		for(var i=0;i<_this.items.length;i++){
 						  			var index=i;
-						  			if(_this.items[i].condition==1){
+						  			if(_this.items[i].status==1){
 						  				_this.time_left(index)
 						  			}
 						  		}
@@ -250,6 +242,45 @@
 			            	alert("请求失败")
 			            }
 			        )
+				    
+				    if(_this.status=1){
+				    	var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
+						//alert(url)
+				  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+		         			//alert(res.body)
+	                       res=JSON.parse(res.body)
+				         	wx.config({
+			                    debug: false,
+			                    appId: res.appId,
+			                    timestamp: res.timestamp,
+			                    nonceStr: res.nonceStr,
+			                    signature: res.signature,
+			                    jsApiList: ['onMenuShareAppMessage']
+			                });
+			                wx.ready(function () {
+			                    wx.onMenuShareAppMessage({
+			                    	title: '快乐的蛋给您送礼了！', // 分享标题
+								    desc: '免费获得快乐的蛋礼品一份！O(∩_∩)O~~', // 分享描述
+								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn='+"<?php echo $order_sn;?>", // 分享链接
+								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/assets/img/duoduo.png', // 分享图标
+								    type: 'link', // 分享类型,music、video或link，不填默认为link
+								    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			                        success: function () { 
+			                            // 用户确认分享后执行的回调函数
+			                            //alert("分享成功了！")
+			                            _this.flag=false;    
+			                        },
+			                        cancel: function () { 
+			                            // 用户取消分享后执行的回调函数
+			                            _this.flag=false;
+			                            alert("不分享朋友会收不到你的祝福哦！")
+			                        }
+			                    });
+			                });
+				        },function(response){
+				        	console.info(response);
+				        });
+				    }	    
 			  }
 			  
 			})
