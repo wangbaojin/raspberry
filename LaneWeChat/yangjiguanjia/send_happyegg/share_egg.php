@@ -26,8 +26,9 @@
 			.top_box{position: relative;font-size: 0;width: 100%;}
 			.top{position: absolute;top: 0;left: 0;text-align: center;width: 100%;}
 			.top .total{font-size: .46rem;color: #222222;margin-top: .4rem;font-family: "微软雅黑";}
-			.top .left{margin-top:;font-size: .46rem;font-weight: bold;font-family: "微软雅黑";}
+			.top .left{margin-top:;font-size: .46rem;font-weight: bold;font-family: "微软雅黑";line-height: .7rem;}
 			.left span{font-size: .72rem;color: #fc4700;}
+			.btn_box{margin-top: .2rem;}
 			.btn_box a{display: inline-block;width: 5rem;height: 1rem;line-height: 1rem;font-size: .32rem;color: #ffffff;
 			font-family: "微软雅黑";background: #fb4700;border-radius: .1rem;}
 			.got_info{font-size: .28rem;color: #222222;margin-top: .2rem;}
@@ -167,7 +168,7 @@
 			            function (res) {
 			                // 处理成功的结果
 			                if(res.body.code==1){
-//			                	alert(res.body.msg)
+			                	alert(res.body.msg)
 //			                	alert(index)
 //			                	alert(_this.items[index].status)
 			                	           	
@@ -206,7 +207,7 @@
 			  		var _this=this;
 				    //alert(location.href)
 				    //请求抢红包详情
-			       
+			      
 					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果

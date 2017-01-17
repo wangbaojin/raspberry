@@ -3,8 +3,8 @@
         date_default_timezone_set('PRC');  
         $data = array(
              'first'=>array('value'=>'您好，您送出的礼品成功领取', 'color'=>'#0A0A0A'),
-             'keyword1'=>array('value'=>'点击详情可以查看哦', 'color'=>'#173177'),
-             'keyword2'=>array('value'=>'1份快乐的蛋', 'color'=>'#173177'),
+             'keyword1'=>array('value'=>$_GET['nick_name'], 'color'=>'#173177'),
+             'keyword2'=>array('value'=>"一份".$_GET['unit_price']."元快乐的蛋", 'color'=>'#173177'),
              'keyword3'=>array('value'=>date("Y/m/d H:i:s",time()), 'color'=>'#173177'),
              'remark'=>array('value'=>'请及时确认，15分钟内可以点击详情收回礼品哦', 'color'=>'#173177')
         );

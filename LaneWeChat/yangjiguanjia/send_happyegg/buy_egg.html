@@ -12,11 +12,11 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
 		body{height: 100%;width: 100%;background-color:#efa230;}
-		.price_ul{margin:0 auto;margin-top: 2.5rem;width: 6.9rem;height: 6.5rem;}
-		.price_ul li{float: left;width: 2rem;margin:0 .15rem;position: relative;}
+		.price_ul{margin:0 auto;margin-top: 2.5rem;width: 6.9rem;height: 6rem;}
+		.price_ul li{float: left;width: 1.8rem;margin:0 .25rem;position: relative;}
 		.kuang{position: absolute;bottom: .3rem;left: 50%;width: .5rem;height:.5rem;border:2px solid #000;border-radius:.1rem;margin-left: -0.2rem;}
 		.gou{height: .5rem;width: .5rem;}
-		.username{width:4.6rem;height:0.9rem;font-family:黑体;font-size: .28rem;color: #000;background-color: #fff;text-align: center;border-radius: .1rem;margin:0 auto;display: block;margin-top: 0.2rem;margin-bottom: .4rem;}
+		.username{width:4.6rem;height:0.9rem;line-height:.9rem;font-family:黑体;font-size: .28rem;color: #000;background-color: #fff;text-align: center;border-radius: .1rem;margin:0 auto;display: block;margin-top: 0.2rem;}
 		</style>
 	</head>
 	<body>
@@ -52,9 +52,9 @@
 					</label>
 				</li>
 			</ul>
-			<div style="height: 3.12rem;" class="weui-cell__bd">
+			<div class="weui-cell__bd">
                    <input class="username" v-model="name" type="text" placeholder="请输入您的名字">
-                   <input @click='show_wishword(0)' class="username" v-model="message" type="text">
+                   <p style="margin-bottom: 1.2rem;" @click='show_wishword(0)' class="username">{{message}}</p>
             </div>
            <!--  <div @click='showwish_word(0)' class="page__bd page__bd_spacing">
         			<a href="javascript:;" class="weui-btn weui-btn_default" style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 4.6rem;background-color: #da3522;font-family: 黑体;">请选择祝福语</a>
@@ -73,7 +73,7 @@
             	</div>
         		</div>
     		</div>
-			<div style="width: 100%;">
+			<div style="position: fixed;bottom: 0;left: 0;width: 100%;">
 		         <a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 100%;background-color: #da3522;font-family: 黑体;border-radius: 0;" class="weui-btn weui-btn_primary" href="javascript:void(0)" id="showTooltips" @click="next_step">下一步</a>
 		    </div>
 			<!-- <p style="text-align: center;font-size: .32rem;margin-top: .2rem;">鸡年到,礼物来,送TA来吃鸡蛋喽</p>

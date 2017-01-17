@@ -3,9 +3,10 @@
    include "../../lanewechat.php"; 
    $b = $_GET['order_sn']; 
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_userinfo');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+   $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN'); 
    $order_sn = $_GET['state'];
      
 ?>
@@ -183,10 +184,10 @@
 			.text_box{width: 100%;text-align: center;}
 			.text_box img{display: inline-block;width: 3.1rem;margin: 0 auto;margin-top: .58rem;}
 			.success_info p{width: 100%;text-align: center;}
-			.goods_info{font-size: .42rem;font-weight: bold;}
+			.goods_info{font-size: .42rem;font-weight: bold;font-family: "微软雅黑";}
 			.hope{font-size: .34rem;margin-top: .3rem;}
 			
-			.big_box{width: 100%;position: absolute;top: 1.35rem;z-index: 9999;}
+			.big_box{width: 100%;position: absolute;top: .55rem;z-index: 9999;}
 			.go_btn{text-align: center;margin-top: .74rem;}
 			.go_btn a{display: inline-block;width: 3.92rem;height: .86rem;line-height: .86rem;font-size: .36rem;color: #fd2c1a;
 			font-family: "微软雅黑";background: #ffff00;border-radius: .1rem;text-align: center;}
@@ -212,6 +213,12 @@
 				<img src="assets/img/already_get_bg.jpg" class="none_bg"/>
 				<div class="none_box">
 					<img src="assets/img/already_get_text.png" class="none" v-bind:class="{ animated: show_get, 'bounceInRight': show_get }"/>
+				</div>
+			</div>
+			<div v-if="show_nochance" class="show_none">
+				<img src="assets/img/no_chance_bg.jpg" class="none_bg"/>
+				<div class="none_box" style="top: 4.1rem;">
+					<img src="assets/img/no_chance.png" class="none" v-bind:class="{ animated: show_nochance, 'bounceInRight': show_nochance }"/>
 				</div>
 			</div>
 			<div v-if="show" style="width: 100%;height: 100%;">
@@ -268,13 +275,14 @@
 			 	condition:false,
 			 	message:"",
 			 	show_none:false,
-			 	show_get:false
+			 	show_get:false,
+			 	show_nochance:false
 			  },
 			  created:function(){
 			  		var _this=this;
 			  		
 			  		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>"}))
-					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",nick_name:"<?php echo $user_info['nickname'];?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 //			                alert(res.body.code)
@@ -288,6 +296,8 @@
 			                		_this.show_get=true;
 			                	}else if(res.body.error==5007){		//已经抢光
 			                		_this.show_none=true;
+			                	}else if(res.body.error==5008){
+			                		_this.show_nochance=true;
 			                	}else if(res.body.error==5010){  //判断抢到红包 但是没填地址
 			                		_this.show_get=true;
         			         		setTimeout(function(){
@@ -297,6 +307,7 @@
 			                	}else{
 			                		alert(res.body.msg)
 			                	}
+			                	
 			                	
 			                }
 			               
@@ -331,10 +342,7 @@
 	         		//var vm=this
 	         		this.isOpen=true;
 	         		this.active=true;
-//	         		setTimeout(function(){
-//	         			alert("快去填写收货地址吧！")
-//	         			location.href="write_info.php"
-//	         		},2500)
+
 	         	},
 	         	go:function(){
 	         		

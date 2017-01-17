@@ -16,7 +16,7 @@
 			.part li{float: left;margin: 0 .1rem;position: relative;}
 			.part img{width: 1.5rem;}
 			.posi{position: absolute;bottom: .06rem;left: .55rem;font-size: .26rem;color: #222222}
-			.posi_x{position: absolute;bottom: .9rem;left: .9rem;font-size: .3rem;color: #222222}
+			.posi_x{position: absolute;bottom: .8rem;left: .9rem;font-size: .3rem;color: #222222}
 		</style>
 	</head>
 	<body>
@@ -62,7 +62,7 @@
 						<label for="x14">
 							<img v-bind:src=src+arr[3]+'.png' alt="">
 							<span class="posi" style="left: .5rem;">其它</span>
-							<span class="posi_x" style="left: .75rem;">x{{num1}}</span>
+							<span class="posi_x">x{{num1}}</span>
 							<input type="radio" class="weui-check" name="radio1" id="x14" v-model="person">
 						</label>
 					</li>
