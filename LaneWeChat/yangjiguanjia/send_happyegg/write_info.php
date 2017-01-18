@@ -70,7 +70,7 @@
 				<img src="assets/img/bg_write.png"/>
 				<div class="write_box">
 					<div class="tx">
-						<img src="<?php echo $user_info['headimgurl']; ?>"/>
+						<img v-bind:src="pic"/>
 					</div>
 					<div class="input_box">
 						<span><img src="assets/img/name.png"/></span>
@@ -125,11 +125,13 @@
 			 	address:"",
 			 	tel:"",
 			 	code:"",
-			 	date:"配送日期"
+			 	date:"配送日期",
+			 	pic:""
 			 	
 			  },
 			  created:function(){
 					var _this=this;
+					_this.pic=JSON.parse(localStorage.getItem("order_number")).pic;
 				    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
 					//alert(url)
 			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
@@ -193,8 +195,10 @@
 			  			return
 			  		}
 			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
+			  		var nick_name=JSON.parse(localStorage.getItem("order_number")).nick_name;
+			  		var pic=JSON.parse(localStorage.getItem("order_number")).pic;
 			  		
-	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:nike_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                //alert(JSON.stringify(res.body))

@@ -281,7 +281,7 @@
 			  created:function(){
 			  		var _this=this;
 			  		
-			  		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>"}))
+			  		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>","nick_name":"<?php echo $user_info['nickname'];?>","pic":"<?php echo $user_info['headimgurl']; ?>"}))
 					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",nick_name:"<?php echo $user_info['nickname'];?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
