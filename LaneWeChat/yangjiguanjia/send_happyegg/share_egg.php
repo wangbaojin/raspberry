@@ -1,4 +1,4 @@
-<?php
+ <?php
 
    include "../../lanewechat.php";
    $b = $_GET['order_sn']; 
@@ -142,7 +142,8 @@
 			    status:null,
 			    title:"",
 			    desc:"",
-			    amount:null
+			    amount:null,
+			    unit_price:null
 			   
 			  },
 			  filters:{
@@ -210,7 +211,7 @@
 			  		var _this=this;
 				    //alert(location.href)
 				    //请求抢红包详情
-			      
+			      	alert("<?php echo $order_sn;?>")
 					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果

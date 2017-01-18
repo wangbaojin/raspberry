@@ -31,7 +31,7 @@ $input->SetTotal_fee($_GET['total_fee']*100);
 $input->SetTime_start(date("YmdHis"));
 $input->SetTime_expire(date("YmdHis", time() + 600));
 $input->SetGoods_tag("WXG");
-$input->SetNotify_url("http://weixin.yangjiguanjia.com/wxpay/example/notify2.php");
+$input->SetNotify_url("http://weixin.yangjiguanjia.com/wxpay1/example/notify2.php");
 $input->SetTrade_type("JSAPI");
 $input->SetOpenid($openId);
 $order = WxPayApi::unifiedOrder($input);
@@ -69,7 +69,7 @@ $editAddress = $tools->GetEditAddressParameters();
 				WeixinJSBridge.log(res.err_msg);
                                 if(res.err_msg == "get_brand_wcpay_request:ok")                                  {   
 
-                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/share_egg.php?order_sn=<?php echo $_GET['order_sn'];?>";
+                                   location.href="http://weixin.yangjiguanjia.com/LaneWeChat2/yangjiguanjia/send_happyegg/share_egg.php?order_sn=<?php echo $_GET['order_sn'];?>";
                                  }else{   
 
                                      location.href="http://www.yangjiguanjia.com";
