@@ -14,9 +14,43 @@
 		body{height: 100%;width: 100%;background-color:#efa230;}
 		.price_ul{margin:0 auto;margin-top: 2.5rem;width: 6.9rem;height: 6rem;}
 		.price_ul li{float: left;width: 1.8rem;margin:0 .25rem;position: relative;}
-		.kuang{position: absolute;bottom: .3rem;left: 50%;width: .5rem;height:.5rem;border:2px solid #000;border-radius:.1rem;margin-left: -0.2rem;}
-		.gou{height: .5rem;width: .5rem;}
+		.kuang{position: absolute;bottom: .3rem;left: 50%;width: .3rem;height:.3rem;border:2px solid #000;border-radius:.1rem;margin-left: -0.2rem;}
+		.gou{height: .3rem;width: .5rem;}
 		.username{width:4.6rem;height:0.9rem;line-height:.9rem;font-family:黑体;font-size: .28rem;color: #000;background-color: #fff;text-align: center;border-radius: .1rem;margin:0 auto;display: block;margin-top: 0.2rem;}
+		.weui-agree__checkbox:checked:before {
+		    font-family: weui;
+		    font-style: normal;
+		    font-weight: 400;
+		    font-variant: normal;
+		    text-transform: none;
+		    text-align: center;
+		    speak: none;
+		    display: inline-block;
+		    vertical-align: middle;
+		    text-decoration: inherit;
+		    content: "\EA08";
+		    color: #09bb07;
+		    font-size: 13px;
+		    position: absolute;
+		    top: 50%;
+		    left: 50%;
+		    -webkit-transform: translate(-50%,-48%) scale(.73);
+		    transform: translate(-50%,-48%) scale(.73);
+		}
+		.weui-agree__checkbox {
+		    -webkit-appearance: none;
+		    appearance: none;
+		    outline: 0;
+		    font-size: 0;
+		    border: 1px solid #d1d1d1;
+		    background-color: #fff;
+		    border-radius: 3px;
+		    width: 13px;
+		    height: 13px;
+		    position: relative;
+		    vertical-align: 0;
+		    top: 2px;
+		}
 		</style>
 	</head>
 	<body>
@@ -28,7 +62,7 @@
 					<label for="x11">
 						<img src="assets/img/buy_1.png" alt="">
 						<div @click='chose_price(0)' class="kuang">
-	                    	<input type="radio" name="radio1" class="weui-check" id="x11" v-model="picked" value="1900.8">
+	                 <input type="radio"  class="weui-check" id="x11" v-model="picked" value="1900.8">
 	                    	<img v-show=arr[0] class="gou" src="assets/img/gou.png" alt="">
 	                    </div>
 					</label>
@@ -37,7 +71,7 @@
 					<label for="x12">
 						<img src="assets/img/buy_2.png" alt="">
 						<div @click='chose_price(1)' class="kuang">
-	                    	<input type="radio" name="radio1" class="weui-check" id="x12" v-model="picked" value="950.6">
+	                  <input type="radio"  class="weui-check" id="x12" v-model="picked" value="950.6">
 	                   	 	<img v-show=arr[1] class="gou" src="assets/img/gou.png" alt="">
 	               		 </div>
 					</label>
@@ -46,15 +80,21 @@
 					<label for="x13">
 						<img src="assets/img/buy_3.png" alt="">
 						<div @click='chose_price(2)' class="kuang">
-	                    	<input type="radio" name="radio1" class="weui-check" id="x13" v-model="picked" value="39.6">
+	                   <input type="radio"  class="weui-check" id="x13" v-model="picked" value="39.6">
 	                    	<img v-show=arr[2] class="gou" src="assets/img/gou.png" alt="">
 	                	</div>
 					</label>
 				</li>
 			</ul>
-			<div class="weui-cell__bd">
+			<div style="margin-bottom: 1rem;" class="weui-cell__bd">
                    <input class="username" v-model="name" type="text" placeholder="请输入您的名字">
-                   <p style="margin-bottom: 1.2rem;" @click='show_wishword(0)' class="username">{{message}}</p>
+                   <p style="margin-bottom: .1rem;" @click='show_wishword(0)' class="username">{{message}}</p>
+                   <label @click='agree' style="width: 4.6rem;margin:0 auto;" for="weuiAgree" class="weui-agree">
+            			<input id="weuiAgree" class="weui-agree__checkbox" type="checkbox" checked="checked">
+            			<span style="font-family: '黑体';color: #171717;font-weight: .18rem;" class="weui-agree__text">
+                		我已阅读并同意<a href="javascript:void(0);">《活动规则》</a>
+            			</span>
+        			</label>
             </div>
            <!--  <div @click='showwish_word(0)' class="page__bd page__bd_spacing">
         			<a href="javascript:;" class="weui-btn weui-btn_default" style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 4.6rem;background-color: #da3522;font-family: 黑体;">请选择祝福语</a>
@@ -66,7 +106,9 @@
                 		<div @click='chose_wishword(0)' class="weui-actionsheet__cell">{{wish_arr[0]}}</div>
                 		<div @click='chose_wishword(1)' class="weui-actionsheet__cell">{{wish_arr[1]}}</div>
                			<div @click='chose_wishword(2)' class="weui-actionsheet__cell">{{wish_arr[2]}}</div>
-                		<div @click='chose_wishword(3)' class="weui-actionsheet__cell">{{wish_arr[3]}}</div>
+               			<div @click='chose_wishword(3)' class="weui-actionsheet__cell">{{wish_arr[3]}}</div>
+               			<div @click='chose_wishword(4)' class="weui-actionsheet__cell">{{wish_arr[4]}}</div>
+               			<div @click='chose_wishword(5)' class="weui-actionsheet__cell">{{wish_arr[5]}}</div>
             		</div>
             	<div @click='show_wishword(1)' class="weui-actionsheet__action">
                 	<div class="weui-actionsheet__cell">取消</div>
@@ -134,23 +176,28 @@
 			var app = new Vue({
 			  el: '#app',
 			  data: {
-			    wish_arr: ['鸡年大吉','恭喜发财','1234','5678'],
+			    wish_arr: ['大鸡大利','新春快乐','鸡年大吉','吉祥如意','万事大吉','财源广进'],
 			    message:'鸡年大吉',
 			    name:'',
-			    picked:1,
-			    arr:[true,false,false],
-			    wish_word:false
+			    picked:'39.6',
+			    arr:[false,false,true],
+			    wish_word:false,
+			    dis_agree:true,
+			    wish_index:''
 			  },
 			  methods:{
 			  	next_step:function(){
 			  		if(this.name==""){
 			  			alert("请输入姓名")
+			  		}else if(!this.dis_agree){
+			  			alert("请阅读活动规则")
 			  		}else{
-			  			localStorage.setItem("product",JSON.stringify({"name":this.name,"id":this.picked,"hope":this.message}))
+			  			localStorage.setItem("product",JSON.stringify({"name":this.name,"id":this.picked,"hope":this.message,"index":this.wish_index}))
 			  			location.href="pay_egg.html"
 			  		}
 			  	},
 			  	chose_price:function(index){
+			  		
 			  		this.arr=[false,false,false];
 			  		this.arr[index]=true;
 			  	},
@@ -164,6 +211,10 @@
 			  	chose_wishword:function(index){
 			  			this.message=this.wish_arr[index];
 			  			this.wish_word=false;
+			  			this.wish_index=index;
+			  	},
+			  	agree:function(){
+			  			this.dis_agree=!this.dis_agree;
 			  	}
 			  }
 			})

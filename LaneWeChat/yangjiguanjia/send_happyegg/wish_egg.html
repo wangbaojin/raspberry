@@ -31,7 +31,7 @@
 		    	<div v-show='disp' class="mask_img">
 		    		<img style="width: 6rem;display: block;margin: 0 auto;" src="assets/img/wish.png" alt="">
 		    		<img @click="turnoff" style="display: block;margin: 0 auto;margin-top: .8rem;width: .6rem;" src="assets/img/x.png" alt="">
-		    		<p style="width: .7rem;font-size: .7rem;color:#000;position: absolute;top: 3.9rem;left: 3.4rem;line-height: .7rem;">{{wish}}</p>
+		    		<img style="position: absolute;left: 3.3rem;top: 3.3rem;height: 4rem;" v-bind:src=src+arr[this.wish_index]+'.png' alt="">
 		    	</div>
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
@@ -40,15 +40,17 @@
 			  el: '#app',
 			  data: {
 			  	disp:true,
-			  	wish:'',
-			  	user_name:""
+			  	wish_index:'1',
+			  	user_name:"",
+			  	arr:[0,1,2,3,4,5],
+			  	src:'assets/img/zf'
 
 			  },
 			  created:function(){
-			  	var hope=JSON.parse(localStorage.getItem("order_sender")).wish_word;
+			  	var index=JSON.parse(localStorage.getItem("order_sender")).index;
 			  	var user_name=JSON.parse(localStorage.getItem("order_sender")).user_name;
 			  	//alert(JSON.parse(localStorage.getItem("order_number")).order_sn)
-			  	this.wish=hope;
+			  	this.wish_index=index;
 			  	this.user_name=user_name
 			  },
 			  methods:{
