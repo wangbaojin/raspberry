@@ -2,10 +2,10 @@
 
    include "../../lanewechat.php";
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/write_info.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_userinfo');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-   $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN');
+  // $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN');
 // echo $user_info['nickname'];
 // echo $user_info['headimgurl'];
 // echo $user_info['openid'];
