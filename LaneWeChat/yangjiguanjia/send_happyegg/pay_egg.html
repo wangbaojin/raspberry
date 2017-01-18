@@ -12,16 +12,16 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
 			 body{width: 100%;height: 100%;background-color: #ffe32d;}
-			.part{height: 2rem;margin: 0 .3rem;font-family: Microsoft YaHei;}
-			.part li{float: left;margin: 0 .1rem;position: relative;}
-			.part img{width: 1.5rem;}
-			.posi{position: absolute;bottom: .06rem;left: .55rem;font-size: .26rem;color: #222222}
+			.part{height: 1.5rem;margin: 0 .3rem;font-family: Microsoft YaHei;}
+			.part li{float: left;margin: 0 .2rem;position: relative;}
+			.part img{width: 1.3rem;}
+			.posi{position: absolute;bottom: .02rem;left: .45rem;font-size: .26rem;color: #222222}
 		</style>
 	</head>
 	<body>
 		<div id="app">
-			<div v-show='dis' style="position: fixed;top:8rem;background-color: #fff;font-size: .4rem;width: 8rem;padding-bottom: .5rem;z-index: 999;">
-				<div class="weui-cell">
+			<div v-show='dis' style="position: fixed;bottom:1.6rem;background-color: #fff;font-size: .4rem;width: 8rem;padding-bottom: .3rem;z-index: 999;">
+				<div class="weui-cell" style="padding:.1rem .15rem;">
                      <div class="weui-cell__hd"><label style="width: 1.2rem;" class="weui-label">份数</label></div>
                      <div class="weui-cell__bd">
                      	<input style="text-align: center;width: 5rem;margin: 0 auto;" autofocus="autofocus" class="weui-input" v-model="num" type="number" placeholder="请输入赠送人数(1~100)" onkeyup="value=value.replace(/\./,'')">
@@ -52,14 +52,14 @@
 					<li @click="changesrc(2)">
 						<label for="x13">
 							<img v-bind:src=src+arr[2]+'.png' alt="">
-							<span class="posi" style="left: .5rem;">10人</span>
+							<span class="posi" style="left: .4rem;">10人</span>
 							<input type="radio"  class="weui-check" id="x13" v-model="person" value="10">
 						</label>
 					</li>
 					<li @click="changesrc(3)">
 						<label for="x14">
 							<img v-bind:src=src+arr[3]+'.png' alt="">
-							<span class="posi" style="left: .5rem;">{{num1}}</span>
+							<span class="posi" style="left: .4rem;">{{num1}}</span>
 							<input type="radio" class="weui-check"  id="x14" v-model="person">
 						</label>
 					</li>
@@ -103,7 +103,7 @@
 		                </div>
 		            </label>
 		        </div> -->
-		        <div class="weui-btn-area" style="margin-top: .3rem;">
+		        <div class="weui-btn-area" style="margin:.3rem auto .2rem;">
 		            <a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 5rem;background-color: #f9481d;" class="weui-btn weui-btn_primary" href="javascript:void(0)" @click="pay" id="showTooltips">立即付款<i style="color: black;">{{total_price}}元</i></a>
 		        </div>
 		    </div>
