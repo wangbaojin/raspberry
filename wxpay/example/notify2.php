@@ -53,8 +53,14 @@ class PayNotifyCallBack extends WxPayNotify
                 //$db->exec("UPDATE ".DB_TABLEPRE."order SET status=1,payable=".$data['total_fee']."/100,pay_time=".time().",updated_at=".time().",pay_type='weixin',callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'"); 
                // $db->exec("UPDATE ".DB_TABLEPRE."wxorder SET paid=1,total_price=".$data['total_fee']."/100,open_id=".$data['openid'].",update_time=".time().",callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'");
                $db->exec("UPDATE ".DB_TABLEPRE."wxorder SET paid=1,update_time=".time().",open_id='".$openid."',callback_data='".json_encode($data)."' WHERE order_sn='".$data['out_trade_no']."'");
-
-                              
+                $res = $db->query("select * from kp_wxorder where order_sn='".$data['out_trade_no']."'");
+                while($row = $res->fetch()){
+                     $unit_price = $row['unit_price'];
+                     $amount = $row['amount'];
+                  
+                }
+                //发送模板消息
+                file_get_contents("http://weixin.yangjiguanjia.com/LaneWeChat/moban_buy_success.php?open_id=".$openid."&order_sn=".$out_trade_no."&unit_price=".$unit_price."&amount=".$amount);              
                 return true;
 	}
 }

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+		<meta name="apple-touch-fullscreen" content="YES" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>快乐的蛋</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
+		<style type="text/css">
+			 body{width: 100%;height: 100%;background-color: #ffe32d;}
+			.part{height: 2rem;margin: 0 .3rem;font-family: Microsoft YaHei;}
+			.part li{float: left;margin: 0 .1rem;position: relative;}
+			.part img{width: 1.5rem;}
+			.posi{position: absolute;bottom: .06rem;left: .55rem;font-size: .26rem;color: #222222}
+			.posi_x{position: absolute;bottom: .9rem;left: .9rem;font-size: .3rem;color: #222222}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div v-show='dis' style="position: fixed;top:5rem;background-color: #fff;font-size: .4rem;width: 8rem;padding-bottom: .5rem;">
+				<div class="weui-cell">
+                     <div class="weui-cell__hd"><label style="width: 1.5rem;" class="weui-label">份数</label></div>
+                     <div class="weui-cell__bd">
+                     	<input class="weui-input" v-model="num" type="number" placeholder="请输入您要购买的份数(1~100)">
+                     </div>
+                </div>
+                <a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 5rem;background-color: #f9481d
+;margin-top: .2rem;" class="weui-btn weui-btn_primary" href="javascript:void(0)" @click="sure">确定</a>
+			</div>
+			<!-- <p style="font-size: .32rem;margin-top: .2rem;width: 100%;height: 5rem;background: gainsboro;color: darkslategray;">大吉大利,祝TA新年快乐!</p> -->
+			<img src="assets/img/1.jpg" alt="">
+			<div>
+				<ul class="part">
+					<li @click="changesrc(0)">
+						<label for="x11">
+							<img v-bind:src=src+arr[0]+'.png' alt="">
+							<span class="posi">1份</span>
+							<input type="radio" class="weui-check" name="radio1" id="x11" v-model="person" value="1">
+						</label>
+					</li>
+					<li @click="changesrc(1)">
+						<label for="x12">
+							<img v-bind:src=src+arr[1]+'.png' alt="">
+							<span class="posi">5份</span>
+							<span class="posi_x">x5</span>
+							<input input type="radio" name="radio1" class="weui-check" id="x12" v-model="person" value="5">
+						</label>
+					</li>
+					<li @click="changesrc(2)">
+						<label for="x13">
+							<img v-bind:src=src+arr[2]+'.png' alt="">
+							<span class="posi" style="left: .5rem;">10份</span>
+							<span class="posi_x">x10</span>
+							<input type="radio" name="radio1" class="weui-check" id="x13" v-model="person" value="10">
+						</label>
+					</li>
+					<li @click="changesrc(3)">
+						<label for="x14">
+							<img v-bind:src=src+arr[3]+'.png' alt="">
+							<span class="posi" style="left: .5rem;">其它</span>
+							<span class="posi_x" style="left: .75rem;">x{{num1}}</span>
+							<input type="radio" class="weui-check" name="radio1" id="x14" v-model="person">
+						</label>
+					</li>
+				</ul>
+		        <!-- <div class="weui-cells weui-cells_radio">
+		            <label class="weui-cell weui-check__label" for="x11">
+		                <div class="weui-cell__bd">
+		                    <p>1人</p>
+		                </div>
+		                <div class="weui-cell__ft">
+		                    <input type="radio" class="weui-check" name="radio1" id="x11" v-model="person" value="1">
+		                    <span class="weui-icon-checked"></span>
+		                </div>
+		            </label>
+		            <label class="weui-cell weui-check__label" for="x12">
+		
+		                <div class="weui-cell__bd">
+		                    <p>10人</p>
+		                </div>
+		                <div class="weui-cell__ft">
+		                    <input type="radio" name="radio1" class="weui-check" id="x12" v-model="person" value="10" >
+		                    <span class="weui-icon-checked"></span>
+		                </div>
+		            </label>
+		            <label class="weui-cell weui-check__label" for="x13">
+		                <div class="weui-cell__bd">
+		                    <p>50人</p>
+		                </div>
+		                <div class="weui-cell__ft">
+		                    <input type="radio" name="radio1" class="weui-check" id="x13" v-model="person" value="50">
+		                    <span class="weui-icon-checked"></span>
+		                </div>
+		            </label>
+		            <label class="weui-cell weui-check__label" for="x14">
+		                <div class="weui-cell__bd">
+		                    <p>其他</p>
+		                </div>
+		                <div class="weui-cell__ft">
+		                    <input type="radio" name="radio1" class="weui-check" id="x14"  v-model="person" value="0">
+		                    <span class="weui-icon-checked"></span>
+		                </div>
+		            </label>
+		        </div> -->
+		        <div class="weui-btn-area" style="margin-top: .3rem;">
+		            <a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 5rem;background-color: #f9481d;" class="weui-btn weui-btn_primary" href="javascript:void(0)" @click="pay" id="showTooltips">立即付款</a>
+		        </div>
+		    </div>
+	    </div>
+		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+			  el: '#app',
+			  data: {
+			    message: '',
+			    person:1,
+			    flag:true,
+			    num1:'N',
+			    num:'',
+			    src:"assets/img/hongbao",
+			    arr:['xz','1','1','1'],
+			    dis:false,
+			    disable:true
+			  },
+			  methods:{
+			  	pay:function(){
+			  		console.log(this.person);
+			  		if(this.flag&&this.disable){
+			  			var id=JSON.parse(localStorage.getItem("product")).id;
+				  		var name=JSON.parse(localStorage.getItem("product")).name;
+				  		var hope=JSON.parse(localStorage.getItem("product")).hope;
+				  		
+				  		this.$http.post(validate.url+"/Api/WxHappyEgg/createOrder",{user_name:name,unit_price:id,wish_word:hope,amount:this.person,total_price:this.person*id},{emulateJSON:true}).then(
+				            function (res) {
+				            	if(res.body.code==1){
+				            		this.flag=false;
+				            		
+                                                           //location.href="http://weixin.yangjiguanjia.com/wxpay/example/jsapi2.php?order_sn="+res.body.result.order_sn+"&total_fee="+res.body.result.total_price
+				            	           location.href="http://weixin.yangjiguanjia.com/wxpay/example/jsapi2.php?order_sn="+res.body.result.order_sn+"&total_fee=0.01"
+                                                }
+				                //console.log(res.body);
+				            },function (res) {
+				            	// 处理失败的结果
+				            	alert("请求出错!")
+				            }
+				        )
+			  		}
+			  		
+
+			  	},
+			  	onBridgeReady:function(){
+			  		    WeixinJSBridge.invoke(
+					       'getBrandWCPayRequest', {
+					           "appId" : "",     //公众号名称，由商户传入     
+					           "timeStamp":"",         //时间戳，自1970年以来的秒数     
+					           "nonceStr" : "", //随机串     
+					           "package" : "",     
+					           "signType" : "MD5",         //微信签名方式：     
+					           "paySign" : "" //微信签名 
+					       },
+					       function(res){     
+					           if(res.err_msg == "get_brand_wcpay_request：ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+					       }
+					   ); 
+			  	},
+			  	callpay:function(){
+			  		
+			  		if (typeof WeixinJSBridge == "undefined"){
+					   if( document.addEventListener ){
+					       document.addEventListener('WeixinJSBridgeReady',this.onBridgeReady, false);
+					   }else if (document.attachEvent){
+					       document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady); 
+					       document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
+					   }
+					}else{
+					   this.onBridgeReady();
+					}
+			  	},
+			  	changesrc:function(index){
+			  		if(index==0){
+			  			this.arr=['xz','1','1','1'];
+			  		}else{
+			  			this.arr=['','1','1','1'];
+			  			this.arr[index]='1xz';
+			  		}
+			  		if(index==3){
+			  			this.dis=true;
+			  			this.disable=false;
+			  		}
+			  		if(index!=3){
+			  			this.dis=false;
+			  			this.disable=true;
+			  			this.num1='N';
+			  			this.num='';
+			  		}
+			  	},
+			  	sure:function(){
+			  		if(this.num>100){
+			  			alert('购买份数在100份以内')
+			  			this.num='';
+			  		}else if(this.num==''){
+			  			this.num1='N';
+			  			alert('请输入您要购买的份数')
+			  		}else{
+			  			this.dis=false;
+			  			this.num1=this.num;
+			  			this.person=this.num;
+			  			this.disable=true;
+			  		}
+			  	}
+			  }
+			})
+			
+	
+		</script>
+	</body>
+</html>
