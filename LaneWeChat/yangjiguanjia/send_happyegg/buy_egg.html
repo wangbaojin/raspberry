@@ -137,12 +137,13 @@
 			    wish_arr: ['鸡年大吉','恭喜发财','1234','5678'],
 			    message:'鸡年大吉',
 			    name:'',
-			    picked:1,
+			    picked:1900.8,
 			    arr:[true,false,false],
 			    wish_word:false
 			  },
 			  methods:{
 			  	next_step:function(){
+			  		alert(this.picked)
 			  		if(this.name==""){
 			  			alert("请输入姓名")
 			  		}else{

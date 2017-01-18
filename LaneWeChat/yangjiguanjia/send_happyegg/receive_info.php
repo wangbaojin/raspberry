@@ -3,9 +3,10 @@
    include "../../lanewechat.php"; 
    $b = $_GET['order_sn']; 
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_userinfo');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+   $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN'); 
    $order_sn = $_GET['state'];
      
 ?>
@@ -231,7 +232,7 @@
 									<img src="assets/img/get.png" class="get"/>
 								</div>
 								<p class="hope" >恭喜您抢到</p>
-								<p class="goods_info">38元鸡蛋一提</p>
+								<p class="goods_info">{{pro}}</p>
 								<div class="go_btn" >
 						            <a href="javascript:void(0);" @click="go">前去领奖</a>
 						        </div>
@@ -275,13 +276,14 @@
 			 	message:"",
 			 	show_none:false,
 			 	show_get:false,
-			 	show_nochance:false
+			 	show_nochance:false,
+			 	pro:""
 			  },
 			  created:function(){
 			  		var _this=this;
 			  		
-			  		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>"}))
-					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
+			  		localStorage.setItem("order_number",JSON.stringify({"order_sn":"<?php echo $order_sn;?>","nick_name":"<?php echo $user_info['nickname'];?>","pic":"<?php echo $user_info['headimgurl']; ?>"}))
+					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",nick_name:"<?php echo $user_info['nickname'];?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 //			                alert(res.body.code)
@@ -289,6 +291,13 @@
 //			                alert(typeof(res.body.error))
 			                if(res.body.code==1){ //抢到红包
 			                	_this.show=true;
+			                	if(res.body.unit_price==39.6){
+			                		_this.pro="39元鸡蛋一提"
+			                	}else if(res.body.unit_price==950.6){
+			                		_this.pro="半年套餐一份"
+			                	}else if(res.body.unit_price==1900.8){
+			                		_this.pro="整年套餐一份"
+			                	}
 			                }else if(res.body.code==0){
 			                	//alert(res.body.error)
 			                	if(res.body.error==5006){  //已经抢过

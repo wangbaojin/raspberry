@@ -2,10 +2,10 @@
 
    include "../../lanewechat.php";
    $redirect_uri = 'LaneWeChat/yangjiguanjia/send_happyegg/write_info.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_userinfo');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
-   $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN');
+  // $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN');
 // echo $user_info['nickname'];
 // echo $user_info['headimgurl'];
 // echo $user_info['openid'];
@@ -70,7 +70,7 @@
 				<img src="assets/img/bg_write.png"/>
 				<div class="write_box">
 					<div class="tx">
-						<img src="<?php echo $user_info['headimgurl']; ?>"/>
+						<img v-bind:src="pic"/>
 					</div>
 					<div class="input_box">
 						<span><img src="assets/img/name.png"/></span>
@@ -125,11 +125,13 @@
 			 	address:"",
 			 	tel:"",
 			 	code:"",
-			 	date:"配送日期"
+			 	date:"配送日期",
+			 	pic:""
 			 	
 			  },
 			  created:function(){
 					var _this=this;
+					_this.pic=JSON.parse(localStorage.getItem("order_number")).pic;
 				    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
 					//alert(url)
 			  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
@@ -150,8 +152,9 @@
 							    	
 							        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
 							        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-							  		_this.$http.get(validate.url+'/getAddressInfo/geocoder/v2/?location='+latitude+','+longitude+'&output=json&pois=1&ak=0r5h4bhrVoUjEvrNc8Lx0NLUcP9xiaQo').then(function(res){
-					                   
+							  		
+							  		_this.$http.get(validate.url+'/getAddressInfo/geocoder/v2/?location='+latitude+','+longitude+'&output=json&pois=1&ak=0r5h4bhrVoUjEvrNc8Lx0NLUcP9xiaQo&coordtype=wgs84ll').then(function(res){
+					                    
 					                    res=JSON.parse(res.body)
 					                  
 					                    if(res.status==0){
@@ -192,8 +195,10 @@
 			  			return
 			  		}
 			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
+			  		var nick_name=JSON.parse(localStorage.getItem("order_number")).nick_name;
+			  		var pic=JSON.parse(localStorage.getItem("order_number")).pic;
 			  		
-	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:"<?php echo $user_info['nickname']; ?>",pic:"<?php echo $user_info['headimgurl']; ?>",open_id:"<?php echo $user_info['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:nike_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                //alert(JSON.stringify(res.body))
