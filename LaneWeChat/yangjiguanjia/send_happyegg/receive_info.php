@@ -232,7 +232,7 @@
 									<img src="assets/img/get.png" class="get"/>
 								</div>
 								<p class="hope" >恭喜您抢到</p>
-								<p class="goods_info">38元鸡蛋一提</p>
+								<p class="goods_info">{{pro}}</p>
 								<div class="go_btn" >
 						            <a href="javascript:void(0);" @click="go">前去领奖</a>
 						        </div>
@@ -276,7 +276,8 @@
 			 	message:"",
 			 	show_none:false,
 			 	show_get:false,
-			 	show_nochance:false
+			 	show_nochance:false,
+			 	pro:""
 			  },
 			  created:function(){
 			  		var _this=this;
@@ -290,6 +291,13 @@
 //			                alert(typeof(res.body.error))
 			                if(res.body.code==1){ //抢到红包
 			                	_this.show=true;
+			                	if(res.body.unit_price==39.6){
+			                		_this.pro="39元鸡蛋一提"
+			                	}else if(res.body.unit_price==950.6){
+			                		_this.pro="半年套餐一份"
+			                	}else if(res.body.unit_price==1900.8){
+			                		_this.pro="整年套餐一份"
+			                	}
 			                }else if(res.body.code==0){
 			                	//alert(res.body.error)
 			                	if(res.body.error==5006){  //已经抢过
