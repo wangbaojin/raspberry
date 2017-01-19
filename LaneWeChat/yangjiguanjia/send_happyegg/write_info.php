@@ -205,13 +205,13 @@
 			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
 			  		var nick_name=JSON.parse(localStorage.getItem("order_number")).nick_name;
 			  		var pic=JSON.parse(localStorage.getItem("order_number")).pic;
-			  		console.log(order_sn)
-			  		console.log(nick_name)
-	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address+this.address_detail,tel:this.tel,nike_name:nike_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address+this.address_detail,tel:this.tel,nike_name:nick_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
-			                alert(JSON.stringify(res.body))
+			                //console.log(JSON.stringify(res.body))
 			                if(res.body.code==1){
+			                	//alert(res.body.result.user_name)
+			                	//alert(res.body.result.wish_word)
 			                	localStorage.setItem("order_sender",JSON.stringify({"user_name":res.body.result.user_name,"wish_word":res.body.result.wish_word}))
 			                	alert(res.body.msg);
 			                	location.href="wish_egg.html"

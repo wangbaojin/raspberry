@@ -6,7 +6,7 @@
              'keyword1'=>array('value'=>$_GET['nick_name'], 'color'=>'#173177'),
              'keyword2'=>array('value'=>"一份".$_GET['unit_price']."元快乐的蛋", 'color'=>'#173177'),
              'keyword3'=>array('value'=>date("Y/m/d H:i:s",time()), 'color'=>'#173177'),
-             'remark'=>array('value'=>'请及时确认，15分钟内可以点击详情收回礼品哦', 'color'=>'#173177')
+             'remark'=>array('value'=>'请及时确认，5分钟内可以点击详情收回礼品哦', 'color'=>'#173177')
         );
 
         //$touser 接收方的OpenId。

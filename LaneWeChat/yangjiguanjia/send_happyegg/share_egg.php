@@ -19,7 +19,6 @@
 		<title>快乐的蛋</title>
 		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
 		<style type="text/css">
 			html,body{background: #e7610f;}
 			.bg img{width: 100%;display: inline-block;}
@@ -211,7 +210,7 @@
 			  		var _this=this;
 				    //alert(location.href)
 				    //请求抢红包详情
-			      	alert("<?php echo $order_sn;?>")
+			      	
 					_this.$http.post(validate.url+"/Api/WxHappyEgg/getCatchInfo",{order_sn:"<?php echo $order_sn;?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
@@ -229,6 +228,7 @@
 			                	}
 			                	_this.total_amount=res.body.result.total_amount;
 			                	_this.unit_price=res.body.result.unit_price;
+			                	
 			                	if(_this.total_amount==1){
 			                		_this.desc="小小福蛋，拳拳心意，慢慢祝福，大大惊喜，还不打开看看，记得填收件地址哦。"
 			                		if(_this.unit_price==39.6){
@@ -298,7 +298,7 @@
 			                    	title: _this.title, // 分享标题
 								    desc: _this.desc, // 分享描述
 								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/receive_info.php?order_sn='+"<?php echo $order_sn;?>", // 分享链接
-								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/assets/img/duoduo.png', // 分享图标
+								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/assets/img/imgurl.jpg', // 分享图标
 								    type: 'link', // 分享类型,music、video或link，不填默认为link
 								    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 			                        success: function () { 

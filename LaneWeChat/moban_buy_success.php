@@ -3,7 +3,7 @@
         date_default_timezone_set('PRC');  
         $data = array(
              'name'=>array('value'=>$_GET['amount']."份".$_GET['unit_price']."元快乐的蛋", 'color'=>'#0A0A0A'),
-             'remark'=>array('value'=>'点击详情页并将其分享给好友，15分钟内可以点击详情收回礼品哦', 'color'=>'#173177')
+             'remark'=>array('value'=>'点击详情页并将其分享给好友，5分钟内可以点击详情收回礼品哦', 'color'=>'#173177')
         );
 
         //$touser 接收方的OpenId。

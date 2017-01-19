@@ -1,0 +1,10 @@
+[ 2017-01-19T01:40:57+08:00 ] 130.193.51.48 /statics/Home/images/favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000247s ]
+
+[ 2017-01-19T09:49:52+08:00 ] 130.193.51.48 /statics/Home/images/favicon.ico
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000272s ]
+
