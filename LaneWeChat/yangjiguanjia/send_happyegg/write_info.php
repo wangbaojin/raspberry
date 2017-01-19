@@ -76,6 +76,7 @@
 							<input class="name" type="text" placeholder="联系人" v-model="name">
 						</div>
 						
+
 					</div>
 					
 					<div class="input_box">
