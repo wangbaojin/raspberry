@@ -1,4 +1,4 @@
- <?php
+<?php
 
    include "../../lanewechat.php";
    $b = $_GET['order_sn']; 

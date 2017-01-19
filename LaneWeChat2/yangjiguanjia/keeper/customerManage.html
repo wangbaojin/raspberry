@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>客户管理</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<style type="text/css">
+			
+			dl{width: 100%;border-bottom: 1px solid #e6e6e6;overflow: hidden;height: 1.18rem;position: relative;}
+			dl dt{float: left;margin: .25rem .16rem 0 .2rem;}
+			dl .name{font-size: .32rem;margin-top: .24rem;}
+			dl .total{font-size: .22rem;margin-top: .05rem;}
+			.total p{display: inline-block;}
+			dl .total .red{color: #fe3057;}
+			dl .touxiang{width: .66rem;height: .66rem;border-radius: 50%;border: 1px solid #e6e6e6;text-align: center;overflow: hidden;}
+			dl .touxiang img{display: inline-block;width: .52rem;margin-top: .14rem;}
+			dl .go{position: absolute;top: .4rem;right: .2rem;}
+			dl .go img{width: .2rem;}
+			section{position: relative;width: 100%;}
+			 .home{position: fixed;right: .4rem;bottom: .6rem;overflow: hidden;}
+			.home img{width: 1.1rem;}
+		</style>
+	</head>
+	<body>
+		<section>
+			<!--<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">王小二</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">8.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">王小二</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">刘大帅</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">0.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">1</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">张三</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">11.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>
+			<dl class="customerInfo">
+				<dt class="touxiang"><img src="assets/img/touxiang.png"/></dt>
+				<dd class="name">李大军</dd>
+				<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">3.9</span>万</p></dd>
+				<dd class="go"><img src="assets/img/go.png"/></dd>
+			</dl>-->
+			
+		</section>
+		<div class="home">
+			<img src="assets/images/home.png"/>
+		</div>
+		<script src="assets/js/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/zepto.tap.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/conf/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/artTamplate.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/md5-min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/html" id="customerManager_tmp1">
+			{{ each data as value index }}
+					<dl class="customerInfo" userId={{value.user_id}}>
+						<dt class="touxiang"><img src="assets/images/touxiang.png"/></dt>
+						<dd class="name">{{value.name}}</dd>
+						<dd class="total">总交易额&emsp;<p class="red">¥ <span class="redNum">{{value.total_fee}}</span>元</p></dd>
+						<dd class="go"><img src="assets/images/go.png"/></dd>
+					</dl>				
+			{{/each}}
+		</script>
+		<script type="text/javascript">
+			$(function(){
+				var id;
+				if(localStorage.getItem("personDetails")){
+					id=JSON.parse(localStorage.getItem("personDetails")).id;
+				};
+				var version="1.2.2";
+				var signature=hex_md5("keeper_id="+id+"&version=1.2.2"+version+"Tv,cM02kjf^lWoU")
+				$.get(validate.url+"/Api/Keeper/getUsersInfo?keeper_id="+id+"&signature="+signature+"&version="+version,{},function(data){
+							if(data.code===1){
+								var html = template("customerManager_tmp1",{data:data.result});
+							 	$("section").html(html);
+							 	$(".customerInfo").on("tap",function(){
+							 		var userID=$(this).attr("userId");
+							 		localStorage.setItem("customerInfo",JSON.stringify({"user_id":userID}))
+							 		location.href="customerDetails.html"
+							 	})
+							}else{ 
+								alert(data.msg);
+							}	
+					})
+				
+				
+				$(".home").on("tap",function(){
+					location.href="index.html";
+				})
+			})
+		</script>
+	</body>
+</html>
