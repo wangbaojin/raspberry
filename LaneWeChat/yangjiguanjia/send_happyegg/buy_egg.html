@@ -53,7 +53,7 @@
 				</li>
 			</ul>
 			<div style="margin-bottom: 1rem;" class="weui-cell__bd">
-                   <input class="username" v-model="name" type="text" placeholder="请输入您的名字">
+                   <input @focus='agree(1)' class="username" v-model="name" type="text" placeholder="请输入您的名字">
                    <p style="margin-bottom: .1rem;" @click='show_wishword(0)' class="username">{{message}}</p>
                    <label @click='agree' style="width: 4.6rem;margin:0 auto;" for="weuiAgree" class="weui-agree">
             			<input id="weuiAgree" class="weui-agree__checkbox" type="checkbox" checked="checked">
@@ -181,8 +181,13 @@
 			  			this.wish_word=false;
 			  			this.wish_index=index;
 			  	},
-			  	agree:function(){
-			  			this.dis_agree=!this.dis_agree;
+			  	agree:function(index){
+			  			if(index==1){
+			  				this.dis_agree=true;
+			  			}else{
+			  				this.dis_agree=!this.dis_agree;
+			  			}
+			  			
 			  	}
 			  }
 			})
