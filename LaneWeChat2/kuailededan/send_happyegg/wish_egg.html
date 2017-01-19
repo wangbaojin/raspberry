@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+		<meta name="apple-touch-fullscreen" content="YES" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>快乐的蛋</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
+		<style type="text/css">
+			body{width: 100%;height: 100%;background-color: #f75843;font-family: "微软雅黑";padding-top: 1rem;}
+			.mask_img{position: fixed;left: 0;top: 0;;height: 100%;width: 100%;z-index: 99;padding-top: 1.5rem;z-index: 999;}
+			.mask{position: fixed;left: 0;top: 0;background-color: #000;opacity: 0.77;filter:alpha(opacity=51.8);height: 100%;width: 100%;z-index: 99;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+				<p style="font-size: .44rem;color: #fff;margin: 0 auto;text-align: center;">感谢{{user_name}}的蛋蛋</p>
+				<p style="font-size: .3rem;color: #fff;margin: 0 auto;text-align: center;margin: .3rem 0 .4rem 0">每周日请注意收蛋哦O(∩_∩)O</p>
+				<div style="height: 5rem;width: 5rem;border-radius: 50% 50%;background-color: #fff;margin: 0 auto;position: relative;">
+					<img style="width: 4rem;position: absolute;left: .5rem;top:1rem;" src="assets/img/duoduo.png" alt="">
+				</div>
+				<div class="weui-btn-area" style="margin-top: 1rem;margin-bottom: 1rem;">
+		          	<a style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 5rem;background-color: #fdd001;color:#f33920;" class="weui-btn weui-btn_primary" href="javascript:void(0)" @click='sendgift'>我也要送礼物</a>
+		    	</div>
+		    	<div v-show='disp' class="mask">
+		    	</div>
+		    	<div v-show='disp' class="mask_img">
+		    		<img style="width: 6rem;display: block;margin: 0 auto;" src="assets/img/wish.png" alt="">
+		    		<img @click="turnoff" style="display: block;margin: 0 auto;margin-top: .8rem;width: .6rem;" src="assets/img/x.png" alt="">
+		    		<img style="position: absolute;left: 3.3rem;top: 3.3rem;height: 4rem;" v-bind:src=src+arr[this.wish_index]+'.png' alt="">
+		    	</div>
+	    </div>
+		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+			  el: '#app',
+			  data: {
+			  	disp:true,
+			  	wish_index:'1',
+			  	user_name:"",
+			  	arr:[0,1,2,3,4,5],
+			  	src:'assets/img/zf'
+
+			  },
+			  created:function(){
+			  	var index=JSON.parse(localStorage.getItem("order_sender")).wish_word;
+			  	var user_name=JSON.parse(localStorage.getItem("order_sender")).user_name;
+			  	//alert(JSON.parse(localStorage.getItem("order_number")).order_sn)
+			  	this.wish_index=index;
+			  	this.user_name=user_name
+			  },
+			  methods:{
+			  	turnoff:function(){
+			  		this.disp=false;
+			  	},
+			  	sendgift:function(){
+			  		location.href="buy_egg.html";
+			  	}
+			  }
+			})
+		</script>
+	</body>
+
+</html>

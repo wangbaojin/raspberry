@@ -60,7 +60,7 @@ class PayNotifyCallBack extends WxPayNotify
                   
                 }
                 //发送模板消息
-                file_get_contents("http://weixin.yangjiguanjia.com/LaneWeChat/moban_buy_success.php?open_id=".$openid."&order_sn=".$out_trade_no."&unit_price=".$unit_price."&amount=".$amount);              
+                file_get_contents("http://weixin.yangjiguanjia.com/LaneWeChat2/moban_buy_success.php?open_id=".$openid."&order_sn=".$out_trade_no."&unit_price=".$unit_price."&amount=".$amount);              
                 return true;
 	}
 }
