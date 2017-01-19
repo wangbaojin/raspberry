@@ -21,8 +21,7 @@
 		<title>快乐的蛋</title>
 		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/css/weui.min.css"/>
-		<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+		<link href="assets/css/animate.min.css" rel="stylesheet" type="text/css">
 		<style type="text/css">
 			#example-1 li{display: flex;width: 100%;}
 			#example-1 span{flex: 1;text-align: center;}
@@ -286,16 +285,16 @@
 					this.$http.post(validate.url+"/Api/WxHappyEgg/addCatchLog",{order_sn:"<?php echo $order_sn;?>",nick_name:"<?php echo $user_info['nickname'];?>",open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
-//			                alert(res.body.code)
+			               
 //			                alert(res.body.error)
 //			                alert(typeof(res.body.error))
 			                if(res.body.code==1){ //抢到红包
 			                	_this.show=true;
-			                	if(res.body.unit_price==39.6){
+			                	if(res.body.result.unit_price==39.6){
 			                		_this.pro="39元鸡蛋一提"
-			                	}else if(res.body.unit_price==950.6){
+			                	}else if(res.body.result.unit_price==950.6){
 			                		_this.pro="半年套餐一份"
-			                	}else if(res.body.unit_price==1900.8){
+			                	}else if(res.body.result.unit_price==1900.8){
 			                		_this.pro="整年套餐一份"
 			                	}
 			                }else if(res.body.code==0){

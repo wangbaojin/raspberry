@@ -28,22 +28,20 @@
 			 img{width: 100%;display: inline-block;}
 			.write_box{z-index: 999;box-sizing: border-box;margin: 0 auto;position: absolute;top: 0;text-align: center;
 			font-size: 0;padding: 0 .3rem;width: 100%;margin-top: .15rem;overflow: hidden;}
-	        .tx{margin: 1.3rem auto .76rem;width: 100%;}
+	        .tx{margin: .8rem auto .4rem;width: 100%;}
 	        .tx img{width: 1rem;height: 1rem;display: inline-block;margin: 0 auto;border-radius: 50%;}
 			.write_box input,.write_box p{display: block;font-size: .28rem;
 			color: #bbbbbb;line-height: .6rem;width: 100%;}
-			.small_box{width: 4.28rem;float: left;margin-bottom: .3rem;
+			.small_box{width: 4.28rem;float: left;margin-bottom: .42rem;
 			height: .6rem;position: relative;}
 			.small_box:after{content: "";position: absolute;
 			left: 0;bottom: 0;width: 100%;height: 1px;background-color: #e4c600;
 			-webkit-transform: scaleY(.5);transform:scaleY(.5);}
 			.input_box{float: left;}
-			.input_box span{display: block;float: left;margin: .07rem .3rem 0 .46rem;}
+			.input_box span{display: block;float: left;margin: .07rem .22rem 0 .6rem;}
 			.input_box img{width: .42rem;display: inline-block;}
-		
 			
-			
-			.submit1_btn{box-sizing: border-box;width:100%;height: 1rem;float: left;margin-top: 1rem;}
+			.submit1_btn{box-sizing: border-box;width:100%;height: 1rem;float: left;margin-top: .3rem;}
 			.submit1_btn a{width: 5rem;height: 1rem;line-height: 1rem;text-align: center;color: #ffffff;
 			font-size: .32rem;background: #fc4602;display: inline-block;margin:0 auto ;
 			border-radius: .1rem;font-family: "微软雅黑";}
@@ -93,7 +91,12 @@
 							<input class="address" type="text" placeholder="配送地址" v-model="address">
 						</div>
 					</div>
-					
+					<div class="input_box">
+						<span style="width: .42rem;"></span>
+						<div class="small_box">
+							<input class="address" type="text" placeholder="详细楼号/门牌号等" v-model="address_detail">
+						</div>
+					</div>
 					<div class="input_box">
 						<span><img src="assets/img/date.png"/></span>
    	             		<div class="small_box">
@@ -126,7 +129,8 @@
 			 	tel:"",
 			 	code:"",
 			 	date:"配送日期",
-			 	pic:""
+			 	pic:"",
+			 	address_detail:""
 			 	
 			  },
 			  created:function(){
@@ -190,19 +194,24 @@
 			  		}else if(!validate.phone(_this.tel)){
 			  			alert("请输入正确的手机号")
 			  			return
+			  		}else if(this.address_detail==""){
+			  			alert("请输入详细楼号、门牌号等")
+			  			return
 			  		}else if(this.date=="配送日期"){
 			  			alert("请选择您的配送日期")
 			  			return
 			  		}
+			  		
 			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
 			  		var nick_name=JSON.parse(localStorage.getItem("order_number")).nick_name;
 			  		var pic=JSON.parse(localStorage.getItem("order_number")).pic;
-			  		
-	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address,tel:this.tel,nike_name:nike_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
+	         		this.$http.post(validate.url+"/Api/WxHappyEgg/saveReceiver",{real_name:this.name,address:this.address+this.address_detail,tel:this.tel,nike_name:nick_name,pic:pic,open_id:"<?php echo $a['openid']; ?>",order_sn:order_sn,receive_time:this.date},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
-			                //alert(JSON.stringify(res.body))
+			                //console.log(JSON.stringify(res.body))
 			                if(res.body.code==1){
+			                	//alert(res.body.result.user_name)
+			                	//alert(res.body.result.wish_word)
 			                	localStorage.setItem("order_sender",JSON.stringify({"user_name":res.body.result.user_name,"wish_word":res.body.result.wish_word}))
 			                	alert(res.body.msg);
 			                	location.href="wish_egg.html"
