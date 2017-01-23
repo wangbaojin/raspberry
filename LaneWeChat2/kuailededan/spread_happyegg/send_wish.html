@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+		<meta name="apple-touch-fullscreen" content="YES" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<meta name = "format-detection" content = "telephone=no">
+		<title>快乐的蛋</title>
+		<script src="assets/js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
+		<style type="text/css">
+			html,body,#app{width: 100%;height: 100%;background: #dc3315;}
+			#app{box-sizing: border-box;position: relative;}
+			#app .bg_src{width: 100%;display: inline-block;height: 7.3rem;}
+			.box{min-height: 4rem;background-color: #dc3315;margin-top: .8rem;}
+			.btn_box{width: 100%;text-align: center;margin-bottom: .24rem;font-size: 0;}
+			.btn_box a{width: 5.8rem;height: 1rem;line-height: 1rem;border-radius: .1rem;background: #fed100;
+			font-size: .32rem;font-family: "微软雅黑";color: #f6370b;display: inline-block;}
+			.btn_box .check_btn,.btn_box .delete_btn{background: #fead00;color: #f6370b;}
+			
+			.mask{background: #000000;opacity: 0.76;position: absolute;width: 100%;height: 100%;}
+			.bg_box{width: 100%;height: 100%;font-size: 0;position: fixed;}
+			.direct{position: absolute;top: .4rem;z-index: 999;right: .56rem;width: 5.12rem;}
+			.direct img{width: 5.12rem;display: inline-block;height: auto;}
+			.know{position: absolute;top: 28%;right:1rem;width: 1.93rem;z-index: 999;}
+			.know img{width: 100%;display: inline-block;}
+			.shinning{position: absolute;top: -.6rem;right:0;width: 1.4rem;z-index: 99;-webkit-animation:shinning 0.6s infinite alternate;}
+			.shinning img{width: 100%;display: inline-block;}
+			.duoduo{position: absolute;top: 1.55rem;left:.65rem;width: 2rem;z-index: 99;}
+			.duoduo img{width: 100%;display: inline-block;}
+			
+			@-webkit-keyframes shinning{
+				0%{		
+					opacity: 1;
+				}
+				100%{	
+					opacity: 0;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="bg_box" v-if="flag" >
+				<div class="mask"></div>
+				<div class="direct"><img src="assets/img/direct_txt.png"/></div>
+				<div class="duoduo"><img src="assets/img/direct_duoduo.png"/></div>
+				<div class="shinning"><img src="assets/img/direct_shinning.png"/></div>
+				<div class="know" @click="know"><img src="assets/img/know.png"/></div>
+			</div>
+			<img v-bind:src="bg_src" class="bg_src"/>
+			<div class="box">
+				<div class="btn_box">
+					<a class="send_btn" href="javascript:void(0)" @click="check_wish">送给好友一份祝福+福蛋</a>
+				</div>
+				<div class="btn_box">
+					<a class="check_btn" href="my_wish.php" >查看我的福袋</a>
+				</div>
+				
+			</div>
+			
+	    </div>
+		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+			  el: '#app',
+			  data: {
+				bg_src:"",
+				flag:false
+			  },
+			  methods:{
+				check_wish:function(){
+					this.flag=true
+				},
+				know:function(){
+			  		this.flag=false
+			  	}
+			  },
+			  created:function(){
+			  	var wish_type=JSON.parse(localStorage.getItem("wish_sender")).wish_type;
+			  	this.bg_src="assets/img/bg_"+wish_type+".png"
+			  	var wish_id=JSON.parse(localStorage.getItem("wish_sender")).wish_id;
+			  	//var nickname=JSON.parse(localStorage.getItem("wish_sender")).nickname;
+			  	//alert(JSON.parse(localStorage.getItem("order_number")).order_sn)
+			  	
+			  	var _this=this
+			  	var url=location.href
+						//alert(url)
+				  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+		         			//alert(res.body)
+	                       res=JSON.parse(res.body)
+				         	wx.config({
+			                    debug: false,
+			                    appId: res.appId,
+			                    timestamp: res.timestamp,
+			                    nonceStr: res.nonceStr,
+			                    signature: res.signature,
+			                    jsApiList: ['onMenuShareAppMessage']
+			                });
+			                wx.ready(function () {
+			                    wx.onMenuShareAppMessage({
+			                    	title: "领取福蛋", // 分享标题
+								    desc: "快乐的蛋", // 分享描述
+								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id, // 分享链接
+								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/assets/img/imgurl.jpg', // 分享图标
+								    type: 'link', // 分享类型,music、video或link，不填默认为link
+								    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			                        success: function () { 
+			                          _this.flag=false
+			                          location.href="my_wish.php"
+			                        },
+			                        cancel: function () { 
+			                            _this.flag=false
+			                        }
+			                    });
+			                });
+				        },function(response){
+				        	console.info(response);
+				        });
+			  }
+			})
+		</script>
+	</body>
+</html>
