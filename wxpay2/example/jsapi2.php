@@ -93,6 +93,8 @@ $editAddress = $tools->GetEditAddressParameters();
 		}
 	}
     </script>
+    <meta charset="UTF-8">
+    <title>快乐的蛋</title>
 </head>
 <body background:#0f0; background-color:transparent;></body>
 </html>

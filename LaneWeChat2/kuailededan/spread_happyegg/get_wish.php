@@ -230,8 +230,9 @@
 							this.$http.post(validate.url+"/Api/NewYearGift/getWish",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:"<?php echo $wish_id;?>"},{emulateJSON:true}).then(
 					            function (res) {
 					                // 处理成功的结果
-					                console.log(JSON.stringify(res.body))
+					                alert(JSON.stringify(res.body))
 					                if(res.body.code==1){
+					                	alert(res.body.result.wish_type)
 										_this.wish_type=res.body.result.wish_type
 										this.$http.post(validate.url+"/Api/NewYearGift/getGift",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:"<?php echo $wish_id;?>"},{emulateJSON:true}).then(
 								            function (res) {
