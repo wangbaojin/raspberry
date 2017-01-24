@@ -67,13 +67,13 @@
     		</div> -->
     		<div v-bind:style="styleObject">
         		<div class="weui-mask" style="opacity: 1;"></div>
-        		<div class="weui-actionsheet weui-actionsheet_toggle">
+        		<div class="weui-actionsheet" v-bind:class="{ 'weui-actionsheet_toggle': choose_flag }">
            			<div class="weui-actionsheet__menu">
                 		<div v-for="(item, index) in items" @click='chose_wishword(index)' class="weui-actionsheet__cell">{{item.wish}}</div>
             		</div>
-            	<div @click='show_wishword(1)' class="weui-actionsheet__action">
-                	<div class="weui-actionsheet__cell">取消</div>
-            	</div>
+	            	<div @click='show_wishword(1)' class="weui-actionsheet__action">
+	                	<div class="weui-actionsheet__cell">取消</div>
+	            	</div>
         		</div>
     		</div>
 			<div style="position: fixed;bottom: 0;left: 0;width: 100%;">
@@ -145,6 +145,7 @@
 			    	{wish:'万事大吉'},
 			    	{wish:'财源广进'}
 			    ],
+			    choose_flag:false,
 			    wish:'鸡年大吉',
 			    name:'',
 			    picked:'39.6',
@@ -177,8 +178,10 @@
 			  	show_wishword:function(index){
 			  		if(index==0){
 			  			this.styleObject.display="block";
+			  			this.choose_flag=true;
 			  		}else{
 			  			this.styleObject.display="none";
+			  			this.choose_flag=false;
 			  		}
 			  	},
 			  	chose_wishword:function(index){
