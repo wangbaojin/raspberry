@@ -54,7 +54,7 @@
 			</ul>
 			<div style="margin-bottom: 1rem;" class="weui-cell__bd">
                    <input class="username" v-model="name" type="text" placeholder="请输入您的名字">
-                   <p style="margin-bottom: .1rem;" @click='show_wishword(0)' class="username">{{message}}</p>
+                   <p style="margin-bottom: .1rem;" @click='show_wishword(0)' class="username">{{wish}}</p>
                    <label for="checkbox" style="width: 4.6rem;margin:0 auto;"  class="weui-agree">
             			<input id="checkbox" class="weui-agree__checkbox" type="checkbox" v-model="checked" checked="{{checked}}">
             			<span style="font-family: '黑体';color: #171717;font-weight: .18rem;" class="weui-agree__text">
@@ -65,16 +65,11 @@
            <!--  <div @click='showwish_word(0)' class="page__bd page__bd_spacing">
         			<a href="javascript:;" class="weui-btn weui-btn_default" style="height: 1rem;font-size: .32rem;line-height: 1rem;width: 4.6rem;background-color: #da3522;font-family: 黑体;">请选择祝福语</a>
     		</div> -->
-    		<div v-if="wish_word">
+    		<div v-bind:style="styleObject">
         		<div class="weui-mask" style="opacity: 1;"></div>
         		<div class="weui-actionsheet weui-actionsheet_toggle">
            			<div class="weui-actionsheet__menu">
-                		<div @click='chose_wishword(0)' class="weui-actionsheet__cell">{{wish_arr[0]}}</div>
-                		<div @click='chose_wishword(1)' class="weui-actionsheet__cell">{{wish_arr[1]}}</div>
-               			<div @click='chose_wishword(2)' class="weui-actionsheet__cell">{{wish_arr[2]}}</div>
-               			<div @click='chose_wishword(3)' class="weui-actionsheet__cell">{{wish_arr[3]}}</div>
-               			<div @click='chose_wishword(4)' class="weui-actionsheet__cell">{{wish_arr[4]}}</div>
-               			<div @click='chose_wishword(5)' class="weui-actionsheet__cell">{{wish_arr[5]}}</div>
+                		<div v-for="(item, index) in items" @click='chose_wishword(index)' class="weui-actionsheet__cell">{{item.wish}}</div>
             		</div>
             	<div @click='show_wishword(1)' class="weui-actionsheet__action">
                 	<div class="weui-actionsheet__cell">取消</div>
@@ -142,14 +137,24 @@
 			var app = new Vue({
 			  el: '#app',
 			  data: {
-			    wish_arr: ['大鸡大利','新春快乐','鸡年大吉','吉祥如意','万事大吉','财源广进'],
-			    message:'鸡年大吉',
+			    items:[
+			    	{wish:'大鸡大利'},
+			    	{wish:'新春快乐'},
+			    	{wish:'鸡年大吉'},
+			    	{wish:'吉祥如意'},
+			    	{wish:'万事大吉'},
+			    	{wish:'财源广进'}
+			    ],
+			    wish:'鸡年大吉',
 			    name:'',
 			    picked:'39.6',
 			    arr:[false,false,true],
-			    wish_word:false,
 			    wish_index:0,
-			    checked:true
+			    checked:true,
+			    styleObject:{
+					"display":"none",
+					"z-index":990
+				}
 			  },
 			  methods:{
 			  	next_step:function(){
@@ -171,14 +176,14 @@
 			  	},
 			  	show_wishword:function(index){
 			  		if(index==0){
-			  			this.wish_word=true;
+			  			this.styleObject.display="block";
 			  		}else{
-			  			this.wish_word=false;
+			  			this.styleObject.display="none";
 			  		}
 			  	},
 			  	chose_wishword:function(index){
-			  			this.message=this.wish_arr[index];
-			  			this.wish_word=false;
+			  			this.wish=this.items[index].wish;
+			  			this.styleObject.display="none";
 			  			this.wish_index=index;
 			  	}
 			  }
