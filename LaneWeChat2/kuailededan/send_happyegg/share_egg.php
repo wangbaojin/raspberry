@@ -229,35 +229,36 @@
 			                	_this.total_amount=res.body.result.total_amount;
 			                	_this.unit_price=res.body.result.unit_price;
 			                	
-			                	if(_this.total_amount==1){
+			                	// if(_this.total_amount==1){
 			                		_this.desc="小小福蛋，拳拳心意，慢慢祝福，大大惊喜，还不打开看看，记得填收件地址哦。"
-			                		if(_this.unit_price==39.6){
-			                			_this.title="送你1份快乐的蛋，祝您鸡年大吉"
-			                		}else if(_this.unit_price==950.6){
-			                			_this.title="送你1份半年套餐-快乐的蛋，祝您鸡年大吉"
-			                		}else if(_this.unit_price==1900.8){
-			                			_this.title="送你1份整年套餐-快乐的蛋，祝您鸡年大吉"
-			                		}
+			                		_this.title="送你'快乐的蛋'（全营养无抗鲜鸡蛋24枚），福蛋送货到家，共享新春快乐！"
+			                		// if(_this.unit_price==39.6){
+			                		// 	_this.title="送你1份快乐的蛋，祝您鸡年大吉"
+			                		// }else if(_this.unit_price==950.6){
+			                		// 	_this.title="送你1份半年套餐-快乐的蛋，祝您鸡年大吉"
+			                		// }else if(_this.unit_price==1900.8){
+			                		// 	_this.title="送你1份整年套餐-快乐的蛋，祝您鸡年大吉"
+			                		// }
 			                		
-			                	}else if(_this.total_amount==5||_this.total_amount==10){
-			                		_this.desc="小小福蛋传心意，快乐健康一整年，我的祝福，请您一定要收下！记得填收件地址哦。"
-			                		if(_this.unit_price==39.6){
-			                			_this.title="送"+_this.total_amount+"份快乐的蛋，祝您鸡年大吉"
-			                		}else if(_this.unit_price==950.6){
-			                			_this.title="送"+_this.total_amount+"份半年套餐-快乐的蛋，祝您鸡年大吉"
-			                		}else if(_this.unit_price==1900.8){
-			                			_this.title="送"+_this.total_amount+"份整年套餐-快乐的蛋，祝您鸡年大吉"
-			                		}
-			                	}else{
-			                		_this.desc="过年了！我送大家"+_this.total_amount+"份健康快乐的蛋，每份有惊喜，快来抢！记得填收件地址哦。"
-			                		if(_this.unit_price==39.6){
-			                			_this.title="送大家"+_this.total_amount+"份快乐福蛋，全年的快乐都有了"
-			                		}else if(_this.unit_price==950.6){
-			                			_this.title="送大家"+_this.total_amount+"份半年套餐-快乐福蛋，全年的快乐都有了"
-			                		}else if(_this.unit_price==1900.8){
-			                			_this.title="送大家"+_this.total_amount+"份整年套餐-快乐福蛋，全年的快乐都有了"
-			                		}
-			                	}
+			                	// }else if(_this.total_amount==5||_this.total_amount==10){
+			                	// 	_this.desc="小小福蛋传心意，快乐健康一整年，我的祝福，请您一定要收下！记得填收件地址哦。"
+			                	// 	if(_this.unit_price==39.6){
+			                	// 		_this.title="送"+_this.total_amount+"份快乐的蛋，祝您鸡年大吉"
+			                	// 	}else if(_this.unit_price==950.6){
+			                	// 		_this.title="送"+_this.total_amount+"份半年套餐-快乐的蛋，祝您鸡年大吉"
+			                	// 	}else if(_this.unit_price==1900.8){
+			                	// 		_this.title="送"+_this.total_amount+"份整年套餐-快乐的蛋，祝您鸡年大吉"
+			                	// 	}
+			                	// }else{
+			                	// 	_this.desc="过年了！我送大家"+_this.total_amount+"份健康快乐的蛋，每份有惊喜，快来抢！记得填收件地址哦。"
+			                	// 	if(_this.unit_price==39.6){
+			                	// 		_this.title="送大家"+_this.total_amount+"份快乐福蛋，全年的快乐都有了"
+			                	// 	}else if(_this.unit_price==950.6){
+			                	// 		_this.title="送大家"+_this.total_amount+"份半年套餐-快乐福蛋，全年的快乐都有了"
+			                	// 	}else if(_this.unit_price==1900.8){
+			                	// 		_this.title="送大家"+_this.total_amount+"份整年套餐-快乐福蛋，全年的快乐都有了"
+			                	// 	}
+			                	// }
 			                	
 			                	_this.last_amount=res.body.result.last_amount;
 			                	_this.catched_amount=res.body.result.catched_amount;
