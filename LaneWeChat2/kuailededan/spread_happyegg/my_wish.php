@@ -20,8 +20,8 @@
 		<style type="text/css">
 			.wx_head{height: 1rem;width: 1rem;border-radius: 50%;position:absolute;top: .5rem;left: 50%;margin-left: -0.5rem;}
 			.process{height: .24rem;width: 2.4rem;background-color: red;border-radius: 5px;position: absolute;left: 50%;top: 1.78rem;margin-left: -1.2rem;}
-			.process_y{height: .24rem;background-color: yellow;border-radius:5px 0 0 5px;position: absolute;left: 0;top: 0;}
-			.small_egg{position: absolute;top: -0.15rem;width: 0.4rem;}
+			.process_y{height: .24rem;background-color: yellow;border-radius:5px 0 0 5px;position: absolute;left: 0;top: 0;transition: width 1.5s;-moz-transition: width 1.5s;-webkit-transition: width 1.5s;-o-transition: width 1.5s;}
+			.small_egg{position: absolute;top: -0.15rem;width: 0.4rem;transition: left 1.5s;-moz-transition: left 1.5s;-webkit-transition: left 1.5s;-o-transition: left 1.5s;}
 			.myfdlb{font-size: .32rem;font-family:"黑体";font-weight: bold;height: .8rem;line-height: .8rem;color: #363636;width: 100%;padding-left: .28rem;border-bottom: 0.5px solid #d7d7d7;}
 			.ul_p{font-size: .3rem;font-family:"黑体";font-weight: bold;height: .7rem;line-height: .7rem;color: #363636;width: 100%;padding-left: .28rem;}
 			.dian{height: .13rem;width: .13rem;border-radius: 50%;background-color: #8a8a8a;margin-left: .5rem;}
@@ -73,7 +73,7 @@
 			<div class="myfdlb">
 				我的福蛋礼包
 				<span class="prompt">(满24枚可兑换一提快乐的蛋)</span>
-				<a @click="exchange" v-bind:class="{'exchange_btn':style_flag}" class="exchange" href="javascript:void(0)">兑换</a>
+				<a @click="exchange" v-bind:class="{'exchange_btn':style_flag}" class="exchange" href="javascript:void(0)">{{message}}</a>
 			</div>
 			<ul class="friend_ul">
 				<li v-for="item in items">
@@ -96,7 +96,7 @@
 						<p class="name_all">{{item.nickname}}</p>
 						<!-- <p class="wish_all">{{index}}份祝福</p> -->
 					</div>
-					<p class="egg_all">{{item.egg_num}}枚鸡蛋</p>
+					<p class="egg_all">{{item.egg_num}}枚福蛋</p>
 				</li>
 			</ul>
 			<div class="continue_send">
@@ -107,15 +107,29 @@
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script> 
 		<script type="text/javascript">
+		history.pushState({page : 'state1'},'state','#state1');
+		history.pushState({page : 'state2'},'state','#state2');
+			
+			window.onpopstate = function(event) {
+		      if (event.state.page === 'state1') {
+		        //WeixinJSBridge.call('closeWindow');
+		        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+				    //alert(res.err_msg);
+				
+				});
+		      }
+		    }
 			var app = new Vue({
 			  el: '#app',
 			  data: {
-			  	posi_left:'',
-			  	width_y:'',
+			  	posi_left:0,
+			  	width_y:0,
 			  	tximgurl:'',
 			  	egg_num:'1',
 			  	style_flag:false,
 			  	btn_status:'',
+			  	message:'兑换',
 			  	items:[
 			  		
 			  	],
@@ -127,13 +141,17 @@
 			  methods:{
 			  	exchange:function(){
 			  		if(this.btn_status==4){
+			  			this.style_flag=true
 			  			location.href="write_address.html"
+			  		}else if(this.btn_status==2){
+			  			alert('您已兑换过了')
 			  		}else{
-			  			alert('还未集齐不可兑换')
+			  			alert('还未集齐，继续努力')
 			  		}
 			  	}
 			  },
 			  created:function(){
+			  	
 			  	var _this=this;
 			  	this.$http.post(validate.url+"/Api/NewYearGift/userInfo",{openid:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 		            function (res) {
@@ -152,8 +170,10 @@
 							}else{
 								_this.width_y=2.3;
 							}
-							if(res.body.result.exchange.status==4){
+							if(_this.btn_status==4){
 								_this.style_flag=true;
+							}else if(_this.btn_status==2){
+								_this.message='已兑换'
 							}
 
 		                }else{

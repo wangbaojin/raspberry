@@ -66,6 +66,20 @@
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script type="text/javascript">
+		
+			history.pushState({page : 'state1'},'state','#state1');
+			history.pushState({page : 'state2'},'state','#state2');
+			
+			window.onpopstate = function(event) {
+		      if (event.state.page === 'state1') {
+		        //WeixinJSBridge.call('closeWindow');
+		        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+				    //alert(res.err_msg);
+				
+				});
+		      }
+		    }
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -82,9 +96,17 @@
 			  },
 			  created:function(){
 			  	var wish_type=JSON.parse(localStorage.getItem("wish_sender")).wish_type;
-			  	this.bg_src="assets/img/bg_"+wish_type+".png"
+			  	var come_from=JSON.parse(localStorage.getItem("wish_sender")).come_from;
+			  
+			  	if(wish_type>0&&wish_type<4){	
+					this.bg_src="assets/img/bg_2.png"
+				}else if(wish_type==4||wish_type==5){
+					this.bg_src="assets/img/bg_3.png"
+				}else{
+					this.bg_src="assets/img/bg_1.png"
+				}
 			  	var wish_id=JSON.parse(localStorage.getItem("wish_sender")).wish_id;
-			  	//var nickname=JSON.parse(localStorage.getItem("wish_sender")).nickname;
+			  	var nickname=JSON.parse(localStorage.getItem("wish_sender")).nickname;
 			  	//alert(JSON.parse(localStorage.getItem("order_number")).order_sn)
 			  	
 			  	var _this=this
@@ -103,10 +125,10 @@
 			                });
 			                wx.ready(function () {
 			                    wx.onMenuShareAppMessage({
-			                    	title: "领取福蛋", // 分享标题
-								    desc: "快乐的蛋", // 分享描述
-								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id, // 分享链接
-								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat/yangjiguanjia/send_happyegg/assets/img/imgurl.jpg', // 分享图标
+			                    	title: nickname+"送上的私密祝福，点击收听", // 分享标题
+								    desc: "敬业福没诚意 来点实际的！不用浇水 福蛋送上门 快乐多多！", // 分享描述
+								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id+"_"+come_from, // 分享链接
+								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/assets/img/imgurl_spread.jpg', // 分享图标
 								    type: 'link', // 分享类型,music、video或link，不填默认为link
 								    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
 			                        success: function () { 

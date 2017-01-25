@@ -1,13 +1,13 @@
 <?php
 
    include "../../lanewechat.php"; 
-   $b = $_GET['order_sn']; 
+   $b = $_GET['come_from']; 
    $redirect_uri = 'LaneWeChat2/kuailededan/spread_happyegg/create_wish.php';
    \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_userinfo');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
    $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN'); 
-   $order_sn = $_GET['state'];
+   $come_from = $_GET['state'];
     
 ?>
 <!DOCTYPE html>
@@ -73,12 +73,12 @@
 		        <div class="weui-mask" id="iosMask"  v-bind:style="styleObject"  @click.stop="cancel_wish"></div>
 		        <div class="weui-actionsheet" v-bind:class="{ 'weui-actionsheet_toggle': choose_flag }" id="iosActionsheet">
 		            <div class="weui-actionsheet__menu">
-		                <div class="weui-actionsheet__cell"  v-for="(item, index) in items" @click="select(index)">
+		                <div class="weui-actionsheet__cell" style="padding: 8px 0;font-size: 14px;"  v-for="(item, index) in items" @click="select(index)">
 		                	{{item.wish}}
 		                </div>
 		            </div>
 		            <div class="weui-actionsheet__action">
-		                <div class="weui-actionsheet__cell" id="iosActionsheetCancel" @click="choose_wish">取消</div>
+		                <div class="weui-actionsheet__cell"  style="padding: 8px 0;font-size: 14px;" id="iosActionsheetCancel" @click="choose_wish">取消</div>
 		            </div>
 		        </div>
 		    </div>
@@ -88,6 +88,19 @@
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+		history.pushState({page : 'state1'},'state','#state1');
+		history.pushState({page : 'state2'},'state','#state2');
+			
+			window.onpopstate = function(event) {
+		      if (event.state.page === 'state1') {
+		        //WeixinJSBridge.call('closeWindow');
+		        WeixinJSBridge.invoke('closeWindow',{},function(res){
+
+				    //alert(res.err_msg);
+				
+				});
+		      }
+		    }
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -98,10 +111,17 @@
 				},
 				items:[
 				 { wish: '鸡年大吉' },
-      			 { wish: '恭喜发财' },
-      			 { wish: '万事如意' }
+      			 { wish: '鸡鸡鸡...' },
+      			 { wish: '必成大器' },
+      			 { wish: '丰胸化吉' },
+      			 { wish: '一吻解千愁' },
+      			 { wish: '财运亨通' },
+      			 { wish: '阖家幸福' },
+      			 { wish: '前程似锦' },
+      			 { wish: '茁壮成长' },
+      			 { wish: '健康长寿' }
       			],
-      			wish:"鸡年大吉",
+      			wish:"请选择您的祝福",
       			voice_btn:true,
       			wish_index:1,
       			duoduo_src:"assets/img/duoduo_1.gif"
@@ -121,7 +141,15 @@
 						this.styleObject.display="none";
 						this.choose_flag=false;
 						this.wish_index=index+1
-						this.duoduo_src="assets/img/duoduo_"+(index+1)+".gif"
+						if(index>=0&&index<3){
+							
+							this.duoduo_src="assets/img/duoduo_2.gif"
+						}else if(index==3||index==4){
+							this.duoduo_src="assets/img/duoduo_3.gif"
+						}else{
+							this.duoduo_src="assets/img/duoduo_1.gif"
+						}
+						
 						var Media=document.getElementById("musicBox");
 						if(this.voice_btn){
 							Media.src="assets/audio/wish_"+(index+1)+".mp3"
@@ -144,6 +172,10 @@
 						this.choose_flag=false;
 					},
 					create_wish:function(){
+						if(this.wish=="请选择您的祝福"){
+							alert("请选择您的祝福语")
+							return
+						}
 						this.$http.post(validate.url+"/Api/NewYearGift/addWish",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_type:this.wish_index},{emulateJSON:true}).then(
 				            function (res) {
 				                // 处理成功的结果
@@ -151,7 +183,7 @@
 				                if(res.body.code==1){
 				                	//alert(res.body.result.user_name)
 				                	//alert(res.body.result.wish_word)
-				                	localStorage.setItem("wish_sender",JSON.stringify({"nickname":"<?php echo $user_info['nickname'];?>","wish_type":this.wish_index,"openid":"<?php echo $a['openid']; ?>","pic":"<?php echo $user_info['headimgurl']; ?>","wish_id":res.body.result.wish_id}))
+				                	localStorage.setItem("wish_sender",JSON.stringify({"nickname":"<?php echo $user_info['nickname'];?>","wish_type":this.wish_index,"openid":"<?php echo $a['openid']; ?>","pic":"<?php echo $user_info['headimgurl']; ?>","wish_id":res.body.result.wish_id,"come_from":"<?php echo $come_from;?>"}))
 				                	alert(res.body.msg);
 				                	location.href="send_wish.html"
 				                }else{
@@ -167,6 +199,7 @@
 			  },
 			  created:function(){
 			  	
+			  
 			  }
 			})
 		</script>

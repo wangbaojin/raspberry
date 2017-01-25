@@ -195,17 +195,17 @@
 //			  		var order_sn=JSON.parse(localStorage.getItem("order_number")).order_sn;
 //			  		var nick_name=JSON.parse(localStorage.getItem("order_number")).nick_name;
 			  		var openid=JSON.parse(localStorage.getItem("wish_info")).openid;
-	         		this.$http.post(validate.url+"/Api/NewYearGift/addAddressInfo",{real_name:this.name,address:this.address+this.address_detail,mobile:this.tel,open_id:openid,receive_time:this.date},{emulateJSON:true}).then(
+	         		this.$http.post(validate.url+"/Api/NewYearGift/addAddressInfo",{openid:openid,addressInfo:{real_name:this.name,address:this.address+this.address_detail,mobile:this.tel,receive_time:this.date}},{emulateJSON:true}).then(
 			            function (res) {
 			                // 处理成功的结果
 			                //console.log(JSON.stringify(res.body))
 			                if(res.body.code==1){
 			                	//alert(res.body.result.user_name)
 			                	//alert(res.body.result.wish_word)
-			                	alert(res.body.msg);
-			                	
+			                	alert("兑换成功!");
+			                	location.href="my_wish.php"
 			                }else{
-			                	alert(res.body.msg)
+			                	alert(res.body.error)
 			                }
 			                
 			            },function (res){

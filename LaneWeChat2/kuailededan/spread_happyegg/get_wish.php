@@ -144,7 +144,7 @@
 							<p class="hope_error" >您没有猜中!</p>
 							<div class="go_btn" style="margin-top: .8rem;">
 					            <a href="javascript:void(0);" @click="guess_agin">
-					            	<img src="assets/img/shinning.png"/>
+					            	<img src="assets/img/shinning.png" style="width: 4.4rem;"/>
 					            	再猜一次
 					            </a>
 							</div>
@@ -180,11 +180,11 @@
 					            	听好友的祝福
 					            </a>
 					            <div class="btn_box">
-					            	<a href="my_wish.php" class="my_btn">
+					            	<a href="my_wish.php" class="my_btn" >
 						            	<img src="assets/img/shinning.png"/>
 						            	我的福袋
 						            </a>
-						            <a href="create_wish.php" class="sendwish_btn">
+						            <a href="create_wish.php" class="sendwish_btn" >
 						           		<img src="assets/img/shinning.png"/>
 						            	我也要送祝福
 						            </a>
@@ -201,6 +201,7 @@
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
+			
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -227,14 +228,18 @@
 //							var Media=document.getElementById("musicBox");
 //							Media.src="assets/audio/wish_"+this.wish_type+".mp3"
 //							Media.play();
-							this.$http.post(validate.url+"/Api/NewYearGift/getWish",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:"<?php echo $wish_id;?>"},{emulateJSON:true}).then(
+							var state="<?php echo $wish_id;?>";
+							var wish_id=state.split("_")[0];
+							var come_from=state.split("_")[1]
+							
+							this.$http.post(validate.url+"/Api/NewYearGift/getWish",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:wish_id,come_from:come_from},{emulateJSON:true}).then(
 					            function (res) {
 					                // 处理成功的结果
-					                alert(JSON.stringify(res.body))
+					                //alert(JSON.stringify(res.body))
 					                if(res.body.code==1){
-					                	alert(res.body.result.wish_type)
+					                	//alert(res.body.result.wish_type)
 										_this.wish_type=res.body.result.wish_type
-										this.$http.post(validate.url+"/Api/NewYearGift/getGift",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:"<?php echo $wish_id;?>"},{emulateJSON:true}).then(
+										this.$http.post(validate.url+"/Api/NewYearGift/getGift",{nickname:"<?php echo $user_info['nickname'];?>",pic:"<?php echo $user_info['headimgurl']; ?>",openid:"<?php echo $a['openid']; ?>",wish_id:wish_id,come_from:come_from},{emulateJSON:true}).then(
 								            function (res) {
 								                if(res.body.code==1){
 													_this.msg="恭喜您获得福蛋一枚"
@@ -286,22 +291,23 @@
 						}
 						
 					},
-					audioAutoPlay:function(id){
-						    var audio = document.getElementById(id);  
-    						audio.play();  
-    						document.addEventListener("WeixinJSBridgeReady", function () {  
-            					audio.play();  
-    						}, false);  
-    						document.addEventListener('YixinJSBridgeReady', function() {  
-        						audio.play();  
-    						}, false);
+					audioAutoPlay:function(){
+//						    var  audio= document.getElementById("rule_music");  
+//  						
+//  						document.addEventListener("WeixinJSBridgeReady", function () {  
+//          					audio.play();  
+//  						}, false);  
+    						
 					}
 			  },
 			  created:function(){
 			  	var _this=this;
 			  	this.flag=this.random(0,1)
-			  	this.audioAutoPlay('rule_music')
-			  	//alert(location.href)
+			  	var  audio= document.getElementById("rule_music");  
+				document.addEventListener("WeixinJSBridgeReady", function () {  
+					audio.play();  
+				}, false); 
+			  	
 				
 			  }
 			})
@@ -309,14 +315,3 @@
 	</body>
 </html>
 
-<!-- function audioAutoPlay(id){  
-    var audio = document.getElementById(id);  
-    audio.play();  
-    document.addEventListener("WeixinJSBridgeReady", function () {  
-            audio.play();  
-    }, false);  
-    document.addEventListener('YixinJSBridgeReady', function() {  
-        audio.play();  
-    }, false);  
-}  
-audioAutoPlay('rule_music'); -->

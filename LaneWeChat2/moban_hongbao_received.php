@@ -16,6 +16,6 @@
         //$topcolor 顶部颜色，可以为空。默认是红色
         $touser = $_GET['open_id'];
         $templateId = "V2Qbmkr0pH2la5qLPPn0rVrkd-xuQiwzBWcbJNZ8h_s";
-        $url = "http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/send_happyegg/egg_details.php?order_sn=".$_GET['order_sn'];
+        //$url = "http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/send_happyegg/egg_details.php?order_sn=".$_GET['order_sn'];
         \LaneWeChat\Core\TemplateMessage::sendTemplateMessage($data, $touser, $templateId, $url, $topcolor='#FF0000');
 

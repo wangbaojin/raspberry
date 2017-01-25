@@ -49,19 +49,38 @@
 			color: #ffffff;font-family: "微软雅黑";font-size: .24rem;background: #bba051;border-radius: .4rem;margin-top: .4rem;}
 			.time_left{font-size: .22rem;color: #ffffff;line-height: 1.4rem;font-family: "微软雅黑";}
 		
-			.bg_box{width: 100%;height: 100%;}
-			.direct{position: fixed;top: 0;z-index: 999;height: 100%;}
-			.direct img{width: 100%;height: 100%;display: inline-block;}
-			.know{position: fixed;top: 30%;right:1rem;width: 1.93rem;z-index: 999;}
+			.mask{background: #000000;opacity: 0.76;position: absolute;width: 100%;height: 100%;}
+			.bg_box{width: 100%;height: 100%;font-size: 0;position: fixed;z-index: 9999;}
+			.direct{position: absolute;top: .4rem;z-index: 999;right: .56rem;width: 5.12rem;}
+			.direct img{width: 5.12rem;display: inline-block;height: auto;}
+			.know{position: absolute;top: 28%;right:1rem;width: 1.93rem;z-index: 999;}
 			.know img{width: 100%;display: inline-block;}
+			.shinning{position: absolute;top: -.6rem;right:0;width: 1.4rem;z-index: 99;-webkit-animation:shinning 0.6s infinite alternate;}
+			.shinning img{width: 100%;display: inline-block;}
+			.duoduo{position: absolute;top: 1.55rem;left:.65rem;width: 2rem;z-index: 99;}
+			.duoduo img{width: 100%;display: inline-block;}
 			
-			
+			@-webkit-keyframes shinning{
+				0%{		
+					opacity: 1;
+				}
+				100%{	
+					opacity: 0;
+				}
+			}
 		</style>
 	</head>
 	<body>
 		<div id="app">
-			<div class="bg_box" v-if="flag" >
+			<!--<div class="bg_box" v-if="flag" >
 				<div class="direct"><img src="assets/img/direct.png"/></div>
+				<div class="know" @click="know"><img src="assets/img/know.png"/></div>
+			</div>-->
+			<div class="bg_box" v-if="flag" >
+				<div class="mask"></div>
+				<div class="direct"><img src="assets/img/direct_txt.png"/></div>
+				<div class="duoduo"><img src="assets/img/direct_duoduo.png"/></div>
+				<div class="shinning"><img src="assets/img/direct_shinning.png"/></div>
 				<div class="know" @click="know"><img src="assets/img/know.png"/></div>
 			</div>
 			<div class="top_box">
@@ -134,7 +153,7 @@
 			    items:[
 			    	
 			    ],
-			    flag:false,
+			    flag:true,
 			    total_amount:"",
 			    last_amount:"",
 			    catched_amount:"",
