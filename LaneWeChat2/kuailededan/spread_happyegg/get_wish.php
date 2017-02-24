@@ -157,13 +157,13 @@
 			
 			<!--<div class="guess_success_box" v-bind:class="{ animated: success, 'fadeInUp': success }"  v-if="success">
 				<div class="bg">
-					<img src="assets/img/success.jpg" class="getwish_bg"/>
+					<img src="assets/img/success.gif" class="getwish_bg"/>
 				</div>
 				
 			</div>-->
 			<div class="guess_success_box" v-bind:class="{ animated: success, 'fadeIn': success }"  v-if="success" >
 				<div class="bg">
-					<img src="assets/img/success.jpg" class="getwish_bg"/>
+					<img src="assets/img/success.gif" class="getwish_bg"/>
 				</div>
 				<div class="big_box" v-bind:class="{ animated: success, 'bounceInDown': success }">
 					<div class="success_info">
@@ -200,6 +200,7 @@
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 		<script type="text/javascript">
 			
 			var app = new Vue({
@@ -308,6 +309,57 @@
 					audio.play();  
 				}, false); 
 			  	
+			  	
+			  	var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1]
+			  	var state="<?php echo $wish_id;?>";
+				var wish_id=state.split("_")[0];
+				var come_from=state.split("_")[1]
+						//alert(url)
+		  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
+         			//alert(res.body)
+                   res=JSON.parse(res.body)
+		         	wx.config({
+	                    debug: false,
+	                    appId: res.appId,
+	                    timestamp: res.timestamp,
+	                    nonceStr: res.nonceStr,
+	                    signature: res.signature,
+	                    jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline']
+	                });
+	                wx.ready(function () {
+	                    wx.onMenuShareAppMessage({
+	                    	title: "<?php echo $user_info['nickname'];?>"+"送上的私密祝福，点击收听", // 分享标题
+						    desc: "敬业福没诚意 来点实际的！不用浇水 福蛋送上门 快乐多多！", // 分享描述
+						    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id+"_"+come_from, // 分享链接
+						    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/assets/img/imgurl_spread.jpg', // 分享图标
+						    type: 'link', // 分享类型,music、video或link，不填默认为link
+						    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+	                        success: function () { 
+	                          
+	                          location.href="my_wish.php"
+	                        },
+	                        cancel: function () { 
+	                          
+	                        }
+	                    });
+	                    wx.onMenuShareTimeline({
+	                    	title: "<?php echo $user_info['nickname'];?>"+"送上的私密祝福，点击收听", // 分享标题
+						   
+						    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id+"_"+come_from, // 分享链接
+						    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/assets/img/imgurl_spread.jpg', // 分享图标
+						    
+	                        success: function () { 
+	                          
+	                          location.href="my_wish.php"
+	                        },
+	                        cancel: function () { 
+	                            
+	                        }
+	                    });
+	                });
+		        },function(response){
+		        	console.info(response);
+		        });
 				
 			  }
 			})

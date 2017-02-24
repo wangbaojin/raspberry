@@ -121,7 +121,7 @@
 			                    timestamp: res.timestamp,
 			                    nonceStr: res.nonceStr,
 			                    signature: res.signature,
-			                    jsApiList: ['onMenuShareAppMessage']
+			                    jsApiList: ['onMenuShareAppMessage','onMenuShareTimeline']
 			                });
 			                wx.ready(function () {
 			                    wx.onMenuShareAppMessage({
@@ -131,6 +131,20 @@
 								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/assets/img/imgurl_spread.jpg', // 分享图标
 								    type: 'link', // 分享类型,music、video或link，不填默认为link
 								    dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+			                        success: function () { 
+			                          _this.flag=false
+			                          location.href="my_wish.php"
+			                        },
+			                        cancel: function () { 
+			                            _this.flag=false
+			                        }
+			                    });
+			                    wx.onMenuShareTimeline({
+			                    	title: nickname+"送上的私密祝福，点击收听", // 分享标题
+								   
+								    link: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/get_wish.php?wish_id='+wish_id+"_"+come_from, // 分享链接
+								    imgUrl: 'http://weixin.yangjiguanjia.com/LaneWeChat2/kuailededan/spread_happyegg/assets/img/imgurl_spread.jpg', // 分享图标
+								    
 			                        success: function () { 
 			                          _this.flag=false
 			                          location.href="my_wish.php"
