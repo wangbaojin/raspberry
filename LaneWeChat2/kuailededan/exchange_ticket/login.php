@@ -1,10 +1,13 @@
 <?php
 
-   include "../../lanewechat.php";
+   include "../../lanewechat.php"; 
+   $b = $_GET['num']; 
    $redirect_uri = 'LaneWeChat2/kuailededan/exchange_ticket/login.php';
-   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+   \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $b, $scope='snsapi_base');
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
+   $order_sn = $_GET['state'];
+     
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,7 +77,7 @@
 			  		this.$http.post(validate.url+"/Api/DeliveryLog/checkCard",{card_no:_this.num,card_pw:_this.password,open_id:"<?php echo $a['openid']; ?>"},{emulateJSON:true}).then(
 			            function (res) {
 			                if(res.body.code==1){
-			                		localStorage.setItem("exchange_info",JSON.stringify({"order_sn":_this.nun,"password":_this.password,open_id:"<?php echo $a['openid']; ?>"}))
+			                		localStorage.setItem("exchange_info",JSON.stringify({"order_sn":_this.num,"password":_this.password,open_id:"<?php echo $a['openid']; ?>"}))
 			                		alert(res.body.msg);
 			                		location.href="write_info.php"
 			                }else{
@@ -89,8 +92,7 @@
 			  	}
 			  },
 			  created:function(){
-			  	var _this=this,url=location.href;
-			  	_this.num=url.split("num=")[1]
+			  	this.num="<?php echo $order_sn;?>"
 			  }
 			})
 		</script>

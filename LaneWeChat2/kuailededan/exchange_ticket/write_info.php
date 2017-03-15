@@ -136,8 +136,7 @@
 			  created:function(){
 			  	var _this=this;
 				this.order_sn=JSON.parse(localStorage.getItem("exchange_info")).order_sn;
-			    var url=location.href;
-				//alert(url)
+			    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1];
 		  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
          			//alert(res.body)
                     res=JSON.parse(res.body)
