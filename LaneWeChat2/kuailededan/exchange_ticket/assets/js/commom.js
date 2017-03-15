@@ -8,5 +8,4 @@ const validate = {
 		        }
 		        return true;
 		    }
-
 }
