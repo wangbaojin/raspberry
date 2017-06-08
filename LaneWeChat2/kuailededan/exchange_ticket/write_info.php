@@ -2,7 +2,9 @@
 
    include "../../lanewechat.php";
    $redirect_uri = 'LaneWeChat2/kuailededan/exchange_ticket/write_info.php';
+
     \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
+
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
 ?>
@@ -41,11 +43,13 @@
 			}
 			.weui-picker{font-size:18px;}
 			.weui-picker__group{display: none;}
+
 		</style>
 	</head>
 	<body>
 	
 		<div id="app">
+
 			<img class="banner" src="assets/img/ex_banner.png" alt="">
 			<div style="margin-top: 0.4rem;" class="weui-cells weui-cells_form">
 	            <div class="weui-cell common_form" id="">
@@ -101,10 +105,12 @@
 	        		 <p v-show="notice" class="notice">*请正确填写电话号码</p>
 	        		<img @click="sure" style="width: 6.9rem;margin:0.4rem auto 0.2rem;" src="assets/img/button_2.png" alt="">
 			</div>
+
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/weui.min.js" type="text/javascript" charset="utf-8"></script>
+
 		<script src="assets/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -124,6 +130,7 @@
 				});
 		      }
 		    }
+
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -182,6 +189,7 @@
 			  		this.icon="none";
 			  		this.notice=false;
 			  	},
+
 			  	sure:function(){
 	         		var _this=this;
 	         		if(this.name==""){
@@ -190,6 +198,7 @@
 			  		}else if(this.address==""){
 			  			alert("请输入地址")
 			  			return
+
 			  		}else if(this.address_details==""){
 			  			alert("请输入门牌号")
 			  			return
@@ -212,6 +221,7 @@
 			                		location.href="success.html"
 			                }else{
 			                		alert(res.body.error)
+
 			                }
 			                
 			            },function (res){
@@ -230,6 +240,7 @@
 			  },
 			  created:function(){
 			  	var _this=this;
+
 				this.card_tp=JSON.parse(localStorage.getItem("exchange_info")).card_tp;
 				if(_this.card_tp==1){
 					_this.send_num=2;
@@ -241,6 +252,7 @@
 					_this.send_num=20;
 				}
 			    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1];
+
 		  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
          			//alert(res.body)
                     res=JSON.parse(res.body)
@@ -259,6 +271,7 @@
 						    	
 						        latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
 						        longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+
 						  		
 						  		_this.$http.get(validate.url+'/getAddressInfo/geocoder/v2/?location='+latitude+','+longitude+'&output=json&pois=1&ak=0r5h4bhrVoUjEvrNc8Lx0NLUcP9xiaQo&coordtype=wgs84ll').then(function(res){
 				                    
@@ -267,11 +280,7 @@
 				                    if(res.status==0){
 				                    	
 				                    		_this.address=res.result.formatted_address;
-				                    		//_this.city=_this.address.substr(0,2)
-				                    		// if(_this.city=="黑龙江"){
-				                    		// 	_this.city="黑龙江"
-				                    		// }
-				                    		
+
 				                    }else{
 				                    		alert("定位失败！")
 				                    }

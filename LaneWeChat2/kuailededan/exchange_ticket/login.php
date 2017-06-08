@@ -1,5 +1,6 @@
 <?php
 
+
    include "../../lanewechat.php"; 
    $b = $_GET['num'];
    $redirect_uri = 'LaneWeChat2/kuailededan/exchange_ticket/login.php';
@@ -9,6 +10,7 @@
    $user_info = \LaneWeChat\Core\WeChatOAuth::getUserInfo($a['access_token'],$a['openid'],$lang='zh_CN'); 
    $order_sn = $_GET['state'];
      
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,6 +25,7 @@
 		<link rel="stylesheet" type="text/css" href="assets/css/reset.css"/>
 		<link rel="stylesheet" type="text/css" href="https://res.wx.qq.com/open/libs/weui/1.1.0/weui.min.css"/>
 		<style type="text/css">
+
 			body{background-color: #e5eef2;}
 			.banner{width: 100%;height: auto;}
 			.common_form{height: 0.8rem;padding: 0.1rem 0.2rem;}
@@ -31,11 +34,13 @@
 			.weui-cell:before{border-top: 1px solid #e5e5e5;}
 			.weui-cells{font-size: 0.34rem;}
 			.fontcolor{color:#353535;}
+
 		</style>
 	</head>
 	<body>
 	
 		<div id="app">
+
 			<img class="banner" src="assets/img/ex_banner.png" alt="">
 			<div style="margin-top: 0.4rem;" class="weui-cells weui-cells_form">
 	            <div class="weui-cell common_form" id="">
@@ -56,13 +61,16 @@
 	                <div class="weui-cell__bd">
 	                    <input class="weui-input fontcolor" v-model="yzcode" type="tel" placeholder="请输入验证码">
 	                    <img @click="change_img" style="height:0.9rem;position: absolute;top: 0;right: 0;" v-bind:src="yz_img">
+
 	                </div>
 	            </div>
 	        </div>
 	        <div class="button-sp-area">
+
 	        		<img @click="exchange" style="width: 6.9rem;margin:0.4rem auto 0.2rem;" src="assets/img/button.png" alt="">
 	        		<p style="font-size: 0.22rem;color: #888;margin-left: 0.3rem;">*输入卡券仅代表验证，提交订单才会致卡券被使用</p>
 			</div>
+
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
@@ -76,6 +84,7 @@
 			     yzcode:"",
 			     yz_img:"http://weixin.yangjiguanjia.com/deliveryLogGetVerify",
 			     card_tp:""
+
 			  },
 			  methods:{
 			  	
@@ -87,6 +96,7 @@
 			  		}else if(_this.password==""){
 			  			alert("请输入密码")
 			  			return
+
 			  		}else if(_this.yzcode==""){
 			  			alert("请输入验证码")
 			  			return
@@ -122,6 +132,7 @@
 			   created:function(){
 			   	this.num="<?php echo $order_sn;?>"
 			   }
+
 			})
 		</script>
 	</body>
