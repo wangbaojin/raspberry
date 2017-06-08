@@ -2,13 +2,7 @@
 
    include "../../lanewechat.php";
    $redirect_uri = 'LaneWeChat2/kuailededan/exchange_ticket/write_info.php';
-<<<<<<< HEAD
-
     \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
-
-=======
-    \LaneWeChat\Core\WeChatOAuth::getCode($redirect_uri, $state=1, $scope='snsapi_base');
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
    $code = $_GET['code'];
    $a = \LaneWeChat\Core\WeChatOAuth::getAccessTokenAndOpenId($code);
 ?>
@@ -47,26 +41,17 @@
 			}
 			.weui-picker{font-size:18px;}
 			.weui-picker__group{display: none;}
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 		</style>
 	</head>
 	<body>
 	
 		<div id="app">
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			<img class="banner" src="assets/img/ex_banner.png" alt="">
 			<div style="margin-top: 0.4rem;" class="weui-cells weui-cells_form">
 	            <div class="weui-cell common_form" id="">
 	                <div class="weui-cell__hd mr"><img class="icon" src="assets/img/name.png" alt=""></div>
 	                <div class="weui-cell__bd">
 	                    <input class="weui-input fontcolor" v-model="name" type="text" placeholder="请填写您的姓名">
-<<<<<<< HEAD
 	                </div>
 	            </div>
 	            <div style="padding-left: 0.76rem;" class="weui-cell common_form" id="">
@@ -79,20 +64,6 @@
 	                	<label class="weui-label sex">女士</label>
 	                </div>
 	            </div>
-=======
-	                </div>
-	            </div>
-	            <div style="padding-left: 0.76rem;" class="weui-cell common_form" id="">
-	                <div @click="choose_sex(0)" class="weui-cell__hd mr">
-	                	<img style="display: inline-block;height: 0.4rem;" v-bind:src="tick" alt="">
-	                	<label class="weui-label sex">先生</label>
-	                </div>
-	                <div @click="choose_sex(1)" class="weui-cell__hd mr">
-	                	<img style="display: inline-block;height: 0.4rem;" v-bind:src="square" alt="">
-	                	<label class="weui-label sex">女士</label>
-	                </div>
-	            </div>
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 	            <div class="weui-cell common_form" id="">
 	                <div class="weui-cell__hd mr"><img class="icon" src="assets/img/tel.png" alt=""></div>
 	                <div @click="icon_dis" class="weui-cell__bd">
@@ -130,18 +101,10 @@
 	        		 <p v-show="notice" class="notice">*请正确填写电话号码</p>
 	        		<img @click="sure" style="width: 6.9rem;margin:0.4rem auto 0.2rem;" src="assets/img/button_2.png" alt="">
 			</div>
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 	    </div>
 		<script src="assets/js/vue.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/vue-resource.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/weui.min.js" type="text/javascript" charset="utf-8"></script>
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 		<script src="assets/js/picker.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="assets/js/commom.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -161,10 +124,6 @@
 				});
 		      }
 		    }
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			var app = new Vue({
 			  el: '#app',
 			  data: {
@@ -216,10 +175,6 @@
 			  		this.font_color="#353535";
 			  		picker.show();
 			  		picker.on('picker.valuechange', function (selectedVal, selectedIndex) {
-<<<<<<< HEAD
-=======
-  						console.log(nameEl.innerText)
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
   						_this.address=nameEl.innerText;
 					});
 			  	},
@@ -227,10 +182,6 @@
 			  		this.icon="none";
 			  		this.notice=false;
 			  	},
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			  	sure:function(){
 	         		var _this=this;
 	         		if(this.name==""){
@@ -239,10 +190,6 @@
 			  		}else if(this.address==""){
 			  			alert("请输入地址")
 			  			return
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			  		}else if(this.address_details==""){
 			  			alert("请输入门牌号")
 			  			return
@@ -250,18 +197,14 @@
 			  			_this.icon="block";
 			  			_this.notice=true;
 			  			return
-			  		}else if(this.date=="请选择配送日期"){
+			  		}else if(this.date=="配送日期"){
 			  			alert("请选择您的配送日期")
 			  			return
 			  		}
 			  		var nick_name=JSON.parse(localStorage.getItem("exchange_info")).nick_name;
 					var pic=JSON.parse(localStorage.getItem("exchange_info")).pic;
 					this.order_sn=JSON.parse(localStorage.getItem("exchange_info")).order_sn;
-<<<<<<< HEAD
 			  		this.$http.post(validate.url+"/deliveryLogAdd",{tel:_this.tel,real_name:_this.name,address:_this.address+_this.address_details,open_id:"<?php echo $a['openid']; ?>",order_sn:_this.order_sn,delivery_time:_this.date,nick_name:nick_name,pic:pic},{emulateJSON:true}).then(
-=======
-			  		this.$http.post(validate.url+"/deliveryLogAdd",{tel:_this.tel,real_name:_this.name,address:_this.address,open_id:"<?php echo $a['openid']; ?>",order_sn:_this.order_sn,delivery_time:_this.date,nick_name:nick_name,pic:pic},{emulateJSON:true}).then(
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			            function (res) {
 			                if(res.body.code==1){
 			                		alert("兑换成功")
@@ -269,10 +212,6 @@
 			                		location.href="success.html"
 			                }else{
 			                		alert(res.body.error)
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 			                }
 			                
 			            },function (res){
@@ -291,31 +230,17 @@
 			  },
 			  created:function(){
 			  	var _this=this;
-<<<<<<< HEAD
-
 				this.card_tp=JSON.parse(localStorage.getItem("exchange_info")).card_tp;
 				if(_this.card_tp==1){
 					_this.send_num=2;
 				}else if(_this.card_tp==2){
 					_this.send_num=4;
 				}else if(_this.card_tp==3){
-=======
-				this.card_tp=JSON.parse(localStorage.getItem("exchange_info")).card_tp;
-				if(_this.card_tp==3){
-					_this.send_num=2;
-				}else if(_this.card_tp==1){
-					_this.send_num=4;
-				}else if(_this.card_tp==2){
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 					_this.send_num=10;
 				}else if(_this.card_tp==4){
 					_this.send_num=20;
 				}
 			    var url=location.href.split("&")[0]+"%26"+location.href.split("&")[1];
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 		  		_this.$http.get(validate.url+'/LaneWeChat/api_getsign.php?url='+url).then(function(res){
          			//alert(res.body)
                     res=JSON.parse(res.body)
@@ -334,10 +259,6 @@
 						    	
 						        latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
 						        longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-<<<<<<< HEAD
-
-=======
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 						  		
 						  		_this.$http.get(validate.url+'/getAddressInfo/geocoder/v2/?location='+latitude+','+longitude+'&output=json&pois=1&ak=0r5h4bhrVoUjEvrNc8Lx0NLUcP9xiaQo&coordtype=wgs84ll').then(function(res){
 				                    
@@ -346,15 +267,11 @@
 				                    if(res.status==0){
 				                    	
 				                    		_this.address=res.result.formatted_address;
-<<<<<<< HEAD
-
-=======
 				                    		//_this.city=_this.address.substr(0,2)
 				                    		// if(_this.city=="黑龙江"){
 				                    		// 	_this.city="黑龙江"
 				                    		// }
 				                    		
->>>>>>> be461f6e1692fa4e98f8fc8069c3a4aa42ffbf1d
 				                    }else{
 				                    		alert("定位失败！")
 				                    }
