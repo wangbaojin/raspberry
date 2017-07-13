@@ -2,6 +2,9 @@
   $longitude = $_GET['longitude'];
   $latitude = $_GET['latitude'];
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 <head>
